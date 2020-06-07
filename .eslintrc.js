@@ -31,14 +31,18 @@ module.exports = {
     'reat/jsx-one-expression-per-line': 0,
     'react/forbid-prop-types': 0,
     'react/require-default-props': 0,
-    'prettier/prettier': ['error'],
+    'react/prefer-stateless-function': 0,
+    'react/jsx-closing-bracket-location': 1,
+    'react/jsx-first-prop-new-line': 1,
     'no-unused-vars': 1,
     'import/extensions': 0,
     'import/order': 1,
-    'react/prefer-stateless-function': 0,
-    'no-use-before-define': 0,
-    'no-param-reassign': 0,
     'import/no-unresolved': 2,
     'import/prefer-default-export': 0,
+    'no-use-before-define': 0,
+    'no-param-reassign': 0,
+    'prettier/prettier': ['error', {
+      endOfLine: "auto"
+    }],
   },
 };
