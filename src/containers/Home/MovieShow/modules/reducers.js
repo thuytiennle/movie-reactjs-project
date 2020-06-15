@@ -2,12 +2,16 @@ import {
   FETCH_LIST_MOVIE_REQUEST,
   FETCH_LIST_MOVIE_SUCCESS,
   FETCH_LIST_MOVIE_FAILED,
+  MOVIE_MODAL_OPEN,
+  MOVIE_MODAL_CLOSE,
 } from './constants';
 
 const initialState = {
   listMovie: [],
   loadingListMovie: false,
   listMovieError: null,
+  isOpenModal: false,
+  modalMovieURL: '',
 };
 
 const listMovieReducer = (state = initialState, action) => {
@@ -28,6 +32,15 @@ const listMovieReducer = (state = initialState, action) => {
       state.listMovie = [];
       state.loadingListMovie = false;
       state.listMovieError = action.err;
+      return { ...state };
+
+    case MOVIE_MODAL_OPEN:
+      state.isOpenModal = true;
+      state.modalMovieURL = action.movieURL;
+      return { ...state };
+
+    case MOVIE_MODAL_CLOSE:
+      state.isOpenModal = false;
       return { ...state };
 
     default:
