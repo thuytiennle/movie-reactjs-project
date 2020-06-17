@@ -4,9 +4,11 @@ import {
   FECTH_DETAIL_MOVIE_FAILED,
 } from './constants';
 
-export const actFetchDetailMovieRequest = () => {
+// Get movieId to attach to API url
+export const actFetchDetailMovieRequest = (id) => {
   return {
     type: FECTH_DETAIL_MOVIE_REQUEST,
+    id,
   };
 };
 

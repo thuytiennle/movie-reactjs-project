@@ -5,7 +5,7 @@ import { FETCH_LIST_MOVIE_REQUEST } from './constants';
 
 function* listMovieSaga() {
   try {
-    // Call dùng để gọi các bất đồng bộ như Axios. Tham số truyền vào là 1 function
+    // Call func uses for handling async functions as Axios, setTimeout with params 1 callback function
     const response = yield call(() =>
       callAPI('QuanLyPhim/LayDanhSachPhim?maNhom=GP05', 'GET', null),
     );
@@ -20,7 +20,7 @@ function* listMovieSaga() {
 }
 
 // watcher saga: watches for actions dispatched to the store, starts worker saga
-// Sẽ thực hiện saga khi function actFetchListMovieRequest đc dispatch lên store
+// Saga will process when actFetchListMovieRequest is dispatched to store
 export default function* listMovieWatcher() {
   yield takeLatest(FETCH_LIST_MOVIE_REQUEST, listMovieSaga);
 }

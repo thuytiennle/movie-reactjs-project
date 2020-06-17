@@ -30,7 +30,7 @@ export default function MovieItem(props) {
             </Styled.MovieModalBtn>
             <Styled.MovieBookingBtn
               type="button"
-              to={`/detail-movie/:${movie.maPhim}`}
+              to={`/detail-movie/${movie.maPhim}`}
               className="showTime-bookingBtn"
             >
               Mua vé

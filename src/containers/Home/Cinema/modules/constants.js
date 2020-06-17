@@ -1,0 +1,12 @@
+export const FETCH_CINEMA_COMPLEX_REQUEST =
+  'cinema/cinemaReducer/FETCH_CINEMA_COMPLEX_REQUEST';
+export const FETCH_CINEMA_COMPLEX_SUCCESS =
+  'cinema/cinemaReducer/FETCH_CINEMA_COMPLEX_SUCCESS';
+export const FETCH_CINEMA_COMPLEX_FAILED =
+  'cinema/cinemaReducer/FETCH_CINEMA_COMPLEX_FAILED';
+export const FETCH_CINEMA_BRANCH_REQUEST =
+  'cinema/cinemaReducer/FETCH_CINEMA_BRANCH_REQUEST';
+export const FETCH_CINEMA_BRANCH_SUCCESS =
+  'cinema/cinemaReducer/FETCH_CINEMA_BRANCH_SUCCESS';
+export const FETCH_CINEMA_BRANCH_FAILED =
+  'cinema/cinemaReducer/FETCH_CINEMA_BRANCH_FAILED';

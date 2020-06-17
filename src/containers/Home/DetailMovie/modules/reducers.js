@@ -10,7 +10,7 @@ const initialState = {
   errorDetailMovie: null,
 };
 
-export const detailMovieReducer = (state = initialState, action) => {
+const detailMovieReducer = (state = initialState, action) => {
   switch (action.type) {
     case FECTH_DETAIL_MOVIE_REQUEST:
       state.detailMovie = {};
@@ -31,3 +31,5 @@ export const detailMovieReducer = (state = initialState, action) => {
       return state;
   }
 };
+
+export default detailMovieReducer;

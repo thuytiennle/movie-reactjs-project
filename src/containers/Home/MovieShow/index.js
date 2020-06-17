@@ -62,7 +62,7 @@ export default function MovieShow() {
   useEffect(() => {
     // Dispatch action request to init saga listMovie API
     dispatch(actFetchListMovieRequest());
-  }, []);
+  }, [dispatch]);
 
   // Render Swiper
   const renderHTML = (list) => {
