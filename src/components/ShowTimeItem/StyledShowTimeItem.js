@@ -19,15 +19,6 @@ export const MovieTitle = styled.p`
   margin: 5px 0;
 `;
 
-export const MovieAgeLimit = styled.span`
-  background-color: red;
-  color: white;
-  font-size: 16px;
-  border-radius: 5px;
-  margin-right: 10px;
-  padding: 5px;
-`;
-
 export const MovieDuration = styled.p`
   font-size: 15px;
   color: gray;
@@ -40,9 +31,11 @@ export const MovieTimeSelect = styled(Link)`
   border: 1px solid black;
   border-radius: 5px;
   background-color: #1f2833;
-  font-size: 14px;
+  font-size: 16px;
+  letter-spacing: 1px;
   color: #fff;
   margin-right: 10px;
+  margin-bottom: 10px;
 
   &:hover,
   &:focus {
@@ -50,9 +43,4 @@ export const MovieTimeSelect = styled(Link)`
     color: #66fcf1;
   }
   cursor: pointer;
-`;
-
-export const MovieStartTime = styled.span`
-  font-size: 17px;
-  color: #66fcf1;
 `;

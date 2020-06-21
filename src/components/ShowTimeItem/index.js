@@ -1,7 +1,32 @@
 import React from 'react';
 import * as Styled from './StyledShowTimeItem';
 
-export default function ShowTimeItem() {
+export default function ShowTimeItem(props) {
+  const { movie } = props;
+
+  // Render movie show by mapping props.movie and just show timeline that match to day. But API just have date from 2019 then just pick up one (01-01-2019)
+  const renderMovieShow = () => {
+    if (movie.lstLichChieuTheoPhim && movie.lstLichChieuTheoPhim.length > 0) {
+      return movie.lstLichChieuTheoPhim.map((item) => {
+        return (
+          new Date(item.ngayChieuGioChieu).toLocaleDateString() ===
+            new Date('2019-01-01').toLocaleDateString() && (
+            <Styled.MovieTimeSelect
+              key={item.maLichChieu}
+              className="movie-timeSelection"
+              to="/cinema"
+            >
+              {new Date(item.ngayChieuGioChieu).toLocaleTimeString([], {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false,
+              })}
+            </Styled.MovieTimeSelect>
+          )
+        );
+      });
+    }
+  };
   return (
     <div className="movie-description mb-4">
       <Styled.MovieInfo
@@ -10,17 +35,11 @@ export default function ShowTimeItem() {
         data-target="#toggleShowTime"
       >
         <div className="movie-img">
-          <Styled.MovieImg
-            src="https://s3img.vcdn.vn/mobile/123phim/2020/02/nang-3-loi-hua-cua-cha-c16-15827063492648_60x60.jpg"
-            alt=""
-          />
+          <Styled.MovieImg src={movie.hinhAnh} alt="" />
         </div>
         <div className="movie-content ml-3">
           <Styled.MovieTitle className="movie-title">
-            <Styled.MovieAgeLimit className="movie-ageLimit">
-              C16
-            </Styled.MovieAgeLimit>
-            Lời hứa của cha
+            {movie.tenPhim}
           </Styled.MovieTitle>
           <Styled.MovieDuration className="movie-duration">
             109 phút - TIX 7.9 - IMDb 0
@@ -29,20 +48,7 @@ export default function ShowTimeItem() {
       </Styled.MovieInfo>
       <div className="movie-timeline" id="toggleShowTime">
         <p>2D Digital</p>
-        <div className="movie-time">
-          <Styled.MovieTimeSelect className="movie-timeSelection" to="/cinema">
-            <Styled.MovieStartTime className="movie-timeStart">
-              19:50
-            </Styled.MovieStartTime>
-            ~ 21:39
-          </Styled.MovieTimeSelect>
-          <Styled.MovieTimeSelect className="movie-timeSelection" to="/cinema">
-            <Styled.MovieStartTime className="movie-timeStart">
-              21:50
-            </Styled.MovieStartTime>
-            ~ 23:39
-          </Styled.MovieTimeSelect>
-        </div>
+        <div className="movie-time">{renderMovieShow()}</div>
       </div>
     </div>
   );

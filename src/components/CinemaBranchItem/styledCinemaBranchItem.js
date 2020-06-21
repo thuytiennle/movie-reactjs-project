@@ -1,18 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-export const CinemaContent = styled.div`
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-`;
-
-export const CinemaImg = styled.img`
-  display: block;
-  width: 60px;
-  height: 60px;
-`;
-
+export const NavLink = styled.a``;
 export const CinemaName = styled.h6`
   span {
     color: red;
@@ -20,15 +9,15 @@ export const CinemaName = styled.h6`
   }
 `;
 
-export const CinemaAddres = styled.span`
+export const CinemaAddress = styled.span`
   display: block;
   text-overflow: ellipsis;
+  overflow: hidden;
   color: black;
-  height: 20px;
+  height: 25px;
 `;
 
 export const CinemaDetail = styled(Link)`
-  display: block;
   color: red;
 
   &:hover {

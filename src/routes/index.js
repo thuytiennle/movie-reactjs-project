@@ -1,5 +1,6 @@
 import HomePage from '../containers/Home/HomePage';
 import DetailMovie from '../containers/Home/DetailMovie';
+import DetailCinema from '../containers/Home/DetailCinema';
 
 export const routesHome = [
   {
@@ -11,6 +12,11 @@ export const routesHome = [
     path: '/detail-movie/:id',
     exact: false,
     component: DetailMovie,
+  },
+  {
+    path: '/detail-cinema/:cinemaId',
+    exact: false,
+    component: DetailCinema,
   },
 ];
 

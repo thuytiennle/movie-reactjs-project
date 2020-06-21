@@ -47,6 +47,8 @@ module.exports = {
     'import/order': 1,
     'import/no-unresolved': 2,
     'import/prefer-default-export': 0,
+    'jsx-a11y/click-events-have-key-events': 0,
+    'jsx-a11y/no-noninteractive-element-interactions': 0,
     'newline-per-chained-call': 0,
     'no-unexpected-multiline': 0,
     'no-use-before-define': 0,

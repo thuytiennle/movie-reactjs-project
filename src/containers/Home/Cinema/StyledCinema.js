@@ -20,3 +20,19 @@ export const CinemaContent = styled.div`
   border-radius: 5px;
   box-shadow: 0 0 20px #fff;
 `;
+
+export const CinemaImg = styled.img`
+  display: block;
+  width: 100%;
+  height: 100%;
+`;
+
+export const CinemaBranchTab = styled.div`
+  opacity: 0.5;
+  cursor: pointer;
+
+  &.active,
+  &:hover {
+    opacity: 1;
+  }
+`;

@@ -1,7 +1,7 @@
 import React from 'react';
 import * as Styled from './StyledBooking';
 
-export default function index() {
+export default function Booking() {
   return (
     <Styled.Booking>
       <Styled.BookingContainer className="container">
