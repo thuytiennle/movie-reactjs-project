@@ -22,7 +22,7 @@ export default function Footer() {
               <a href="https://www.cgv.vn/" title="CGV">
                 <Styled.FooterListImg
                   className="iconConnect"
-                  src="./img/cgv.png"
+                  src="../img/cgv.png"
                   style={{ backgroundColor: '#fff' }}
                   alt=""
                 />
@@ -30,21 +30,21 @@ export default function Footer() {
               <a href="http://bhdstar.vn" title="BHD">
                 <Styled.FooterListImg
                   className="iconConnect"
-                  src="./img/bhd.png"
+                  src="../img/bhd.png"
                   alt=""
                 />
               </a>
               <a href="http://galaxycine.vn" title="Galaxy">
                 <Styled.FooterListImg
                   className="iconConnect"
-                  src="./img/galaxycine.png"
+                  src="../img/galaxycine.png"
                   alt=""
                 />
               </a>
               <a href="http://cinestar.com.vn" title="Cinestar">
                 <Styled.FooterListImg
                   className="iconConnect"
-                  src="./img/cinestar.png"
+                  src="../img/cinestar.png"
                   alt=""
                 />
               </a>
@@ -61,34 +61,34 @@ export default function Footer() {
               <a href="https://www.megagscinemas.vn" title="MegaGS">
                 <Styled.FooterListImg
                   className="iconConnect"
-                  src="./img/megags.png"
+                  src="../img/megags.png"
                   alt=""
                 />
               </a>
               <a href="https://www.betacineplex.vn/" title="Beta">
                 <Styled.FooterListImg
                   className="iconConnect"
-                  src="./img/bt.jpg"
+                  src="../img/bt.jpg"
                   alt=""
                 />
               </a>
               <a href="http://ddcinema.vn" title="DDC">
                 <Styled.FooterListImg
                   className="iconConnect"
-                  src="./img/dongdacinema.png"
+                  src="../img/dongdacinema.png"
                   alt=""
                 />
               </a>
               <a href="https://touchcinema.com/" title="Touch Cinema">
                 <Styled.FooterListImg
                   className="iconConnect"
-                  src="./img/TOUCH.png"
+                  src="../img/TOUCH.png"
                 />
               </a>
               <a href="https://cinemaxvn.com/" title="Cinemax">
                 <Styled.FooterListImg
                   className="iconConnect"
-                  src="./img/cnx.jpg"
+                  src="../img/cnx.jpg"
                 />
               </a>
             </div>
@@ -97,31 +97,31 @@ export default function Footer() {
               <a href="http://starlight.vn/" title="Starlight">
                 <Styled.FooterListImg
                   className="iconConnect"
-                  src="./img/STARLIGHT.png"
+                  src="../img/STARLIGHT.png"
                 />
               </a>
               <a href="https://www.dcine.vn/" title="Dcine">
                 <Styled.FooterListImg
                   className="iconConnect"
-                  src="./img/dcine.png"
+                  src="../img/dcine.png"
                 />
               </a>
               <a href="https://zalopay.vn/" title="ZaloPay">
                 <Styled.FooterListImg
                   className="iconConnect"
-                  src="./img/zalopay_icon.png"
+                  src="../img/zalopay_icon.png"
                 />
               </a>
               <a href="https://www.payoo.vn/" title="Payoo">
                 <Styled.FooterListImg
                   className="iconConnect"
-                  src="./img/payoo.jpg"
+                  src="../img/payoo.jpg"
                 />
               </a>
               <a href="https://www.vietcombank.com.vn/" title="Vietcombank">
                 <Styled.FooterListImg
                   className="iconConnect"
-                  src="./img/VCB.png"
+                  src="../img/VCB.png"
                 />
               </a>
             </div>
@@ -132,14 +132,14 @@ export default function Footer() {
             <Styled.FooterList>
               <Styled.FooterListImg
                 className="iconConnect mb-0"
-                src="./img/facebook-logo.png"
+                src="../img/facebook-logo.png"
               />
               Facebook
             </Styled.FooterList>
             <Styled.FooterList>
               <Styled.FooterListImg
                 className="iconConnect mb-0"
-                src="./img/zalo-logo.png"
+                src="../img/zalo-logo.png"
               />
               Zalo
             </Styled.FooterList>

@@ -1,12 +1,30 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { callAPI } from '../../../../utils/callAPI';
 import { FETCH_DETAIL_CINEMA_REQUEST } from './constants';
-import { actFetchDetailCinemaFailed } from './actions';
+import {
+  actFetchDetailCinemaFailed,
+  actFetchDetailCinemaSuccess,
+} from './actions';
 
+// Saga Worker: detailCinemaSaga
 function* detailCinemaSaga({ cinemaId }) {
-  // try{
-  //   cosnt response = yield call(()=> callAPI())
-  // }catch(error){
-  //   yield put(actFetchDetailCinemaFailed(error));
-  // }
+  try {
+    const response = yield call(() =>
+      callAPI(
+        `QuanLyRap/LayThongTinLichChieuHeThongRap?maHeThongRap=${cinemaId}&maNhom=GP05`,
+        'GET',
+        null,
+      ),
+    );
+
+    const { data } = response;
+    yield put(actFetchDetailCinemaSuccess(data));
+  } catch (error) {
+    yield put(actFetchDetailCinemaFailed(error));
+  }
+}
+
+// Saga Watcher
+export default function* detailCinemaWatcher() {
+  yield takeLatest(FETCH_DETAIL_CINEMA_REQUEST, detailCinemaSaga);
 }

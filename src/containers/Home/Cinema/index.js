@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useCallback, memo } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import * as Styled from './StyledCinema';
 import { actFetchCinemaComplexRequest } from './modules/actions';
 import CinemaBrachItem from '../../../components/CinemaBranchItem';
-// import ShowTimeItem from '../../../components/ShowTimeItem';
+import ShowTimeItem from '../../../components/ShowTimeItem';
 
 function Cinema() {
   // Declare dispatch func
@@ -17,117 +17,154 @@ function Cinema() {
 
   // Declare useState
   const [state, setState] = useState({
+    cinemaSelected: 0,
     cinemaBranchSelected: 0,
-  });
-
-  const handleCinemaBranchClick = useCallback((cinemaBrachId) => {
-    setState({
-      cinemaBranchSelected: cinemaBrachId,
-    });
   });
 
   // Did Mount
   useEffect(() => {
     // Dispatch cinema complex action
     dispatch(actFetchCinemaComplexRequest());
-  }, []);
+  }, [dispatch]);
 
   const renderCinemaTab = () => {
-    if (cinemaComplex && cinemaComplex.length > 0) {
-      return cinemaComplex.map((cinema, index) => {
-        return (
-          <a
-            key={`${cinema.maHeThongRap}-tab`}
-            className={index === 0 ? 'nav-link active' : 'nav-link'}
-            id={`${cinema.maHeThongRap}-tab`}
-            data-toggle="pill"
-            href={`#${cinema.maHeThongRap}`}
-            role="tab"
-            aria-controls="v-pills-home"
-            aria-selected="true"
-            onClick={() => {
-              setState({
-                cinemaBranchSelected: 0,
-              });
-            }}
-          >
-            <Styled.CinemaImg src={cinema.logo} alt="" />
-          </a>
-        );
-      });
-    }
-  };
-
-  const renderCinemaBranch = () => {
     if (cinemaBranch && cinemaBranch.length > 0) {
       return cinemaBranch.map((cinema, index) => {
         return (
-          <div
-            key={`${cinema.maHeThongRap}-tabContent`}
+          <Styled.CinemaLi
+            key={cinema.maHeThongRap}
             className={
-              index === 0 ? 'tab-pane fade show active' : 'tab-pane fade'
+              state.cinemaSelected === index ||
+              state.cinemaSelected === cinema.maHeThongRap
+                ? 'active'
+                : ''
             }
-            id={cinema.maHeThongRap}
-            role="tabpanel"
-            aria-labelledby="v-pills-home-tab"
+            onClick={() => {
+              setState({
+                cinemaBranchSelected: cinema.lstCumRap[0].maCumRap,
+                cinemaSelected: cinema.maHeThongRap,
+              });
+            }}
           >
-            <div className="row">
-              {/* Cinema Branch Tab */}
-              <div
-                key={`cinema-${cinema.maHeThongRap}-tab`}
-                className="col-4 nav flex-column nav-pills"
-                id={`cinema-${cinema.maHeThongRap}-tab`}
-                role="tablist"
-                aria-orientation="vertical"
-              >
-                {cinema.lstCumRap.map((item, indexCinemaBrach) => {
-                  return (
-                    <Styled.CinemaBranchTab
-                      key={`${item.maCumRap}-tab`}
-                      className={
-                        state.cinemaBranchSelected === indexCinemaBrach ||
-                        state.cinemaBranchSelected === item.maCumRap
-                          ? 'cinema-branch nav-link active'
-                          : 'cinema-branch nav-link'
-                      }
-                      id={`${item.maCumRap}-tab`}
-                      onClick={() => {
-                        handleCinemaBranchClick(item.maCumRap);
-                      }}
-                    >
-                      <CinemaBrachItem
-                        cinemaBranch={{
-                          maCumRap: item.maCumRap,
-                          tenCumRap: item.tenCumRap,
-                          diaChi: item.diaChi,
-                        }}
-                      />
-                    </Styled.CinemaBranchTab>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
+            {cinemaComplex.map((item) => {
+              return (
+                cinema.maHeThongRap === item.maHeThongRap && (
+                  <Styled.CinemaImg
+                    key={`${item.maHeThongRap}-img`}
+                    src={item.logo}
+                    alt=""
+                  />
+                )
+              );
+            })}
+          </Styled.CinemaLi>
         );
       });
     }
   };
+
+  const renderCinemaBranchTab = () => {
+    if (cinemaBranch && cinemaBranch.length > 0) {
+      return cinemaBranch.map((cinema, index) => {
+        return (
+          <Styled.CinemaUL
+            key={`${cinema.maHeThongRap}-branch`}
+            className={`${cinema.maHeThongRap}-branch ${
+              state.cinemaSelected === index ||
+              state.cinemaSelected === cinema.maHeThongRap
+                ? 'show'
+                : 'hide'
+            }`}
+          >
+            {cinema.lstCumRap.map((item, lstCumRapindex) => {
+              return (
+                <Styled.CinemaLi
+                  key={item.maCumRap}
+                  className={
+                    state.cinemaBranchSelected === lstCumRapindex ||
+                    state.cinemaBranchSelected === item.maCumRap
+                      ? 'active'
+                      : ''
+                  }
+                  onClick={() => {
+                    setState({
+                      ...state,
+                      cinemaBranchSelected: item.maCumRap,
+                    });
+                  }}
+                >
+                  <CinemaBrachItem
+                    cinemaBranch={{
+                      maHeThongRap: cinema.maHeThongRap,
+                      maCumRap: item.maCumRap,
+                      tenCumRap: item.tenCumRap,
+                      diaChi: item.diaChi,
+                      index: lstCumRapindex,
+                    }}
+                  />
+                </Styled.CinemaLi>
+              );
+            })}
+          </Styled.CinemaUL>
+        );
+      });
+    }
+  };
+
+  const renderCinemaListMovie = () => {
+    if (cinemaBranch && cinemaBranch.length > 0) {
+      return cinemaBranch.map((cinema, index) => {
+        return (
+          <Styled.CinemaMovieShow
+            key={`${cinema.maHeThongRap}-movieShow`}
+            className={`${cinema.maHeThongRap}-movieShow ${
+              state.cinemaSelected === index ||
+              state.cinemaSelected === cinema.maHeThongRap
+                ? 'active'
+                : 'hide'
+            }`}
+          >
+            {cinema.lstCumRap.map((item, lstCumRapindex) => {
+              return (
+                <Styled.CinemaMovieShow
+                  key={`${item.maCumRap}-movieShow`}
+                  className={
+                    state.cinemaBranchSelected === lstCumRapindex ||
+                    state.cinemaBranchSelected === item.maCumRap
+                      ? 'show'
+                      : 'hide'
+                  }
+                >
+                  {item.danhSachPhim.map((movie) => (
+                    <ShowTimeItem
+                      key={movie.maPhim}
+                      movie={movie}
+                      date="2019/01/01"
+                    />
+                  ))}
+                </Styled.CinemaMovieShow>
+              );
+            })}
+          </Styled.CinemaMovieShow>
+        );
+      });
+    }
+  };
+
   return (
     <Styled.CinemaSection>
       <div className="container">
         <Styled.CinemaTitle>Cụm rạp</Styled.CinemaTitle>
         <Styled.CinemaContent className="cinema-content">
           <div className="row">
-            <div
-              className="col-1 nav flex-column nav-pills"
-              id="cinemaBrands-tab"
-              role="tablist"
-              aria-orientation="vertical"
-            >
+            <ul className="col-1 tabCinema border-right">
               {renderCinemaTab()}
+            </ul>
+            <div className="col-4 tabCinemaBranch selectScroll border-right">
+              {renderCinemaBranchTab()}
             </div>
-            <div className="col-11 tab-content" id="cinemaBrands-tabContent">
-              {renderCinemaBranch()}
+            <div className="col-7 selectScroll CinemaBranchMovieTime">
+              {renderCinemaListMovie()}
             </div>
           </div>
         </Styled.CinemaContent>

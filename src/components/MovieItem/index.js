@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { useDispatch } from 'react-redux';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import * as Styled from './StyledMovieItem';
 import { actMovieModalOpen } from '../../containers/Home/MovieShow/modules/actions';
 
-export default function MovieItem(props) {
+function MovieItem(props) {
   const { movie } = props;
   // Declare dispatch
   const dispatch = useDispatch();
@@ -41,3 +41,5 @@ export default function MovieItem(props) {
     </Styled.MovieSwiper>
   );
 }
+
+export default memo(MovieItem);

@@ -19,7 +19,7 @@ function* cinemaSaga() {
     // Dispatch cinema complex API success action
     yield put(actFetchCinemaComplexSuccess(data));
 
-    // call each cinema API branch based on cinemaComplexId
+    // Call each cinema API branch based on cinemaComplexId
     yield all(data.map((item) => call(cinemaBranchSaga, item.maHeThongRap)));
   } catch (error) {
     // Dispatch cinema complex API failed action

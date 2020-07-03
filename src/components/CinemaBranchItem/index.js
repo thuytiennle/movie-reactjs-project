@@ -14,7 +14,8 @@ export default function CinemaBrachItem(props) {
       <Styled.CinemaDetail
         type="button"
         className="cinema-detail"
-        to="/detail-cinema"
+        // Get API lstCumRap of cinema based on cinemaId(maHeThongRap). cinemaBrachId uses for showing first at table on DetailCinema Page
+        to={`/detail-cinema/${cinemaBranch.maHeThongRap}-${cinemaBranch.index}-${cinemaBranch.maCumRap}`}
       >
         [chi tiết]
       </Styled.CinemaDetail>

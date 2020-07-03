@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, memo, useCallback } from 'react';
 import Swiper from 'react-id-swiper';
 import { useDispatch, useSelector } from 'react-redux';
 import ModalVideo from 'react-modal-video';
@@ -8,16 +8,13 @@ import {
   actMovieModalClose,
 } from './modules/actions';
 import * as Styled from './StyledMovieShow';
+import LoadingIndicator from '../../../components/LoadingIndicator';
 
 // Set props for Swiper
 const params = {
   effect: 'coverflow',
-  loop: true,
   speed: 1000,
-  // loopedSlides: 3, // according to the codepen
-  // mousewheel: {
-  //   releaseOnEdges: true,
-  // },
+  loop: true,
   grabCursor: true,
   centeredSlides: true,
   slidesPerView: 'auto',
@@ -32,22 +29,23 @@ const params = {
     nextEl: '.swiper-button-next',
     prevEl: '.swiper-button-prev',
   },
-  // autoplay: {
-  //   delay: 3000,
-  // },
   spaceBetween: 30,
   // rebuildOnUpdate: true,
 };
 // End of Swiper props
 
-export default function MovieShow() {
+function MovieShow() {
   // Get listMovie from store by userSelector
-  // const listMovie = useSelector((state) => state.listMovieReducer.listMovie);
-  const { listMovie, isOpenModal, modalMovieURL } = useSelector((state) => ({
-    listMovie: state.listMovieReducer.listMovie,
-    isOpenModal: state.listMovieReducer.isOpenModal,
-    modalMovieURL: state.listMovieReducer.modalMovieURL,
-  }));
+  const listMovie = useSelector((state) => state.listMovieReducer.listMovie);
+  const isOpenModal = useSelector(
+    (state) => state.listMovieReducer.isOpenModal,
+  );
+  const loadingListMovie = useSelector(
+    (state) => state.listMovieReducer.loadingListMovie,
+  );
+  const modalMovieURL = useSelector(
+    (state) => state.listMovieReducer.modalMovieURL,
+  );
 
   // Declare dispatch
   const dispatch = useDispatch();
@@ -64,12 +62,12 @@ export default function MovieShow() {
     dispatch(actFetchListMovieRequest());
   }, [dispatch]);
 
-  // Render Swiper
-  const renderHTML = (list) => {
-    if (list && list.length > 0) {
+  // Render Swiper. useCallback prevents the re-render of renderHTML
+  const renderHTML = useCallback(() => {
+    if (listMovie && listMovie.length > 0) {
       return (
         <Swiper {...params}>
-          {list.map((movie) => {
+          {listMovie.map((movie) => {
             return (
               <div
                 key={movie.maPhim}
@@ -82,8 +80,13 @@ export default function MovieShow() {
         </Swiper>
       );
     }
-  };
+  }, [listMovie]);
   // End of render Swiper
+
+  // Display Loader while loading data
+  if (loadingListMovie) {
+    return <LoadingIndicator />;
+  }
 
   return (
     <Styled.MovieShow>
@@ -124,14 +127,14 @@ export default function MovieShow() {
           id="nowShowing"
           role="tabpanel"
         >
-          {renderHTML(listMovie)}
+          {renderHTML()}
         </div>
         <div className="tab-pane fade" id="upComing" role="tabpanel">
-          {renderHTML(listMovie)}
+          {renderHTML()}
         </div>
       </div>
-      {/* MODAL VIDEO */}
 
+      {/* MODAL VIDEO */}
       {/* When click play button from MovieItem which sends movieurl, and toggle isOpenModal in store. Get is isOpenModal and movieurl to Movie Show get movie id from movieurl */}
       <ModalVideo
         channel={getVideoId(modalMovieURL).service}
@@ -142,3 +145,5 @@ export default function MovieShow() {
     </Styled.MovieShow>
   );
 }
+
+export default memo(MovieShow);

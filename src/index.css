@@ -16,3 +16,7 @@ body,
 html {
   font-family: 'Roboto', sans-serif;
 }
+
+.row {
+  margin: 0 !important;
+}

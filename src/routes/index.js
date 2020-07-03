@@ -1,6 +1,7 @@
 import HomePage from '../containers/Home/HomePage';
 import DetailMovie from '../containers/Home/DetailMovie';
 import DetailCinema from '../containers/Home/DetailCinema';
+import CinemaBookingRoom from '../containers/Home/CinemaBookingRoom';
 
 export const routesHome = [
   {
@@ -14,9 +15,14 @@ export const routesHome = [
     component: DetailMovie,
   },
   {
-    path: '/detail-cinema/:cinemaId',
+    path: '/detail-cinema/:cinemaId-:cinemaBranchIndex-:cinemaBranchId',
     exact: false,
     component: DetailCinema,
+  },
+  {
+    path: '/cinema-booking-room',
+    exact: false,
+    component: CinemaBookingRoom,
   },
 ];
 

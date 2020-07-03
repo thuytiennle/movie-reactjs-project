@@ -10,7 +10,7 @@ import Footer from '../../../components/Footer';
 
 export default function HomePage() {
   return (
-    <div>
+    <React.Fragment key="key">
       <Header />
       <Carousel />
       <Booking />
@@ -19,6 +19,6 @@ export default function HomePage() {
       <News />
       <Discount />
       <Footer />
-    </div>
+    </React.Fragment>
   );
 }

@@ -1,12 +1,22 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { actFetchDetailMovieRequest } from './modules/actions';
+import LoadingIndicator from '../../../components/LoadingIndicator';
 
 export default function DetailMovie(props) {
   // useSelector uses to get state from store
   const detailMovie = useSelector(
     (state) => state.detailMovieReducer.detailMovie,
   );
+  const loadingDetailMovie = useSelector(
+    (state) => state.detailMovieReducer.loadingDetailMovie,
+  );
+
+  // Set State
+  const [state, setState] = useState({
+    cinemaSelected: 0,
+    dateSelected: 0,
+  });
 
   // Declare dispatch func
   const dispatch = useDispatch();
@@ -19,25 +29,87 @@ export default function DetailMovie(props) {
   }, [dispatch, props.match.params]);
 
   // RenderHTLM func
-  const renderTable = (list) => {
+  const renderCinemaTab = (list) => {
     if (list && list.length > 0) {
-      return list.map((item) => {
+      const lstCinema = list.map((item) => {
+        return item.thongTinRap.tenHeThongRap;
+      });
+      // Filter all date on array
+      const uniqueCinemaSet = new Set(lstCinema);
+      const cinemaArray = [...uniqueCinemaSet];
+      return cinemaArray.map((item) => {
         return (
-          <tr key={item.maLichChieu}>
-            <td>{item.thongTinRap.tenCumRap}</td>
-            <td>{item.thongTinRap.tenRap}</td>
-            <td>{new Date(item.ngayChieuGioChieu).toLocaleDateString()}</td>
-            <td>{new Date(item.ngayChieuGioChieu).toLocaleTimeString()}</td>
-            <td>
-              <a className="btn btn-success" href="#datve">
-                Dat ve
-              </a>
-            </td>
-          </tr>
+          <li
+            key={`${item}-detail-movie-tab`}
+            className={`${item}-tab`}
+            onClick={() => {
+              setState({
+                ...state,
+                cinemaSelected: item,
+              });
+            }}
+          >
+            {item}
+          </li>
         );
       });
     }
   };
+
+  const renderCinemaTabContent = (list) => {
+    if (list && list.length > 0) {
+      const lstCinema = list.map((item) => {
+        return item.thongTinRap.tenHeThongRap;
+      });
+      // Filter all date on array
+      const uniqueCinemaSet = new Set(lstCinema);
+      const cinemaArray = [...uniqueCinemaSet];
+      // Filter all date based on cinema
+      const selectedCinema =
+        state.cinemaSelected === 0 ? cinemaArray[0] : state.cinemaSelected;
+      const lstCinemaMovieShow = list.filter((item) => {
+        return item.thongTinRap.tenHeThongRap === selectedCinema;
+      });
+      const dateArr = lstCinemaMovieShow.map((item) => {
+        return new Date(item.ngayChieuGioChieu).toLocaleDateString();
+      });
+      // Filter all date on array
+      const uniqueDateSet = new Set(dateArr);
+      const dateArray = [...uniqueDateSet];
+
+      return (
+        <ul>
+          {dateArray.map((item, index) => {
+            const date = new Date(item);
+            return (
+              <li
+                key={`detail-movie-date-tab-${index}`}
+                className={`detail-movie-date-tab-${index}`}
+                // onClick={
+                //   setState({
+                //     ...state,
+                //     date
+                //   })
+                // }
+              >
+                <p className="py-1 m-0 border-bottom">
+                  {`0${date.getDate()}`.slice(-2)}
+                </p>
+                <p className="py-1 m-0">
+                  {`0${date.getMonth() + 1}`.slice(-2)}
+                </p>
+              </li>
+            );
+          })}
+        </ul>
+      );
+    }
+  };
+
+  // Display Loader while loading data
+  if (loadingDetailMovie) {
+    return <LoadingIndicator />;
+  }
 
   return (
     <div className="container">
@@ -66,18 +138,11 @@ export default function DetailMovie(props) {
             </div>
           </div>
           <div className="row">
-            <div className="col-sm-12">
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th>Cum rap</th>
-                    <th>Ten rap</th>
-                    <th>Ngay chieu</th>
-                    <th>Gio chieu</th>
-                  </tr>
-                </thead>
-                <tbody>{renderTable(detailMovie.data.lichChieu)}</tbody>
-              </table>
+            <ul className="col-sm-4 detail-movie-cinema-tab">
+              {renderCinemaTab(detailMovie.data.lichChieu)}
+            </ul>
+            <div className="col-sm-8 detail-movie-cinema-tabContent">
+              {renderCinemaTabContent(detailMovie.data.lichChieu)}
             </div>
           </div>
         </>

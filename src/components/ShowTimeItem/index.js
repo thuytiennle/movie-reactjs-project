@@ -2,7 +2,7 @@ import React from 'react';
 import * as Styled from './StyledShowTimeItem';
 
 export default function ShowTimeItem(props) {
-  const { movie } = props;
+  const { movie, date } = props;
 
   // Render movie show by mapping props.movie and just show timeline that match to day. But API just have date from 2019 then just pick up one (01-01-2019)
   const renderMovieShow = () => {
@@ -10,11 +10,11 @@ export default function ShowTimeItem(props) {
       return movie.lstLichChieuTheoPhim.map((item) => {
         return (
           new Date(item.ngayChieuGioChieu).toLocaleDateString() ===
-            new Date('2019-01-01').toLocaleDateString() && (
+            new Date(date).toLocaleDateString() && (
             <Styled.MovieTimeSelect
               key={item.maLichChieu}
               className="movie-timeSelection"
-              to="/cinema"
+              to="/cinema-booking-room"
             >
               {new Date(item.ngayChieuGioChieu).toLocaleTimeString([], {
                 hour: '2-digit',

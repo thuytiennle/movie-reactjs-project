@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const MovieShow = styled.section`
   background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-    url(./img/movie-bg.jpg) !important;
+    url(../img/movie-bg.jpg) !important;
   background-size: cover;
   background-repeat: repeat-x;
   overflow: hidden;
