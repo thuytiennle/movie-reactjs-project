@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import App from './containers/App';
-import './index.css';
 import * as serviceWorker from './serviceWorker';
 import configureStore from './utils/configureStore';
 
@@ -20,6 +19,10 @@ import 'swiper/css/swiper.css';
 // Import video modal
 import '../node_modules/react-modal-video/scss/modal-video.scss';
 // End of video modal
+
+// Main CSS
+import './index.css';
+// End of Main CSS
 
 const store = configureStore();
 

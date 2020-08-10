@@ -1,13 +1,15 @@
-import { call, put, takeLatest, all } from 'redux-saga/effects';
+import { call, put, takeLatest } from 'redux-saga/effects';
 import { callAPI } from '../../../../utils/callAPI';
 import {
   actFetchCinemaComplexFailed,
   actFetchCinemaComplexSuccess,
   actFetchCinemaBranchSuccess,
   actFetchCinemaBranchFailed,
-  actFetchCinemaBranchRequest,
 } from './actions';
-import { FETCH_CINEMA_COMPLEX_REQUEST } from './constants';
+import {
+  FETCH_CINEMA_COMPLEX_REQUEST,
+  FETCH_CINEMA_BRANCH_REQUEST,
+} from './constants';
 
 function* cinemaSaga() {
   try {
@@ -18,9 +20,6 @@ function* cinemaSaga() {
     const { data } = response;
     // Dispatch cinema complex API success action
     yield put(actFetchCinemaComplexSuccess(data));
-
-    // Call each cinema API branch based on cinemaComplexId
-    yield all(data.map((item) => call(cinemaBranchSaga, item.maHeThongRap)));
   } catch (error) {
     // Dispatch cinema complex API failed action
     yield put(actFetchCinemaComplexFailed(error));
@@ -28,9 +27,7 @@ function* cinemaSaga() {
 }
 
 // After get cinemaComplex API then we'll get cinema branches and movie showtimes based on cinemaconplexid
-function* cinemaBranchSaga(cinemaComplexId) {
-  // Dispatch cinema branch request action
-  yield put(actFetchCinemaBranchRequest());
+function* cinemaBranchSaga({ cinemaComplexId }) {
   try {
     // Call cinema branch API
     const response = yield call(() =>
@@ -52,6 +49,7 @@ function* cinemaBranchSaga(cinemaComplexId) {
 // Watch action FETCH_CINEMA_COMPLEX_REQUEST dispatched then cinemaSaga
 function* cinemaWatcher() {
   yield takeLatest(FETCH_CINEMA_COMPLEX_REQUEST, cinemaSaga);
+  yield takeLatest(FETCH_CINEMA_BRANCH_REQUEST, cinemaBranchSaga);
 }
 
 export default cinemaWatcher;

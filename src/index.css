@@ -20,3 +20,53 @@ html {
 .row {
   margin: 0 !important;
 }
+
+/* All imgs are set a default of block display, w-100, h-100  */
+img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+button,
+button:hover,
+button:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Customize Swiper pagination, navigation */
+.customized-swiper-pagination.swiper-pagination-bullets {
+  bottom: 60px;
+}
+
+.customized-swiper-pagination .swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  background: #fff;
+}
+
+.customized-swiper-button-prev,
+.customized-swiper-button-next {
+  display: block;
+  color: #fff;
+  opacity: 0.5;
+  transition: all 0.5s;
+}
+
+.customized-swiper-button-prev:hover,
+.customized-swiper-button-next:hover {
+  display: block;
+  opacity: 1;
+}
+
+@media screen and (max-width: 768px) {
+  .customized-swiper-pagination.swiper-pagination-bullets {
+    bottom: 10px;
+  }
+
+  .customized-swiper-button-prev,
+  .customized-swiper-button-next {
+    display: none;
+  }
+}

@@ -27,9 +27,10 @@ export const actFetchCinemaComplexFailed = (err) => {
   };
 };
 
-export const actFetchCinemaBranchRequest = () => {
+export const actFetchCinemaBranchRequest = (cinemaComplexId) => {
   return {
     type: FETCH_CINEMA_BRANCH_REQUEST,
+    cinemaComplexId,
   };
 };
 

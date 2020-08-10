@@ -1,0 +1,19 @@
+{
+  "components.Navbar.ShowTime": "SHOW TIME",
+  "components.Navbar.Cinema": "CINEMA",
+  "components.Navbar.News": "NEWS",
+  "components.Navbar.Discounts": "DISCOUNTS",
+  "components.Navbar.SignIn": "Sign In",
+  "container.Booking.Movie": "Movie",
+  "container.Booking.Cinema": "Cinema",
+  "container.Booking.Date": "Date",
+  "container.Booking.ShowTime": "Showtime",
+  "container.BookingButton": "Book ticket",
+  "container.Booking.MovieRequest": "Please select movie",
+  "container.Booking.CinemaRequest": "Please select cinema",
+  "container.Booking.DateRequest": "Please select date",
+  "container.MovieShow.NowShowing": "Now Showing",
+  "container.MovieShow.UpComing": "Up Coming",
+  "container.Cinema.Title": "Cinema",
+  "container.Cinema.detailButton": "detail"
+}

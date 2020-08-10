@@ -1,0 +1,19 @@
+{
+  "components.Navbar.ShowTime": "LỊCH CHIẾU",
+  "components.Navbar.Cinema": "CỤM RẠP",
+  "components.Navbar.News": "TIN TỨC",
+  "components.Navbar.Discounts": "KHUYẾN MÃI",
+  "components.Navbar.SignIn": "Đăng nhập",
+  "container.Booking.Movie": "Phim",
+  "container.Booking.Cinema": "Rạp",
+  "container.Booking.Date": "Ngày",
+  "container.Booking.ShowTime": "Suất chiếu",
+  "container.BookingButton": "Mua vé",
+  "container.Booking.MovieRequest": "Vui lòng chọn phim",
+  "container.Booking.CinemaRequest": "Vui lòng chọn rạp",
+  "container.Booking.DateRequest": "Vui lòng chọn ngày xem",
+  "container.MovieShow.NowShowing": "Phim Đang Chiếu",
+  "container.MovieShow.UpComing": "Phim Sắp Chiếu",
+  "container.Cinema.Title": "Cụm Rạp",
+  "container.Cinema.detailButton": "chi tiết"
+}

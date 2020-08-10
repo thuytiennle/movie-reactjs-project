@@ -2,6 +2,8 @@ import React from 'react';
 import { BrowserRouter, Switch } from 'react-router-dom';
 import { routesHome } from '../../routes';
 import HomeTemplate from '../../templates/HomeTemplate';
+import CustomThemeProvider from '../Theme/CustomThemeProvider';
+import LanguageProvider from '../Language/LanguageProvider';
 
 function App() {
   const showMenuHome = (routes) => {
@@ -19,9 +21,13 @@ function App() {
     }
   };
   return (
-    <BrowserRouter>
-      <Switch>{showMenuHome(routesHome)}</Switch>
-    </BrowserRouter>
+    <CustomThemeProvider>
+      <LanguageProvider>
+        <BrowserRouter>
+          <Switch>{showMenuHome(routesHome)}</Switch>
+        </BrowserRouter>
+      </LanguageProvider>
+    </CustomThemeProvider>
   );
 }
 

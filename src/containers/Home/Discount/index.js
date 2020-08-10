@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { memo } from 'react';
 import DiscountItem from '../../../components/DiscountItem';
 import * as Styled from './styledDiscount';
 
-export default function Discount() {
+function Discount() {
   return (
     <Styled.DiscountSection>
       <Styled.DiscoutTitle> Discount</Styled.DiscoutTitle>
@@ -10,3 +10,5 @@ export default function Discount() {
     </Styled.DiscountSection>
   );
 }
+
+export default memo(Discount);

@@ -1,6 +1,6 @@
 import React from 'react';
 import Swiper from 'react-id-swiper';
-import * as Styled from './styledDiscountItem';
+import { SwiperItemContainer } from './styledDiscountItem';
 
 export default function DiscountItem() {
   const params = {
@@ -34,7 +34,7 @@ export default function DiscountItem() {
     },
   };
   return (
-    <Styled.SwiperItemContainer>
+    <SwiperItemContainer>
       <Swiper {...params}>
         <div className="discount-img">
           <img
@@ -73,6 +73,6 @@ export default function DiscountItem() {
           />
         </div>
       </Swiper>
-    </Styled.SwiperItemContainer>
+    </SwiperItemContainer>
   );
 }
