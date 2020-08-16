@@ -1,9 +1,13 @@
 import React from 'react';
-import { BrowserRouter, Switch } from 'react-router-dom';
+import { Router, Switch, Route } from 'react-router-dom';
 import { routesHome } from '../../routes';
 import HomeTemplate from '../../templates/HomeTemplate';
 import CustomThemeProvider from '../Theme/CustomThemeProvider';
 import LanguageProvider from '../Language/LanguageProvider';
+import { SignUp } from '../Auth/SignUp';
+import { SignIn } from '../Auth/SignIn';
+import { PageNotFound } from '../PageNotFound';
+import { history } from '../../utils/history';
 
 function App() {
   const showMenuHome = (routes) => {
@@ -14,6 +18,7 @@ function App() {
             key={index}
             path={route.path}
             exact={route.exact}
+            auth={route.auth}
             Component={route.component}
           />
         );
@@ -23,9 +28,14 @@ function App() {
   return (
     <CustomThemeProvider>
       <LanguageProvider>
-        <BrowserRouter>
-          <Switch>{showMenuHome(routesHome)}</Switch>
-        </BrowserRouter>
+        <Router history={history}>
+          <Switch>
+            {showMenuHome(routesHome)}
+            <Route exact={false} path="/sign-up" component={SignUp} />
+            <Route exact={false} path="/sign-in" component={SignIn} />
+            <Route path="" component={PageNotFound} />
+          </Switch>
+        </Router>
       </LanguageProvider>
     </CustomThemeProvider>
   );

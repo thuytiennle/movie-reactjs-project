@@ -1,6 +1,6 @@
 import { InputBase, MenuItem, Select } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { LanguageContext } from '../../containers/Language/LanguageContext';
 import { languageOptions } from '../../translations';
 
@@ -27,14 +27,6 @@ export default function LanguageSelector() {
   const handleLanguageChange = (e) => {
     userLanguageChange(e.target.value);
   };
-
-  useEffect(() => {
-    let defaultLanguage = window.localStorage.getItem('rcml-language');
-    if (!defaultLanguage) {
-      defaultLanguage = window.navigator.language.substring(0, 2);
-    }
-    userLanguageChange(defaultLanguage);
-  }, [userLanguageChange]);
 
   return (
     <Select

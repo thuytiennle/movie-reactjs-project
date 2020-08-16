@@ -5,7 +5,11 @@ import { LanguageContext } from './LanguageContext';
 
 // it provides the language context to app
 export default function LanguageProvider({ children }) {
-  const [userLanguage, setUserLanguage] = useState('vi');
+  let defaultLanguage = window.localStorage.getItem('rcml-language');
+  if (!defaultLanguage) {
+    defaultLanguage = window.navigator.language.substring(0, 2);
+  }
+  const [userLanguage, setUserLanguage] = useState(defaultLanguage || 'vi');
 
   // provider is default params passing to language context
   const provider = {

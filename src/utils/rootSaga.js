@@ -4,6 +4,9 @@ import detailMoviewatcher from '../containers/Home/DetailMovie/modules/sagas';
 import cinemaWatcher from '../containers/Home/Cinema/modules/sagas';
 import detailCinemaWatcher from '../containers/Home/DetailCinema/modules/sagas';
 import cinemaShowTimeWatcher from '../containers/Home/Booking/modules/sagas';
+import cinemaBookingRoomWatcher from '../containers/Home/CinemaBookingRoom/modules/sagas';
+import AuthWatcher from '../containers/Auth/module/sagas';
+import userProfileWatcher from '../containers/Home/Profile/module/sagas';
 
 function* rootSaga() {
   yield all([
@@ -12,6 +15,9 @@ function* rootSaga() {
     cinemaWatcher(),
     detailCinemaWatcher(),
     cinemaShowTimeWatcher(),
+    cinemaBookingRoomWatcher(),
+    AuthWatcher(),
+    userProfileWatcher(),
   ]);
 }
 export default rootSaga;

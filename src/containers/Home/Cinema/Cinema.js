@@ -220,13 +220,10 @@ function Cinema() {
                       {renderCinemaBranch()}
                     </Tabs>
                   </Grid>
-                  <Grid
-                    item
-                    sm={8}
-                    role="tabpanel"
-                    className={classes.scrollbar}
-                  >
-                    {renderCinemaShowTime()}
+                  <Grid item sm={8} role="tabpanel">
+                    <div className={classes.scrollbar}>
+                      {renderCinemaShowTime()}
+                    </div>
                   </Grid>
                 </>
               ) : (

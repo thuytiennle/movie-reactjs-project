@@ -14,7 +14,7 @@ function* cinemaShowTimeSaga(action) {
     const response = yield call(() =>
       callAPI(`QuanLyRap/LayThongTinLichChieuPhim?MaPhim=${id}`, 'GET', null),
     );
-    // ConstrucData
+    // Construct Data
     const listCinema = response.data.heThongRapChieu.map((item) => {
       return item.cumRapChieu.map((cinema) => cinema);
     });

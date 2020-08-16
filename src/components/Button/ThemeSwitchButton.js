@@ -23,7 +23,7 @@ export default function ThemeSwitch() {
     <IconButton
       className={classes.root}
       edge="end"
-      color="inherit"
+      // color="inherit"
       aria-label="mode"
       onClick={handleThemeChange}
     >

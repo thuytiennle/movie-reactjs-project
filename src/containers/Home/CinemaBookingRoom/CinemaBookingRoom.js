@@ -1,0 +1,169 @@
+import {
+  Box,
+  Button,
+  Container,
+  Dialog,
+  Grid,
+  makeStyles,
+  Paper,
+  Typography,
+} from '@material-ui/core';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useParams } from 'react-router-dom';
+import { TextTranslation } from '../../Language/TextTranslation';
+import BookingSeatForm from './BookingSeatForm';
+import ListBookingSeat from './ListBookingSeat';
+import { actFetchCinemaBookingRoomRequest } from './modules/actions';
+
+const useStyles = makeStyles((theme) => ({
+  wrapper: {
+    marginTop: 68,
+    padding: 20,
+    borderRadius: 'unset',
+    height: 'calc(100vh - 68px)',
+    backgroundColor: theme.palette.background.dark,
+  },
+  link: {
+    '&:hover': {
+      textDecoration: 'none',
+      color: theme.palette.secondary.main,
+    },
+  },
+  buttonContainer: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: '10px',
+  },
+}));
+
+export default function CinemaBookingRoom() {
+  const cinemaBookingRoom = useSelector(
+    (state) => state.cinemaBookingRoomReducer.cinemaBookingRoom,
+  );
+  const cinemaBookingTicket = useSelector(
+    (state) => state.cinemaBookingRoomReducer.cinemaBookingTicket,
+  );
+
+  const classes = useStyles();
+  const dispatch = useDispatch();
+  const { showTimeId } = useParams();
+
+  const [second, setSecond] = React.useState(300);
+  const [time, setTime] = React.useState({});
+  const [openDialogTimeUp, setOpenDialogTimeUp] = React.useState(false);
+
+  useEffect(() => {
+    dispatch(actFetchCinemaBookingRoomRequest(showTimeId));
+  }, [dispatch, showTimeId]);
+
+  const secondsToTime = (secs) => {
+    const minutes = Math.floor((secs % 3600) / 60);
+    const seconds = Math.floor((secs % 3600) % 60);
+    return {
+      minutes,
+      seconds: `0${seconds}`.slice(-2),
+    };
+  };
+
+  useEffect(() => {
+    let interval = null;
+    if (second !== 0) {
+      interval = setInterval(() => {
+        setSecond(second - 1);
+        setTime(secondsToTime(second - 1));
+      }, 1000);
+    } else if (second === 0) {
+      clearInterval(interval);
+      // Set open Dialog time up
+      setOpenDialogTimeUp(true);
+    }
+    return () => clearInterval(interval);
+  }, [second]);
+
+  const handleBookingAgain = () => {
+    setOpenDialogTimeUp(false);
+    setSecond(300);
+  };
+
+  return (
+    <Paper className={classes.wrapper}>
+      {cinemaBookingRoom &&
+        cinemaBookingRoom.thongTinPhim &&
+        cinemaBookingRoom.danhSachGhe && (
+          <Grid container>
+            <Grid item sm={9}>
+              <Container maxWidth="md">
+                <Box display="flex" justifyContent="space-between">
+                  <div>
+                    <Typography variant="subtitle1">
+                      {cinemaBookingRoom.thongTinPhim.tenCumRap}
+                    </Typography>
+                    <Typography>
+                      {`${cinemaBookingRoom.thongTinPhim.ngayChieu} - ${cinemaBookingRoom.thongTinPhim.gioChieu} - ${cinemaBookingRoom.thongTinPhim.tenRap}`}
+                    </Typography>
+                  </div>
+                  <Box textAlign="right">
+                    <Typography variant="body2">
+                      <TextTranslation id="container.CinemaBookingRoom.BookingTime" />
+                    </Typography>
+                    <Typography variant="h4">
+                      {`${time.minutes} : ${time.seconds}`}
+                    </Typography>
+                  </Box>
+                </Box>
+                <Box textAlign="center">
+                  <ListBookingSeat
+                    danhSachGhe={cinemaBookingRoom.danhSachGhe}
+                  />
+                </Box>
+              </Container>
+            </Grid>
+            <Grid item sm={3}>
+              <BookingSeatForm cinemaBookingRoom={cinemaBookingRoom} />
+            </Grid>
+            {/* display dialog when time is up */}
+            <Dialog disableBackdropClick open={openDialogTimeUp}>
+              <Box padding="10px" alignItems="center">
+                <Typography>
+                  <TextTranslation id="container.CinemaBookingRoom.TimeupNote" />
+                </Typography>
+                <Box className={classes.buttonContainer}>
+                  <Button
+                    variant="outlined"
+                    color="secondary"
+                    onClick={handleBookingAgain}
+                  >
+                    <TextTranslation id="container.CinemaBookingRoom.BookingAgain" />
+                  </Button>
+                </Box>
+              </Box>
+            </Dialog>
+            {/* Display dialog when booking is successful */}
+            <Dialog
+              disableBackdropClick
+              open={cinemaBookingTicket ? Boolean(true) : Boolean(false)}
+            >
+              <Box padding="10px" alignItems="center">
+                <Typography>
+                  <TextTranslation id="container.CinemaBookingRoom.BookingSuccess" />
+                </Typography>
+                <Box className={classes.buttonContainer}>
+                  <Button
+                    className={classes.link}
+                    variant="outlined"
+                    color="secondary"
+                    component={Link}
+                    to="/"
+                  >
+                    OK
+                  </Button>
+                </Box>
+              </Box>
+            </Dialog>
+          </Grid>
+        )}
+    </Paper>
+  );
+}

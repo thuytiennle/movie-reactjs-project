@@ -1,5 +1,6 @@
 import { createStore, compose, applyMiddleware } from 'redux';
 import createSagaMiddleware from 'redux-saga';
+// import { createLogger } from 'redux-logger';
 import rootReducer from './rootReducer';
 import rootSaga from './rootSaga';
 
@@ -18,11 +19,13 @@ const composeEnhancers =
 
 // Create saga middleware
 const sagaMiddleware = createSagaMiddleware();
+// const loggerMiddleware = createLogger();
 
 const configureStore = () => {
   const middlewares = [
     // List of middlewares
     sagaMiddleware,
+    // loggerMiddleware,
   ];
   const enhancers = [applyMiddleware(...middlewares)];
   const store = createStore(rootReducer, composeEnhancers(...enhancers));
