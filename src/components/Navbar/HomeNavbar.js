@@ -14,7 +14,7 @@ import { CustomRouterLink } from '../CustomLink';
 import { LanguageSelector } from '../Select';
 import NavbarScrollLink from './NavbarScrollLink';
 import { NavbarUserInfo } from './NavbarUserInfo';
-import NavbarDrawer from './NavbarDrawer';
+import NavbarDrawer from './HomeNavbarDrawer';
 import { actSignInCheckAfterReload } from '../../containers/Auth/module/actions';
 
 const useStyles = makeStyles(() => ({
@@ -73,7 +73,7 @@ export default function NavBar() {
         </Box>
         {/* Toggle Menu */}
         <Hidden mdUp>
-          <NavbarDrawer />
+          <NavbarDrawer anchor="right" />
         </Hidden>
       </Toolbar>
     </AppBar>

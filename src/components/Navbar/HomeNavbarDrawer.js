@@ -22,7 +22,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function NavbarDrawer() {
+export default function NavbarDrawer(props) {
   // Get state from store
   const isSignIn = useSelector((state) => state.AuthReducer.isSignIn);
   const classes = useStyles();
@@ -54,9 +54,9 @@ export default function NavbarDrawer() {
       <SwipeableDrawer
         className={classes.drawer}
         open={openDrawer}
-        anchor="right"
         onOpen={handleToggleDrawer(true)}
         onClose={handleToggleDrawer(false)}
+        {...props}
       >
         <Box width="240px">
           {/* Sign in Button */}

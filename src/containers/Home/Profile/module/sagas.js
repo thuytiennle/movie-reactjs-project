@@ -3,21 +3,44 @@ import { callAPI } from '../../../../utils/callAPI';
 import {
   actFetchUserProfileFailed,
   actFetchUserProfileSuccess,
+  actFetchUserProfileUpdateSuccess,
+  actFetchUserProfileUpdateFailed,
 } from './actions';
-import { FETCH_USER_PROFILE_REQUEST } from './constants';
+import {
+  FETCH_USER_PROFILE_REQUEST,
+  FETCH_USER_PROFILE_UPDATE_REQUEST,
+} from './constants';
+import { authHeader } from '../../../../utils/auth-header';
 
 function* userProfileSaga({ account }) {
   try {
     const response = yield call(() =>
       callAPI('QuanLyNguoiDung/ThongTinTaiKhoan', 'POST', account),
     );
-    console.log(response);
     yield put(actFetchUserProfileSuccess(response.data));
   } catch (error) {
     yield put(actFetchUserProfileFailed(error));
   }
 }
 
+function* userProfileUpdateSaga({ updateUserInfo }) {
+  try {
+    const params = { headers: authHeader() };
+    const response = yield call(() =>
+      callAPI(
+        'QuanLyNguoiDung/CapNhatThongTinNguoiDung',
+        'PUT',
+        updateUserInfo,
+        params,
+      ),
+    );
+    yield put(actFetchUserProfileUpdateSuccess(response.data));
+  } catch (error) {
+    yield put(actFetchUserProfileUpdateFailed(error));
+  }
+}
+
 export default function* userProfileWatcher() {
   yield takeLatest(FETCH_USER_PROFILE_REQUEST, userProfileSaga);
+  yield takeLatest(FETCH_USER_PROFILE_UPDATE_REQUEST, userProfileUpdateSaga);
 }

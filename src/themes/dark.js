@@ -23,6 +23,7 @@ const theme = createMuiTheme({
     background: {
       default: '#212121',
       dark: '#000',
+      light: '#555',
     },
     error: {
       main: red.A400,

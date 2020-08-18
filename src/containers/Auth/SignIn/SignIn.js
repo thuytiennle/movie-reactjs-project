@@ -60,6 +60,14 @@ export default function SignIn() {
   const location = useLocation();
   const history = useHistory();
   const { from } = location.state || { from: { pathname: '/' } };
+  // Get state from store
+  // const infoUserSignInError = useSelector(
+  //   (state) => state.AuthReducer.infoUserSignInError,
+  // );
+
+  // if (infoUserSignInError) {
+  //   console.log(infoUserSignInError.response.data);
+  // }
 
   return (
     <Container component="main" maxWidth="xs">

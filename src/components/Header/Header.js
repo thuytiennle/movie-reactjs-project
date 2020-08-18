@@ -1,8 +1,8 @@
 import React, { memo } from 'react';
-import { Navbar } from '../Navbar';
+import { HomeNavbar } from '../Navbar';
 
 function Header() {
-  return <Navbar />;
+  return <HomeNavbar />;
 }
 
 export default memo(Header);

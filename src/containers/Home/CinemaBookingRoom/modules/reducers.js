@@ -34,7 +34,7 @@ const cinemaBookingRoomReducer = (state = initialState, action) => {
     case FETCH_CINEMA_BOOKING_ROOM_FAILED:
       state.cinemaComplex = {};
       state.loadingCinemaBookingRoom = false;
-      state.errorCinemaBookingRoom = action.err;
+      state.errorCinemaBookingRoom = action.error;
       return { ...state };
     // Post booking seat to API
     case FETCH_CINEMA_BOOKING_TICKET_REQUEST:
@@ -50,7 +50,7 @@ const cinemaBookingRoomReducer = (state = initialState, action) => {
     case FETCH_CINEMA_BOOKING_TICKET_FAILED:
       state.cinemaBookingTicket = '';
       state.loadingCinemaBookingTicket = false;
-      state.errorCinemaBookingTicket = action.err;
+      state.errorCinemaBookingTicket = action.error;
       return { ...state };
     // Booking seat
     case BOOKING_SEAT: {

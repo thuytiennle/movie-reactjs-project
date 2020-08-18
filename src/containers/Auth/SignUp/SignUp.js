@@ -16,37 +16,12 @@ import { Form, Formik } from 'formik';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import * as yup from 'yup';
 import { TextTranslation } from '../../Language/TextTranslation';
 import {
   actFetchSignUpRequest,
   actFetchSignUpUserTypeRequest,
 } from '../module/actions';
-
-const SignupSchema = yup.object().shape({
-  taiKhoan: yup
-    .string()
-    .required(<TextTranslation id="container.Auth.SignUp.AccountValidate" />),
-  hoTen: yup
-    .string()
-    .required(<TextTranslation id="container.Auth.SignUp.NameValidate" />),
-  email: yup
-    .string()
-    .email()
-    .required(<TextTranslation id="container.Auth.SignUp.EmailValidate" />),
-  matKhau: yup
-    .string()
-    .min(6, <TextTranslation id="container.Auth.SignUp.PassValidateShort" />)
-    .max(20, <TextTranslation id="container.Auth.SignUp.PassValidateLong" />)
-    .required(<TextTranslation id="container.Auth.SignUp.PasswordValidate" />),
-  soDt: yup
-    .string()
-    .required(<TextTranslation id="container.Auth.SignUp.PhoneValidate" />)
-    .matches(/^[0-9]+$/, () => (
-      <TextTranslation id="container.Auth.SignUp.PhoneNotNumber" />
-    )),
-  maNhom: yup.string(),
-});
+import { SignupSchema } from './SignUpSchema';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -132,8 +107,8 @@ export default function SignUp() {
           }}
           validationSchema={SignupSchema}
           onSubmit={(values) => {
-            // dispatch(actFetchSignUpRequest(values));
-            console.log(values);
+            dispatch(actFetchSignUpRequest(values));
+            // console.log(values);
           }}
         >
           {({ errors, handleChange, touched }) => (

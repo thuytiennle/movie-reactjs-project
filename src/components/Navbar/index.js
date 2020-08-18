@@ -1,1 +1,2 @@
-export { default as Navbar } from './Navbar';
+export { default as HomeNavbar } from './HomeNavbar';
+export { default as DashBoardNavBar } from './DashBoardNavBar';

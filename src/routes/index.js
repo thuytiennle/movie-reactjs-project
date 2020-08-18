@@ -1,8 +1,11 @@
-import { HomePage } from '../containers/Home/HomePage';
-import { DetailMovie } from '../containers/Home/DetailMovie';
-import { DetailCinema } from '../containers/Home/DetailCinema';
 import { CinemaBookingRoom } from '../containers/Home/CinemaBookingRoom';
+import { DetailCinema } from '../containers/Home/DetailCinema';
+import { DetailMovie } from '../containers/Home/DetailMovie';
+import { HomePage } from '../containers/Home/HomePage';
 import { Profile } from '../containers/Home/Profile';
+import { DashBoard } from '../containers/Admin/DashBoad';
+import { UserManage } from '../containers/Admin/UserManage';
+import { MovieManage } from '../containers/Admin/MovieManage';
 
 export const routesHome = [
   {
@@ -38,4 +41,20 @@ export const routesHome = [
   },
 ];
 
-export const routesAdmin = [];
+export const routesAdmin = [
+  {
+    path: '/admin',
+    exact: true,
+    component: DashBoard,
+  },
+  {
+    path: '/admin/user-manage',
+    exact: false,
+    component: UserManage,
+  },
+  {
+    path: '/admin/movie-manage',
+    exact: false,
+    component: MovieManage,
+  },
+];

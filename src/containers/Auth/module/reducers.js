@@ -22,7 +22,7 @@ const intialState = {
   userTypeError: null,
   infoUserSignIn: {},
   loadingInfoUserSignIn: Boolean(false),
-  infoUserSignInrError: null,
+  infoUserSignInError: null,
   // At first user has not logged in yet
   isSignIn: Boolean(false),
 };
@@ -49,18 +49,18 @@ const AuthReducer = (state = intialState, action) => {
     case FETCH_SIGN_IN_REQUEST:
       state.infoUserSignIn = {};
       state.loadingInfoUserSignIn = Boolean(true);
-      state.infoUserSignInrError = null;
+      state.infoUserSignInError = null;
       return { ...state };
     case FETCH_SIGN_IN_SUCCESS:
       state.infoUserSignIn = action.signInUser;
       state.loadingInfoUserSignIn = Boolean(false);
-      state.infoUserSignInrError = null;
+      state.infoUserSignInError = null;
       state.isSignIn = Boolean(true);
       return { ...state };
     case FETCH_SIGN_IN_FAILED:
       state.infoUserSignIn = {};
       state.loadingInfoUserSignIn = Boolean(false);
-      state.infoUserSignInrError = null;
+      state.infoUserSignInError = action.err;
       return { ...state };
     case FETCH_SIGN_IN_CHECK_AFTER_RELOAD:
       state.isSignIn = Boolean(true);
