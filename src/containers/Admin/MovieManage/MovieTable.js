@@ -1,4 +1,4 @@
-import { Button } from '@material-ui/core';
+import { Button, Box } from '@material-ui/core';
 import { green, red } from '@material-ui/core/colors';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
@@ -10,44 +10,11 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import CloseIcon from '@material-ui/icons/Close';
+import TheatersIcon from '@material-ui/icons/Theaters';
+import { useTheme } from '@material-ui/styles';
 import { PropTypes } from 'prop-types';
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { TextTranslation } from '../../Language/TextTranslation';
-import { actOpenEditDialog, actFetchDeleteUserRequest } from './module/actions';
-
-const columns = [
-  {
-    id: 'taiKhoan',
-    label: <TextTranslation id="container.Auth.SignIn.Account" />,
-    minWidth: 170,
-  },
-  {
-    id: 'matKhau',
-    label: <TextTranslation id="container.Auth.SignIn.Password" />,
-    minWidth: 100,
-  },
-  {
-    id: 'hoTen',
-    label: <TextTranslation id="container.Auth.SignUp.Name" />,
-    minWidth: 170,
-  },
-  {
-    id: 'email',
-    label: 'Email',
-    minWidth: 170,
-  },
-  {
-    id: 'soDt',
-    label: <TextTranslation id="container.Auth.SignUp.Phone" />,
-    minWidth: 170,
-  },
-  {
-    id: 'maLoaiNguoiDung',
-    label: <TextTranslation id="container.Auth.SignUp.UserType" />,
-    minWidth: 170,
-  },
-];
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -80,10 +47,49 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function UserTable(props) {
+const columns = [
+  {
+    id: 'maPhim',
+    label: <TextTranslation id="container.Admin.MovieManage.MovieId" />,
+    minWidth: 100,
+  },
+  {
+    id: 'tenPhim',
+    label: <TextTranslation id="container.Admin.MovieManage.MovieName" />,
+    minWidth: 170,
+  },
+  {
+    id: 'hinhAnh',
+    label: <TextTranslation id="container.Admin.MovieManage.MovieImage" />,
+    minWidth: 100,
+    format: (value) => (
+      <img style={{ width: 80, height: 80 }} src={value} alt="" />
+    ),
+  },
+  {
+    id: 'moTa',
+    label: (
+      <TextTranslation id="container.Admin.MovieManage.MovieDescription" />
+    ),
+    minWidth: 200,
+  },
+  {
+    id: 'maNhom',
+    label: <TextTranslation id="container.Admin.MovieManage.MovieGroupId" />,
+    minWidth: 170,
+  },
+  {
+    id: 'ngayKhoiChieu',
+    label: <TextTranslation id="container.Admin.MovieManage.ReleaseDate" />,
+    minWidth: 100,
+    format: (value) => new Date(value).toLocaleDateString('en-GB'),
+  },
+];
+
+export default function MovieTable(props) {
   const { rows } = props;
   const classes = useStyles();
-  const dispatch = useDispatch();
+  const theme = useTheme();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -113,7 +119,7 @@ export default function UserTable(props) {
                   </TableCell>
                 ))}
                 {/* Action Buttons */}
-                <TableCell style={{ minWidth: 170 }}>
+                <TableCell style={{ minWidth: 200 }}>
                   <TextTranslation id="container.Admin.UserManage.ActionButton" />
                 </TableCell>
               </TableRow>
@@ -127,16 +133,16 @@ export default function UserTable(props) {
                       hover
                       role="checkbox"
                       tabIndex={-1}
-                      key={row.taiKhoan}
+                      key={row.maPhim}
                     >
                       {columns.map((column) => {
                         const value = row[column.id];
                         return (
                           <TableCell
-                            key={`${row.taiKhoan}-${column.id}`}
+                            key={`${row.maPhim}-${column.id}`}
                             align={column.align}
                           >
-                            {column.format && typeof value === 'number'
+                            {column.format && typeof value === 'string'
                               ? column.format(value)
                               : value}
                           </TableCell>
@@ -144,28 +150,34 @@ export default function UserTable(props) {
                       })}
                       {/* Action Buttons */}
                       <TableCell>
-                        {/* Edit btn */}
                         <Button
-                          variant="contained"
+                          variant="outlined"
                           style={{
-                            backgroundColor: green[500],
-                            color: '#fff',
-                            marginRight: 5,
+                            color: theme.palette.text,
+                            margin: '5px 0',
                           }}
-                          onClick={() => dispatch(actOpenEditDialog(row))}
                         >
-                          <TextTranslation id="container.Admin.UserManage.ActionButton.Edit" />
+                          <TheatersIcon />
+                          <TextTranslation id="components.Navbar.ShowTime" />
                         </Button>
-                        {/* Delete btn */}
-                        <Button
-                          variant="contained"
-                          style={{ backgroundColor: red[500], color: '#fff' }}
-                          onClick={() =>
-                            dispatch(actFetchDeleteUserRequest(row.taiKhoan))
-                          }
-                        >
-                          <CloseIcon />
-                        </Button>
+                        <Box display="flex" width="100%">
+                          <Button
+                            variant="contained"
+                            style={{
+                              backgroundColor: green[500],
+                              color: '#fff',
+                              marginRight: 5,
+                            }}
+                          >
+                            <TextTranslation id="container.Admin.UserManage.ActionButton.Edit" />
+                          </Button>
+                          <Button
+                            variant="contained"
+                            style={{ backgroundColor: red[500], color: '#fff' }}
+                          >
+                            <CloseIcon />
+                          </Button>
+                        </Box>
                       </TableCell>
                     </TableRow>
                   );
@@ -174,7 +186,7 @@ export default function UserTable(props) {
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[10, 20, 30]}
+          rowsPerPageOptions={[5, 10, 20, 30]}
           component="div"
           count={rows.length}
           rowsPerPage={rowsPerPage}
@@ -187,6 +199,6 @@ export default function UserTable(props) {
   );
 }
 
-UserTable.propTypes = {
+MovieTable.propTypes = {
   rows: PropTypes.any,
 };

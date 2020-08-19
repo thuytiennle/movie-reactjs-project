@@ -6,6 +6,7 @@ import { Profile } from '../containers/Home/Profile';
 import { DashBoard } from '../containers/Admin/DashBoad';
 import { UserManage } from '../containers/Admin/UserManage';
 import { MovieManage } from '../containers/Admin/MovieManage';
+import { AddUser } from '../containers/Admin/UserManage/AddUser';
 
 export const routesHome = [
   {
@@ -49,11 +50,21 @@ export const routesAdmin = [
   },
   {
     path: '/admin/user-manage',
-    exact: false,
+    exact: true,
     component: UserManage,
   },
   {
+    path: '/admin/user-manage/add-user',
+    exact: false,
+    component: AddUser,
+  },
+  {
     path: '/admin/movie-manage',
+    exact: true,
+    component: MovieManage,
+  },
+  {
+    path: '/admin/movie-manage/add-movie',
     exact: false,
     component: MovieManage,
   },

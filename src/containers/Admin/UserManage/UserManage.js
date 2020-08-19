@@ -2,8 +2,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import UserTable from './UserTable';
-import { actFetchListUserRequest } from './module/actions';
+import { actFetchListUserRequest, actCloseEditDialog } from './module/actions';
 import UsersToolbar from './UserToolbar';
+import UserEditDialog from './UserEditDialog';
 
 const useStyle = makeStyles((theme) => ({
   wrapper: {
@@ -18,6 +19,10 @@ export default function UserManage() {
   const dispatch = useDispatch();
   // Get state from store
   const listUser = useSelector((state) => state.userManageReducer.listUser);
+  const openEditDialog = useSelector(
+    (state) => state.userManageReducer.openEditDialog,
+  );
+  const searchUser = useSelector((state) => state.userManageReducer.searchUser);
 
   // Did Mount
   React.useEffect(() => {
@@ -29,7 +34,13 @@ export default function UserManage() {
       {listUser && listUser.length > 0 && (
         <>
           <UsersToolbar />
-          <UserTable rows={listUser} />
+          <UserTable
+            rows={searchUser && searchUser.length > 0 ? searchUser : listUser}
+          />
+          <UserEditDialog
+            open={openEditDialog}
+            onClose={() => dispatch(actCloseEditDialog())}
+          />
         </>
       )}
     </div>

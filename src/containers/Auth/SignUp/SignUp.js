@@ -1,26 +1,14 @@
-import {
-  Avatar,
-  Button,
-  Container,
-  FormControl,
-  Grid,
-  InputLabel,
-  Select,
-  TextField,
-  Typography,
-} from '@material-ui/core';
+import { Avatar, Button, Container, Grid, Typography } from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import { Form, Formik } from 'formik';
+import { Formik } from 'formik';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { TextTranslation } from '../../Language/TextTranslation';
-import {
-  actFetchSignUpRequest,
-  actFetchSignUpUserTypeRequest,
-} from '../module/actions';
+import { actFetchSignUpRequest } from '../module/actions';
+import SignUpForm from './SignUpForm';
 import { SignupSchema } from './SignUpSchema';
 
 const useStyles = makeStyles((theme) => ({
@@ -56,33 +44,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const engUserType = [
-  {
-    maLoaiNguoiDung: 'KhachHang',
-    tenLoai: 'Customer',
-  },
-  {
-    maLoaiNguoiDung: 'QuanTri',
-    tenLoai: 'Admin',
-  },
-];
-
 export default function SignUp() {
   const classes = useStyles();
   const dispatch = useDispatch();
-
-  // Get state from store
-  const userType = useSelector((state) => state.AuthReducer.userType);
-
-  // Get language from local storage
-  const language =
-    localStorage.getItem('rcml-language') ||
-    window.navigator.language.substring(0, 2);
-
-  // Did Mount
-  React.useEffect(() => {
-    dispatch(actFetchSignUpUserTypeRequest());
-  }, [dispatch]);
 
   return (
     <Container component="main" maxWidth="xs">
@@ -111,130 +75,13 @@ export default function SignUp() {
             // console.log(values);
           }}
         >
-          {({ errors, handleChange, touched }) => (
-            <Form className={classes.form}>
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  <TextField
-                    name="taiKhoan"
-                    variant="outlined"
-                    fullWidth
-                    id="taiKhoan"
-                    label={
-                      <TextTranslation id="container.Auth.SignIn.Account" />
-                    }
-                    color="secondary"
-                    onChange={handleChange}
-                    error={errors.taiKhoan && touched.taiKhoan}
-                    helperText={
-                      errors.taiKhoan && touched.taiKhoan
-                        ? errors.taiKhoan
-                        : null
-                    }
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    fullWidth
-                    id="hoTen"
-                    label={<TextTranslation id="container.Auth.SignUp.Name" />}
-                    name="hoTen"
-                    color="secondary"
-                    onChange={handleChange}
-                    error={errors.hoTen && touched.hoTen}
-                    helperText={
-                      errors.hoTen && touched.hoTen ? errors.hoTen : null
-                    }
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    fullWidth
-                    name="matKhau"
-                    label={
-                      <TextTranslation id="container.Auth.SignIn.Password" />
-                    }
-                    type="password"
-                    id="matKhau"
-                    color="secondary"
-                    onChange={handleChange}
-                    error={errors.matKhau && touched.matKhau}
-                    helperText={
-                      errors.matKhau && touched.matKhau ? errors.matKhau : null
-                    }
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    fullWidth
-                    id="email"
-                    label="Email"
-                    name="email"
-                    color="secondary"
-                    onChange={handleChange}
-                    error={errors.email && touched.email}
-                    helperText={
-                      errors.email && touched.email ? errors.email : null
-                    }
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    fullWidth
-                    id="soDt"
-                    label={<TextTranslation id="container.Auth.SignUp.Phone" />}
-                    name="soDt"
-                    color="secondary"
-                    onChange={handleChange}
-                    error={errors.soDt && touched.soDt}
-                    helperText={
-                      errors.soDt && touched.soDt ? errors.soDt : null
-                    }
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <FormControl
-                    variant="outlined"
-                    className={classes.formControlSelect}
-                  >
-                    <InputLabel color="secondary">
-                      <TextTranslation id="container.Auth.SignUp.SelectUser" />
-                    </InputLabel>
-                    <Select
-                      native
-                      color="secondary"
-                      // value={user}
-                      name="maLoaiNguoiDung"
-                      onChange={handleChange}
-                      label={
-                        <TextTranslation id="container.Auth.SignUp.SelectUser" />
-                      }
-                    >
-                      <option aria-label="None" value="" />
-                      {userType &&
-                        userType.length > 0 &&
-                        userType.map((item) => (
-                          <option
-                            key={`signUp-${item.maLoaiNguoiDung}`}
-                            value={item.maLoaiNguoiDung}
-                          >
-                            {language === 'vi'
-                              ? item.tenLoai
-                              : engUserType.find(
-                                  (engItem) =>
-                                    engItem.maLoaiNguoiDung ===
-                                    item.maLoaiNguoiDung,
-                                ).tenLoai}
-                          </option>
-                        ))}
-                    </Select>
-                  </FormControl>
-                </Grid>
-              </Grid>
+          {({ errors, handleChange, touched, values }) => (
+            <SignUpForm
+              errors={errors}
+              handleChange={handleChange}
+              touched={touched}
+              values={values}
+            >
               <Button
                 type="submit"
                 fullWidth
@@ -251,7 +98,7 @@ export default function SignUp() {
                   </Link>
                 </Grid>
               </Grid>
-            </Form>
+            </SignUpForm>
           )}
         </Formik>
       </div>
