@@ -8,6 +8,7 @@ import cinemaBookingRoomReducer from '../containers/Home/CinemaBookingRoom/modul
 import AuthReducer from '../containers/Auth/module/reducers';
 import profileReducer from '../containers/Home/Profile/module/reducers';
 import userManageReducer from '../containers/Admin/UserManage/module/reducers';
+import movieManageReducer from '../containers/Admin/MovieManage/module/reducers';
 
 const rootReducer = combineReducers({
   listMovieReducer,
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   AuthReducer,
   profileReducer,
   userManageReducer,
+  movieManageReducer,
 });
 
 export default rootReducer;

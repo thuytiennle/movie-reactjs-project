@@ -7,6 +7,7 @@ import { DashBoard } from '../containers/Admin/DashBoad';
 import { UserManage } from '../containers/Admin/UserManage';
 import { MovieManage } from '../containers/Admin/MovieManage';
 import { AddUser } from '../containers/Admin/UserManage/AddUser';
+import { AddMovie } from '../containers/Admin/MovieManage/AddMovie';
 
 export const routesHome = [
   {
@@ -66,6 +67,6 @@ export const routesAdmin = [
   {
     path: '/admin/movie-manage/add-movie',
     exact: false,
-    component: MovieManage,
+    component: AddMovie,
   },
 ];

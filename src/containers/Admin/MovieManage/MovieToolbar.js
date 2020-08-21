@@ -1,10 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/styles';
 import { Button } from '@material-ui/core';
-
-import { SearchInput } from '../../../components/SearchInput';
+import { makeStyles } from '@material-ui/styles';
+import clsx from 'clsx';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { TextTranslation } from '../../Language/TextTranslation';
 
 const useStyles = makeStyles((theme) => ({
@@ -16,13 +15,14 @@ const useStyles = makeStyles((theme) => ({
   },
   row: {
     height: '42px',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
     margin: theme.spacing(2),
   },
-  searchInput: {
-    marginRight: theme.spacing(1),
+  routerButton: {
+    backgroundColor: theme.palette.secondary.light,
+    '&:hover': {
+      backgroundColor: theme.palette.secondary.light,
+      color: theme.palette.titleBar.main,
+    },
   },
 }));
 
@@ -34,11 +34,12 @@ const MovieToolbar = (props) => {
   return (
     <div {...rest} className={clsx(classes.root, className)}>
       <div className={classes.row}>
-        <SearchInput
-          className={classes.searchInput}
-          placeholder="Search user"
-        />
-        <Button color="primary" variant="contained">
+        <Button
+          className={classes.routerButton}
+          variant="contained"
+          component={Link}
+          to="/admin/movie-manage/add-movie"
+        >
           <TextTranslation id="container.Admin.MovieManage.AddMovieBtn" />
         </Button>
       </div>

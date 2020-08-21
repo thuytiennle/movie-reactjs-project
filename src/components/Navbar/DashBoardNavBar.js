@@ -51,7 +51,7 @@ export default function DashBoardNavBar(props) {
     <AppBar color="default" className={classes.appbar}>
       <Toolbar className={classes.toolbar}>
         {/* Logo */}
-        <CustomRouterLink to="/dashboard" onClick={scroll.scrollToTop}>
+        <CustomRouterLink to="/admin" onClick={scroll.scrollToTop}>
           <Typography variant="h3" color="secondary">
             unix
           </Typography>

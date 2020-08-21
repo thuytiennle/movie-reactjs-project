@@ -1,4 +1,4 @@
-import { Button, Box } from '@material-ui/core';
+import { Box, Button } from '@material-ui/core';
 import { green, red } from '@material-ui/core/colors';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
@@ -14,7 +14,13 @@ import TheatersIcon from '@material-ui/icons/Theaters';
 import { useTheme } from '@material-ui/styles';
 import { PropTypes } from 'prop-types';
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { TextTranslation } from '../../Language/TextTranslation';
+import {
+  actFetchDeleteMovieRequest,
+  actOpenMovieDialog,
+  actOpenShowTimeDialog,
+} from './module/actions';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -89,6 +95,7 @@ const columns = [
 export default function MovieTable(props) {
   const { rows } = props;
   const classes = useStyles();
+  const dispatch = useDispatch();
   const theme = useTheme();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -156,6 +163,7 @@ export default function MovieTable(props) {
                             color: theme.palette.text,
                             margin: '5px 0',
                           }}
+                          onClick={() => dispatch(actOpenShowTimeDialog())}
                         >
                           <TheatersIcon />
                           <TextTranslation id="components.Navbar.ShowTime" />
@@ -168,12 +176,16 @@ export default function MovieTable(props) {
                               color: '#fff',
                               marginRight: 5,
                             }}
+                            onClick={() => dispatch(actOpenMovieDialog(row))}
                           >
                             <TextTranslation id="container.Admin.UserManage.ActionButton.Edit" />
                           </Button>
                           <Button
                             variant="contained"
                             style={{ backgroundColor: red[500], color: '#fff' }}
+                            onClick={() => {
+                              dispatch(actFetchDeleteMovieRequest(row.maPhim));
+                            }}
                           >
                             <CloseIcon />
                           </Button>

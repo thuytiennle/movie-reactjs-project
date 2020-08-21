@@ -73,7 +73,7 @@ export default function AddUser() {
                     color="secondary"
                     startIcon={<SaveIcon />}
                   >
-                    Save
+                    <TextTranslation id="container.Admin.MovieManage.SaveBtn" />
                   </Button>
                 </CardActions>
               </SignUpForm>

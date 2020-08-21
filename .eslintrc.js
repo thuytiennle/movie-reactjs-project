@@ -55,9 +55,12 @@ module.exports = {
     'no-use-before-define': 0,
     'no-param-reassign': 0,
     'no-return-assign': 0,
+    'no-restricted-syntax': 0,
     'require-yield': 0,
     'prefer-destructuring': 0,
     'global-require': 0,
+    'guard-for-in': 0,
+    'prefer-const': 0,
     'prettier/prettier': ['error'],
   },
 };
