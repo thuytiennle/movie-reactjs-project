@@ -14,13 +14,16 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import { Formik } from 'formik';
 import { PropTypes } from 'prop-types';
-import React from 'react';
+import React, { memo } from 'react';
+import { useSelector } from 'react-redux';
 import { TextTranslation } from '../../Language/TextTranslation';
-import { MovieSchema } from './MovieSchema';
+import { ShowTimeSchema } from './MovieSchema';
 import ShowTimeForm from './ShowTimeForm';
+import ShowTimeTable from './ShowTimeTable';
 
-export default function ShowTimeCreateDialog(props) {
+function ShowTimeCreateDialog(props) {
   const { open, onClose } = props;
+  const movieInfo = useSelector((state) => state.movieManageReducer.movieInfo);
 
   return (
     <Dialog fullScreen open={open} onClose={onClose}>
@@ -29,7 +32,7 @@ export default function ShowTimeCreateDialog(props) {
           <IconButton edge="start" color="inherit" onClick={onClose}>
             <CloseIcon />
           </IconButton>
-          <Typography variant="h4" color="default">
+          <Typography variant="h5" color="inherit">
             <TextTranslation id="components.Navbar.ShowTime" />
           </Typography>
         </Toolbar>
@@ -46,16 +49,23 @@ export default function ShowTimeCreateDialog(props) {
             <CardContent>
               <Formik
                 initialValues={{
-                  tenPhim: '',
-                  biDanh: '',
-                  trailer: '',
-                  hinhAnh: '',
-                  ngayKhoiChieu: '01/01/2020',
-                  moTa: '',
+                  hethongRap: '',
+                  cumRap: '',
+                  maRap: '',
+                  ngayChieuGioChieu: new Date(),
+                  giaVe: '',
                 }}
-                validationSchema={MovieSchema}
+                validationSchema={ShowTimeSchema}
                 onSubmit={(values) => {
-                  console.log(values);
+                  if (movieInfo) {
+                    const showtime = {
+                      maPhim: movieInfo.maPhim,
+                      maRap: values.maRap,
+                      ngayChieuGioChieu: values.ngayChieuGioChieu,
+                      giaVe: values.giaVe,
+                    };
+                    console.log(showtime);
+                  }
                 }}
               >
                 {(propsForm) => <ShowTimeForm {...propsForm} />}
@@ -66,14 +76,18 @@ export default function ShowTimeCreateDialog(props) {
             <Card style={{ margin: 10 }}>
               <CardHeader title="Table" />
             </Card>
-            <CardContent>fdsf</CardContent>
+            <CardContent>
+              {Object.keys(movieInfo).length > 0 && (
+                <ShowTimeTable movieInfo={movieInfo} />
+              )}
+            </CardContent>
           </Grid>
         </Grid>
       </DialogContent>
     </Dialog>
   );
 }
-
+export default memo(ShowTimeCreateDialog);
 ShowTimeCreateDialog.propTypes = {
   onClose: PropTypes.func,
   open: PropTypes.bool.isRequired,

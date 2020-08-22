@@ -24,9 +24,7 @@ export default function MovieForm(props) {
     children,
   } = props;
   const classes = useStyles();
-  console.log(
-    TextTranslation({ id: 'container.Admin.MovieManage.MovieForm.CodeName' }),
-  );
+
   return (
     <Form className={classes.formControl}>
       <Grid container spacing={2}>

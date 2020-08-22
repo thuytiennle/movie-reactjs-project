@@ -54,7 +54,6 @@ export default function MovieEditDialog(props) {
                 formdata.append(key, movie[key]);
               }
               dispatch(actFetchUpdateMovieRequest(formdata));
-              console.log(movie);
             }}
           >
             {(propsForm) => (

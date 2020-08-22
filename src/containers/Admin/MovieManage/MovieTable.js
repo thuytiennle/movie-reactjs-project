@@ -13,13 +13,13 @@ import CloseIcon from '@material-ui/icons/Close';
 import TheatersIcon from '@material-ui/icons/Theaters';
 import { useTheme } from '@material-ui/styles';
 import { PropTypes } from 'prop-types';
-import React from 'react';
+import React, { memo } from 'react';
 import { useDispatch } from 'react-redux';
 import { TextTranslation } from '../../Language/TextTranslation';
 import {
   actFetchDeleteMovieRequest,
+  actFetchMovieInfoRequest,
   actOpenMovieDialog,
-  actOpenShowTimeDialog,
 } from './module/actions';
 
 const useStyles = makeStyles((theme) => ({
@@ -92,7 +92,7 @@ const columns = [
   },
 ];
 
-export default function MovieTable(props) {
+function MovieTable(props) {
   const { rows } = props;
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -163,7 +163,9 @@ export default function MovieTable(props) {
                             color: theme.palette.text,
                             margin: '5px 0',
                           }}
-                          onClick={() => dispatch(actOpenShowTimeDialog())}
+                          onClick={() =>
+                            dispatch(actFetchMovieInfoRequest(row.maPhim))
+                          }
                         >
                           <TheatersIcon />
                           <TextTranslation id="components.Navbar.ShowTime" />
@@ -210,6 +212,8 @@ export default function MovieTable(props) {
     </div>
   );
 }
+
+export default memo(MovieTable);
 
 MovieTable.propTypes = {
   rows: PropTypes.any,

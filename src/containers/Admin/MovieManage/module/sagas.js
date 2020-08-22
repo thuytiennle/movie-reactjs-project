@@ -1,21 +1,26 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
+import { authHeader } from '../../../../utils/auth-header';
 import { callAPI } from '../../../../utils/callAPI';
+import { actFetchListMovieRequest } from '../../../Home/MovieShow/modules/actions';
 import {
-  actFetchAddMovieSuccess,
   actFetchAddMovieFailed,
-  actFetchDeleteMovieSuccess,
+  actFetchAddMovieSuccess,
   actFetchDeleteMovieFailed,
-  actFetchUpdateMovieSuccess,
+  actFetchDeleteMovieSuccess,
+  actFetchMovieInfoFailed,
+  actFetchMovieInfoSuccess,
   actFetchUpdateMovieFailed,
+  actFetchUpdateMovieSuccess,
+  actFetchCiemaBranchInfoSuccess,
+  actFetchCiemaBranchInfoFailed,
 } from './actions';
 import {
   FETCH_ADD_MOVIE_REQUEST,
   FETCH_DELETE_MOVIE_REQUEST,
+  FETCH_MOVIE_INFO_REQUEST,
   FETCH_UPDATE_MOVIE_REQUEST,
+  FETCH_CINEMA_BRANCH_REQUEST,
 } from './constants';
-import { authHeader } from '../../../../utils/auth-header';
-import { actFetchListMovieRequest } from '../../../Home/MovieShow/modules/actions';
-import { FETCH_UPDATE_USER_REQUEST } from '../../UserManage/module/constants';
 
 function* addMovieSaga({ movie }) {
   try {
@@ -33,7 +38,6 @@ function* addMovieSaga({ movie }) {
 function* deleteMovieSaga({ deleteMovieId }) {
   try {
     const params = { headers: authHeader(), credentials: 'same-origin' };
-    console.log(params);
     const response = yield call(() =>
       callAPI(
         `QuanLyPhim/XoaPhim?MaPhim=${deleteMovieId}`,
@@ -66,8 +70,36 @@ function* upDateMovieSaga({ updateUser }) {
   }
 }
 
+function* movieInfoSaga({ movieId }) {
+  try {
+    const response = yield call(() =>
+      callAPI(`QuanLyPhim/LayThongTinPhim?MaPhim=${movieId}`, 'GET', null),
+    );
+    yield put(actFetchMovieInfoSuccess(response.data));
+  } catch (error) {
+    yield put(actFetchMovieInfoFailed(error));
+  }
+}
+
+function* cinemaBranchInfoSaga({ cinemaId }) {
+  try {
+    const response = yield call(() =>
+      callAPI(
+        `QuanLyRap/LayThongTinCumRapTheoHeThong?maHeThongRap=${cinemaId}`,
+        'GET',
+        null,
+      ),
+    );
+    yield put(actFetchCiemaBranchInfoSuccess(response.data));
+  } catch (error) {
+    yield put(actFetchCiemaBranchInfoFailed(error));
+  }
+}
+
 export default function* movieManageSaga() {
   yield takeLatest(FETCH_ADD_MOVIE_REQUEST, addMovieSaga);
   yield takeLatest(FETCH_DELETE_MOVIE_REQUEST, deleteMovieSaga);
   yield takeLatest(FETCH_UPDATE_MOVIE_REQUEST, upDateMovieSaga);
+  yield takeLatest(FETCH_MOVIE_INFO_REQUEST, movieInfoSaga);
+  yield takeLatest(FETCH_CINEMA_BRANCH_REQUEST, cinemaBranchInfoSaga);
 }

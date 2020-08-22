@@ -1,17 +1,22 @@
 import {
+  CLOSE_MOVIE_DIALOG,
+  CLOSE_SHOW_TIME_DIALOG,
+  FETCH_ADD_MOVIE_FAILED,
   FETCH_ADD_MOVIE_REQUEST,
   FETCH_ADD_MOVIE_SUCCESS,
-  FETCH_ADD_MOVIE_FAILED,
+  FETCH_DELETE_MOVIE_FAILED,
   FETCH_DELETE_MOVIE_REQUEST,
   FETCH_DELETE_MOVIE_SUCCESS,
-  FETCH_DELETE_MOVIE_FAILED,
-  OPEN_MOVIE_DIALOG,
-  CLOSE_MOVIE_DIALOG,
+  FETCH_MOVIE_INFO_FAILED,
+  FETCH_MOVIE_INFO_REQUEST,
+  FETCH_MOVIE_INFO_SUCCESS,
+  FETCH_UPDATE_MOVIE_FAILED,
   FETCH_UPDATE_MOVIE_REQUEST,
   FETCH_UPDATE_MOVIE_SUCCESS,
-  FETCH_UPDATE_MOVIE_FAILED,
-  OPEN_SHOW_TIME_DIALOG,
-  CLOSE_SHOW_TIME_DIALOG,
+  OPEN_MOVIE_DIALOG,
+  FETCH_CINEMA_BRANCH_REQUEST,
+  FETCH_CINEMA_BRANCH_SUCCESS,
+  FETCH_CINEMA_BRANCH_FAILED,
 } from './constants';
 
 export const actFetchAddMovieRequest = (movie) => {
@@ -92,14 +97,52 @@ export const actFetchUpdateMovieFailed = (error) => {
 };
 
 // Show Time Selection
-export const actOpenShowTimeDialog = () => {
-  return {
-    type: OPEN_SHOW_TIME_DIALOG,
-  };
-};
-
 export const actCloseShowTimeDialog = () => {
   return {
     type: CLOSE_SHOW_TIME_DIALOG,
+  };
+};
+
+// Movie info
+export const actFetchMovieInfoRequest = (movieId) => {
+  return {
+    type: FETCH_MOVIE_INFO_REQUEST,
+    movieId,
+  };
+};
+
+export const actFetchMovieInfoSuccess = (data) => {
+  return {
+    type: FETCH_MOVIE_INFO_SUCCESS,
+    data,
+  };
+};
+
+export const actFetchMovieInfoFailed = (error) => {
+  return {
+    type: FETCH_MOVIE_INFO_FAILED,
+    error,
+  };
+};
+
+// CinemaInfo
+export const actFetchCiemaBranchInfoRequest = (cinemaId) => {
+  return {
+    type: FETCH_CINEMA_BRANCH_REQUEST,
+    cinemaId,
+  };
+};
+
+export const actFetchCiemaBranchInfoSuccess = (data) => {
+  return {
+    type: FETCH_CINEMA_BRANCH_SUCCESS,
+    data,
+  };
+};
+
+export const actFetchCiemaBranchInfoFailed = (error) => {
+  return {
+    type: FETCH_CINEMA_BRANCH_FAILED,
+    error,
   };
 };

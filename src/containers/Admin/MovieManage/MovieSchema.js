@@ -24,3 +24,16 @@ export const MovieSchema = yup.object().shape({
       <TextTranslation id="container.Admin.MovieManage.MovieForm.DescriptionSchema" />,
     ),
 });
+
+export const ShowTimeSchema = yup.object().shape({
+  thoiLuong: yup
+    .string()
+    .required(
+      <TextTranslation id="container.Admin.MovieManage.ShowTimeCreation.DuartionSchema" />,
+    ),
+  giaVe: yup
+    .string()
+    .required(
+      <TextTranslation id="container.Admin.MovieManage.ShowTimeCreation.TicketPriceSchema" />,
+    ),
+});
