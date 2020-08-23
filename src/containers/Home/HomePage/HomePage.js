@@ -9,6 +9,9 @@ import { Cinema } from '../Cinema';
 import { MovieShow } from '../MovieShow';
 import { ScrollToTopButton } from '../../../components/Button';
 import { actFetchListMovieRequest } from '../MovieShow/modules/actions';
+import { News } from '../News';
+import { Discount } from '../Discount';
+import { Footer } from '../../../components/Footer';
 
 export default function HomePage() {
   const dispatch = useDispatch();
@@ -25,6 +28,9 @@ export default function HomePage() {
       <Booking />
       <MovieShow />
       <Cinema />
+      <News />
+      <Discount />
+      <Footer />
       <ScrollToTopButton>
         <Fab color="secondary" size="small" aria-label="scroll back to top">
           <KeyboardArrowUpIcon />

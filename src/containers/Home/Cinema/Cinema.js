@@ -1,22 +1,23 @@
 import {
-  Paper,
-  Typography,
   Container,
-  Tabs,
   Grid,
   makeStyles,
+  Paper,
+  Tabs,
+  Typography,
 } from '@material-ui/core';
+import clsx from 'clsx';
 import React, { memo, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { TextTranslation } from '../../Language/TextTranslation';
-import { CustomTab } from '../../../components/Tabs';
-import {
-  actFetchCinemaComplexRequest,
-  actFetchCinemaBranchRequest,
-} from './modules/actions';
-import { Spinner } from '../../../components/LoadingIndicator';
-import ShowTimeItem from './ShowTimeItem';
 import { CinemaBranchItem } from '../../../components/CinemaBranchItem';
+import { Spinner } from '../../../components/LoadingIndicator';
+import { CustomTab } from '../../../components/Tabs';
+import { TextTranslation } from '../../Language/TextTranslation';
+import {
+  actFetchCinemaBranchRequest,
+  actFetchCinemaComplexRequest,
+} from './modules/actions';
+import ShowTimeItem from './ShowTimeItem';
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -28,11 +29,31 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     paddingBottom: 20,
   },
+  tabContainer: {
+    overflow: 'hidden',
+    overflowX: 'scroll',
+  },
+  scrollCustom: {
+    // Customize scrollbar
+    '&::-webkit-scrollbar': {
+      width: 4,
+      height: 4,
+      backgroundColor: '#e8e3e3',
+      borderRadius: 10,
+    },
+    '&::-webkit-scrollbar-track': {
+      borderRadius: 10,
+      boxShadow: 'inset 0 0 6px rgba(0, 0, 0, 0.3)',
+    },
+    '&::-webkit-scrollbar-thumb': {
+      borderRadius: 20,
+      backgroundColor: theme.palette.secondary.main,
+      outline: '1px solid slategrey',
+    },
+  },
   root: {
-    flexGrow: 1,
-    display: 'flex',
+    width: 912,
     height: 600,
-    borderRadius: 10,
     boxShadow: '0 0 20px #e8e8e86c',
     overflow: 'hidden',
   },
@@ -55,21 +76,10 @@ const useStyles = makeStyles((theme) => ({
   scrollbar: {
     height: '100%',
     overflowY: 'scroll',
-    // Customize scrollbar
-    '&::-webkit-scrollbar': {
-      width: 4,
-      backgroundColor: '#e8e3e3',
-      borderRadius: 10,
-    },
-    '&::-webkit-scrollbar-track': {
-      borderRadius: 10,
-      boxShadow: 'inset 0 0 6px rgba(0, 0, 0, 0.3)',
-    },
-    '&::-webkit-scrollbar-thumb': {
-      borderRadius: 20,
-      backgroundColor: theme.palette.secondary.main,
-      outline: '1px solid slategrey',
-    },
+  },
+  img: {
+    width: 50,
+    height: 50,
   },
 }));
 
@@ -136,7 +146,7 @@ function Cinema() {
         <CustomTab
           key={`cinemaComplex-${item.maHeThongRap}`}
           value={item.maHeThongRap}
-          label={<img src={item.logo} width="100px" height="100px" alt="" />}
+          label={<img className={classes.img} src={item.logo} alt="" />}
         />
       );
     });
@@ -183,53 +193,60 @@ function Cinema() {
         <Typography className={classes.title} variant="h4" color="secondary">
           <TextTranslation id="container.Cinema.Title" />
         </Typography>
-        <div className={classes.root}>
-          <Grid item sm={1} className={classes.container1}>
-            {/* When cinemaComplex has data then render tabs otherwise spinner */}
-            {cinemaComplex && cinemaComplex.length ? (
-              <Tabs
-                value={handleValueTab1()}
-                orientation="vertical"
-                variant="scrollable"
-                onChange={handleChangeTab1}
-                aria-label="ant example"
-                className={classes.tabsVetical}
-              >
-                {renderCinemaComplex()}
-              </Tabs>
-            ) : (
-              <Spinner />
-            )}
-          </Grid>
-          <Grid item sm={11} className={classes.container2}>
-            <div className={classes.rootInner}>
-              {cinemaBranch &&
-              cinemaBranch.length > 0 &&
-              cinemaBranch[0].lstCumRap &&
-              cinemaBranch[0].lstCumRap.length > 0 ? (
-                <>
-                  <Grid item sm={4}>
-                    <Tabs
-                      value={selectCinemaBranch}
-                      orientation="vertical"
-                      variant="scrollable"
-                      onChange={handleChangeTab2}
-                      aria-label="ant example"
-                      className={classes.tabsVetical}
-                    >
-                      {renderCinemaBranch()}
-                    </Tabs>
-                  </Grid>
-                  <Grid item sm={8} role="tabpanel">
-                    <div className={classes.scrollbar}>
-                      {renderCinemaShowTime()}
-                    </div>
-                  </Grid>
-                </>
+        <div className={clsx(classes.tabContainer, classes.scrollCustom)}>
+          <Grid container className={classes.root}>
+            <Grid item sm={1} className={classes.container1}>
+              {/* When cinemaComplex has data then render tabs otherwise spinner */}
+              {cinemaComplex && cinemaComplex.length ? (
+                <Tabs
+                  value={handleValueTab1()}
+                  orientation="vertical"
+                  variant="scrollable"
+                  onChange={handleChangeTab1}
+                  aria-label="ant example"
+                  className={classes.tabsVetical}
+                >
+                  {renderCinemaComplex()}
+                </Tabs>
               ) : (
                 <Spinner />
               )}
-            </div>
+            </Grid>
+            <Grid item sm={11} className={classes.container2}>
+              <div className={classes.rootInner}>
+                {cinemaBranch &&
+                cinemaBranch.length > 0 &&
+                cinemaBranch[0].lstCumRap &&
+                cinemaBranch[0].lstCumRap.length > 0 ? (
+                  <>
+                    <Grid item sm={4}>
+                      <Tabs
+                        value={selectCinemaBranch}
+                        orientation="vertical"
+                        variant="scrollable"
+                        onChange={handleChangeTab2}
+                        aria-label="ant example"
+                        className={classes.tabsVetical}
+                      >
+                        {renderCinemaBranch()}
+                      </Tabs>
+                    </Grid>
+                    <Grid item sm={8} role="tabpanel">
+                      <div
+                        className={clsx(
+                          classes.scrollbar,
+                          classes.scrollCustom,
+                        )}
+                      >
+                        {renderCinemaShowTime()}
+                      </div>
+                    </Grid>
+                  </>
+                ) : (
+                  <Spinner />
+                )}
+              </div>
+            </Grid>
           </Grid>
         </div>
       </Container>

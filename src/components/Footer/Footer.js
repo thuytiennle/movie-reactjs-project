@@ -1,151 +1,220 @@
-import React, { memo } from 'react';
-import PhoneIcon from '@material-ui/icons/Phone';
 import {
-  FooterSection,
-  FooterTitle,
-  FooterList,
-  FooterPartnership,
-  FooterListImg,
-  FooterCopyRight,
-} from './styledFooter';
+  Box,
+  Button,
+  Container,
+  Divider,
+  Grid,
+  List,
+  ListItem,
+  ListItemText,
+  makeStyles,
+  Paper,
+  Typography,
+  useTheme,
+} from '@material-ui/core';
+import PhoneIcon from '@material-ui/icons/Phone';
+import React, { memo } from 'react';
+import { TextTranslation } from '../../containers/Language/TextTranslation';
+
+const useStyles = makeStyles((theme) => ({
+  wrapper: {
+    borderRadius: 'unset',
+    padding: '50px 0',
+    backgroundColor: theme.palette.background.dark,
+  },
+  img: {
+    width: 40,
+    height: 40,
+  },
+  partnership: {
+    display: 'none',
+    [theme.breakpoints.up('md')]: {
+      display: 'block',
+    },
+  },
+}));
+
+const partnershipList = [
+  {
+    row: 1,
+    list: [
+      {
+        href: 'https://www.cgv.vn/',
+        img: '../img/cgv.png',
+      },
+      {
+        href: 'http://bhdstar.vn',
+        img: '../img/bhd.png',
+      },
+      {
+        href: 'http://galaxycine.vn',
+        img: '../img/galaxycine.png',
+      },
+      {
+        href: 'http://cinestar.com.vn',
+        img: '../img/cinestar.png',
+      },
+      {
+        href: 'http://lottecinemavn.com',
+        img:
+          'https://s3img.vcdn.vn/123phim/2018/09/404b8c4b80d77732e7426cdb7e24be20.png',
+      },
+    ],
+  },
+  {
+    row: 2,
+    list: [
+      {
+        href: 'https://www.megagscinemas.vn',
+        img: '../img/megags.png',
+      },
+      {
+        href: 'https://www.betacineplex.vn/',
+        img: '../img/bt.jpg',
+      },
+      {
+        href: 'http://ddcinema.vn',
+        img: '../img/dongdacinema.png',
+      },
+      {
+        href: 'https://touchcinema.com/',
+        img: '../img/TOUCH.png',
+      },
+      {
+        href: 'https://cinemaxvn.com/',
+        img: '../img/cnx.jpg',
+      },
+    ],
+  },
+  {
+    row: 3,
+    list: [
+      {
+        href: 'http://starlight.vn/',
+        img: '../img/STARLIGHT.png',
+      },
+      {
+        href: 'https://www.dcine.vn/',
+        img: '../img/dcine.png',
+      },
+      {
+        href: 'https://zalopay.vn/',
+        img: '../img/zalopay_icon.png',
+      },
+      {
+        href: 'https://www.payoo.vn/',
+        img: '../img/payoo.jpg',
+      },
+      {
+        href: 'https://www.vietcombank.com.vn/',
+        img: '../img/VCB.png',
+      },
+    ],
+  },
+];
 
 function Footer() {
+  const classes = useStyles();
+  const theme = useTheme();
   return (
-    <FooterSection>
-      <div className="container">
-        <div className="row m-0">
-          <div className="col-6 col-lg-4">
-            <FooterTitle logo>UNiX</FooterTitle>
-            <FooterList>FAQs</FooterList>
-            <FooterList>Brand guidelines</FooterList>
-            <FooterList>Thảo thuận sử dụng</FooterList>
-            <FooterList>Chính sách bảo mật</FooterList>
-          </div>
+    <Paper className={classes.wrapper}>
+      <Container>
+        <Grid container>
+          <Grid item xs={12} sm={6} md={3} lg={4}>
+            <Typography variant="h5" color="secondary">
+              UNiX
+            </Typography>
+            <List component="nav" aria-label="secondary mailbox folders">
+              <ListItem button>
+                <ListItemText primary="FAQs" />
+              </ListItem>
+              <ListItem button>
+                <ListItemText
+                  primary={
+                    <TextTranslation id="container.Footer.BrandGuidelines" />
+                  }
+                />
+              </ListItem>
+              <ListItem button>
+                <ListItemText
+                  primary={
+                    <TextTranslation id="container.Footer.UsageDiscussion" />
+                  }
+                />
+              </ListItem>
+              <ListItem button>
+                <ListItemText
+                  primary={
+                    <TextTranslation id="container.Footer.PrivacyPolicy" />
+                  }
+                />
+              </ListItem>
+              {/* container.Footer.PrivacyPolicy */}
+            </List>
+          </Grid>
 
-          <FooterPartnership className="col-lg-5">
-            <FooterTitle>Đối tác</FooterTitle>
-            {/* First Row */}
-            <div className="row col-sm-12 col-xs-12 linePartner">
-              <a href="https://www.cgv.vn/" title="CGV">
-                <FooterListImg
-                  className="iconConnect"
-                  src="../img/cgv.png"
-                  style={{ backgroundColor: '#fff' }}
-                  alt=""
-                />
-              </a>
-              <a href="http://bhdstar.vn" title="BHD">
-                <FooterListImg
-                  className="iconConnect"
-                  src="../img/bhd.png"
-                  alt=""
-                />
-              </a>
-              <a href="http://galaxycine.vn" title="Galaxy">
-                <FooterListImg
-                  className="iconConnect"
-                  src="../img/galaxycine.png"
-                  alt=""
-                />
-              </a>
-              <a href="http://cinestar.com.vn" title="Cinestar">
-                <FooterListImg
-                  className="iconConnect"
-                  src="../img/cinestar.png"
-                  alt=""
-                />
-              </a>
-              <a href="http://lottecinemavn.com" title="LotteCinema">
-                <FooterListImg
-                  className="iconConnect"
-                  src="https://s3img.vcdn.vn/123phim/2018/09/404b8c4b80d77732e7426cdb7e24be20.png"
-                  alt=""
-                />
-              </a>
-            </div>
-            {/* Second Row */}
-            <div className="row col-sm-12 col-xs-12 linePartner">
-              <a href="https://www.megagscinemas.vn" title="MegaGS">
-                <FooterListImg
-                  className="iconConnect"
-                  src="../img/megags.png"
-                  alt=""
-                />
-              </a>
-              <a href="https://www.betacineplex.vn/" title="Beta">
-                <FooterListImg
-                  className="iconConnect"
-                  src="../img/bt.jpg"
-                  alt=""
-                />
-              </a>
-              <a href="http://ddcinema.vn" title="DDC">
-                <FooterListImg
-                  className="iconConnect"
-                  src="../img/dongdacinema.png"
-                  alt=""
-                />
-              </a>
-              <a href="https://touchcinema.com/" title="Touch Cinema">
-                <FooterListImg className="iconConnect" src="../img/TOUCH.png" />
-              </a>
-              <a href="https://cinemaxvn.com/" title="Cinemax">
-                <FooterListImg className="iconConnect" src="../img/cnx.jpg" />
-              </a>
-            </div>
-            {/* Third Row */}
-            <div className="row col-sm-12 col-xs-12 linePartner">
-              <a href="http://starlight.vn/" title="Starlight">
-                <FooterListImg
-                  className="iconConnect"
-                  src="../img/STARLIGHT.png"
-                />
-              </a>
-              <a href="https://www.dcine.vn/" title="Dcine">
-                <FooterListImg className="iconConnect" src="../img/dcine.png" />
-              </a>
-              <a href="https://zalopay.vn/" title="ZaloPay">
-                <FooterListImg
-                  className="iconConnect"
-                  src="../img/zalopay_icon.png"
-                />
-              </a>
-              <a href="https://www.payoo.vn/" title="Payoo">
-                <FooterListImg className="iconConnect" src="../img/payoo.jpg" />
-              </a>
-              <a href="https://www.vietcombank.com.vn/" title="Vietcombank">
-                <FooterListImg className="iconConnect" src="../img/VCB.png" />
-              </a>
-            </div>
-          </FooterPartnership>
+          <Grid className={classes.partnership} item md={5}>
+            <Typography variant="h6" color="secondary">
+              <TextTranslation id="container.Footer.Partnership" />
+            </Typography>
+            {partnershipList.map((row, rowIndex) => (
+              <Box key={`row-${rowIndex}`} display="flex">
+                {row.list.map((item, index) => (
+                  <Button
+                    key={`partnershipImg-${index}`}
+                    href={item.href}
+                    target="_blank"
+                  >
+                    <img className={classes.img} src={item.img} alt="" />
+                  </Button>
+                ))}
+              </Box>
+            ))}
+          </Grid>
 
-          <div className="col-6 col-lg-3">
-            <FooterTitle>Liên hệ</FooterTitle>
-            <FooterList>
-              <FooterListImg
-                className="iconConnect mb-0"
-                src="../img/facebook-logo.png"
-              />
-              Facebook
-            </FooterList>
-            <FooterList>
-              <FooterListImg
-                className="iconConnect mb-0"
-                src="../img/zalo-logo.png"
-              />
-              Zalo
-            </FooterList>
-            <FooterList>
-              <PhoneIcon className="mr-2" />
-              028 7300 8881
-            </FooterList>
-          </div>
-        </div>
-        <FooterCopyRight>
-          2020 © Movie React Web / Web design by LTTT
-        </FooterCopyRight>
-      </div>
-    </FooterSection>
+          <Grid item xs={12} sm={6} md={4}>
+            <Typography variant="h6" color="secondary">
+              <TextTranslation id="container.Footer.Contact" />
+            </Typography>
+            <List component="nav" aria-label="secondary mailbox folders">
+              <ListItem button>
+                <img
+                  className={classes.img}
+                  src="../img/facebook-logo.png"
+                  alt=""
+                />
+                <ListItemText
+                  style={{ marginLeft: '10px' }}
+                  primary="Facebook"
+                />
+              </ListItem>
+              <ListItem button>
+                <img
+                  className={classes.img}
+                  src="../img/zalo-logo.png"
+                  alt=""
+                />
+                <ListItemText style={{ marginLeft: '10px' }} primary="Zalo" />
+              </ListItem>
+              <ListItem button>
+                <PhoneIcon />
+                <ListItemText
+                  style={{ marginLeft: '10px' }}
+                  primary="028 7300 8881"
+                />
+              </ListItem>
+            </List>
+          </Grid>
+        </Grid>
+        <Divider
+          style={{ backgroundColor: theme.palette.secondary.main }}
+          variant="middle"
+        />
+        <Box marginY="20px" textAlign="center">
+          <TextTranslation id="container.Footer.CopyRight" />
+        </Box>
+      </Container>
+    </Paper>
   );
 }
 
