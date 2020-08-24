@@ -1,4 +1,4 @@
-import { Button, Card, CardContent, Container } from '@material-ui/core';
+import { Box, Button, Container, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { PropTypes } from 'prop-types';
@@ -10,44 +10,36 @@ const useStyles = makeStyles((theme) => ({
   wrapper: {
     position: 'relative',
     width: '100%',
-    height: '70vh',
+    padding: '100px 0',
     backgroundColor: theme.palette.background.default,
-  },
-  container: {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-  },
-  root: {
-    display: 'flex',
-    width: '100%',
-    backgroundColor: 'transparent',
-    boxShadow: 'none',
+    [theme.breakpoints.down('sm')]: {
+      padding: '50px 0',
+    },
   },
   contentContainer: {
     width: '100%',
     position: 'relative',
   },
   imgContent: {
-    width: '30%',
-    padding: 0,
-    margin: '0 20px',
     borderRadius: 5,
     border: `1px solid ${theme.palette.secondary.main}`,
-    overflow: 'hidden',
+    maxWidth: 250,
+    maxHeight: 450,
   },
   content: {
-    position: 'absolute',
-    top: '50%',
-    transform: 'translateY(-50%)',
+    padding: '0 10px',
+    [theme.breakpoints.down('sm')]: {
+      textAlign: 'center',
+    },
   },
   padding: {
     padding: 5,
   },
-  bookingLink: {
-    backgroundColor: theme.palette.secondary.main,
-    color: theme.palette.titleBar.contrastText,
+  contentButton: {
+    display: 'flex',
+    [theme.breakpoints.down('sm')]: {
+      justifyContent: 'center',
+    },
   },
 }));
 
@@ -57,13 +49,15 @@ export default function CinemaIntro(props) {
 
   return (
     <div className={classes.wrapper}>
-      <Container maxWidth="md" className={classes.container}>
-        <Card className={classes.root}>
-          <CardContent className={classes.imgContent}>
-            <img src={cinema.hinhAnh} alt="" />
-          </CardContent>
-          <div className={classes.contentContainer}>
-            <CardContent className={classes.content}>
+      <Container maxWidth="md">
+        <Grid container alignItems="center" justify="center">
+          <Grid item xs={12} sm={3}>
+            <Box width="100%" display="flex" justifyContent="center">
+              <img className={classes.imgContent} src={cinema.hinhAnh} alt="" />
+            </Box>
+          </Grid>
+          <Grid item xs={12} sm={9}>
+            <div className={classes.content}>
               <Typography
                 variant="h5"
                 color="secondary"
@@ -79,14 +73,16 @@ export default function CinemaIntro(props) {
               >
                 {cinema.diaChi}
               </Typography>
-              <Button variant="contained" color="secondary" className="my-3">
-                <Link smooth={Boolean(true)} offset={-50} to="cinemaShowTime">
-                  <TextTranslation id="container.BookingButton" />
-                </Link>
-              </Button>
-            </CardContent>
-          </div>
-        </Card>
+              <div className={classes.contentButton}>
+                <Button variant="contained" color="secondary" className="my-3">
+                  <Link smooth={Boolean(true)} offset={-50} to="movieShowTime">
+                    <TextTranslation id="container.BookingButton" />
+                  </Link>
+                </Button>
+              </div>
+            </div>
+          </Grid>
+        </Grid>
       </Container>
     </div>
   );

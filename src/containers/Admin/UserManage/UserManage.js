@@ -8,8 +8,7 @@ import UserEditDialog from './UserEditDialog';
 
 const useStyle = makeStyles((theme) => ({
   wrapper: {
-    padding: 20,
-    height: 'calc(100vh - 68px)',
+    padding: '20px 20px 38px',
     backgroundColor: theme.palette.background.light,
   },
 }));

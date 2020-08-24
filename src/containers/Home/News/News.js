@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 import NewsItem from '../../../components/NewsItem/NewsItem';
 import { TextTranslation } from '../../Language/TextTranslation';
+import news from './news.json';
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -25,21 +26,17 @@ export default function News() {
           <TextTranslation id="container.Cinema.News" />
         </Typography>
         <Grid container spacing={2}>
-          <Grid item xs={12} sm={6}>
-            <NewsItem />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <NewsItem />
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            <NewsItem />
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            <NewsItem />
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            <NewsItem />
-          </Grid>
+          {news.map((item, index) => (
+            // Divide grid 2 elements/1st row and 3 for 2nd row
+            <Grid
+              key={`news-${index}`}
+              item
+              xs={12}
+              sm={index / 5 === 0 || index % 5 === 1 ? 6 : 4}
+            >
+              <NewsItem news={item} />
+            </Grid>
+          ))}
         </Grid>
       </Container>
     </Paper>

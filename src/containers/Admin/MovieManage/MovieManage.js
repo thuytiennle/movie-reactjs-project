@@ -10,8 +10,7 @@ import ShowTimeCreateDialog from './ShowTimeCreateDialog';
 
 const useStyle = makeStyles((theme) => ({
   wrapper: {
-    padding: 20,
-    height: 'calc(100vh - 68px)',
+    padding: '25px 20px 55px',
     backgroundColor: theme.palette.background.light,
   },
 }));

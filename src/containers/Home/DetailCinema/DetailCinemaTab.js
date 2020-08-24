@@ -6,13 +6,14 @@ import {
   Tabs,
   Typography,
 } from '@material-ui/core';
+import clsx from 'clsx';
 import { PropTypes } from 'prop-types';
 import React, { useEffect } from 'react';
 import { CustomTab } from '../../../components/Tabs';
 import { TextTranslation } from '../../Language/TextTranslation';
-import CinemaInfo from './CinemaInfo';
-import DateTab from '../DetailMovie/DateTab';
 import ShowTimeItem from '../Cinema/ShowTimeItem';
+import DateTab from '../DetailMovie/DateTab';
+import CinemaInfo from './CinemaInfo';
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -20,12 +21,33 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 'unset',
     padding: '60px 0',
   },
+  tabContainer: {
+    overflowX: 'scroll',
+    boxShadow: '0 0 20px #e8e8e86c',
+  },
+  scrollCustom: {
+    // Customize scrollbar
+    '&::-webkit-scrollbar': {
+      width: 4,
+      height: 4,
+      backgroundColor: '#e8e3e3',
+      borderRadius: 10,
+    },
+    '&::-webkit-scrollbar-track': {
+      borderRadius: 10,
+      boxShadow: 'inset 0 0 6px rgba(0, 0, 0, 0.3)',
+    },
+    '&::-webkit-scrollbar-thumb': {
+      borderRadius: 20,
+      backgroundColor: theme.palette.secondary.main,
+      outline: '1px solid slategrey',
+    },
+  },
   root: {
     flexGrow: 1,
     display: 'flex',
+    minWidth: 912,
     height: 600,
-    borderRadius: 10,
-    boxShadow: '0 0 20px #e8e8e86c',
     overflow: 'hidden',
   },
   padding: {
@@ -57,21 +79,6 @@ const useStyles = makeStyles((theme) => ({
   scrollbar: {
     height: '100%',
     overflowY: 'scroll',
-    // Customize scrollbar
-    '&::-webkit-scrollbar': {
-      width: 4,
-      backgroundColor: '#e8e3e3',
-      borderRadius: 10,
-    },
-    '&::-webkit-scrollbar-track': {
-      borderRadius: 10,
-      boxShadow: 'inset 0 0 6px rgba(0, 0, 0, 0.3)',
-    },
-    '&::-webkit-scrollbar-thumb': {
-      borderRadius: 20,
-      backgroundColor: theme.palette.secondary.main,
-      outline: '1px solid slategrey',
-    },
   },
 }));
 
@@ -201,37 +208,42 @@ export default function MovieShowTime(props) {
         <Typography variant="h5" color="secondary" className={classes.title}>
           <TextTranslation id="components.Navbar.ShowTime" />
         </Typography>
-        <div className={classes.root}>
-          {detailCinema && detailCinema.length > 0 && (
-            <>
-              <Grid item sm={4} className={classes.container1}>
-                <Tabs
-                  className={classes.tabsVetical}
-                  value={selectCinema}
-                  orientation="vertical"
-                  variant="scrollable"
-                  onChange={handleChangeTab1}
-                  aria-label="ant example"
-                >
-                  {renderCinemaTab()}
-                </Tabs>
-              </Grid>
-              <Grid item sm={8} className={classes.container2}>
-                <Tabs
-                  className={classes.tabsHorizontal}
-                  value={handleValue()}
-                  variant="scrollable"
-                  onChange={handleChangeTab2}
-                  aria-label="ant example"
-                >
-                  {renderDateTab()}
-                </Tabs>
-                <div role="tabpanel" className={classes.scrollbar}>
-                  {renderTabContent()}
-                </div>
-              </Grid>
-            </>
-          )}
+        <div className={clsx(classes.tabContainer, classes.scrollCustom)}>
+          <div className={classes.root}>
+            {detailCinema && detailCinema.length > 0 && (
+              <>
+                <Grid item sm={4} className={classes.container1}>
+                  <Tabs
+                    className={classes.tabsVetical}
+                    value={selectCinema}
+                    orientation="vertical"
+                    variant="scrollable"
+                    onChange={handleChangeTab1}
+                    aria-label="ant example"
+                  >
+                    {renderCinemaTab()}
+                  </Tabs>
+                </Grid>
+                <Grid item sm={8} className={classes.container2}>
+                  <Tabs
+                    className={classes.tabsHorizontal}
+                    value={handleValue()}
+                    variant="scrollable"
+                    onChange={handleChangeTab2}
+                    aria-label="ant example"
+                  >
+                    {renderDateTab()}
+                  </Tabs>
+                  <div
+                    role="tabpanel"
+                    className={clsx(classes.scrollbar, classes.scrollCustom)}
+                  >
+                    {renderTabContent()}
+                  </div>
+                </Grid>
+              </>
+            )}
+          </div>
         </div>
       </Container>
     </Paper>

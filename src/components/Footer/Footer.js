@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   wrapper: {
     borderRadius: 'unset',
     padding: '50px 0',
-    backgroundColor: theme.palette.background.dark,
+    backgroundColor: theme.palette.background.default,
   },
   img: {
     width: 40,
@@ -40,19 +40,19 @@ const partnershipList = [
     list: [
       {
         href: 'https://www.cgv.vn/',
-        img: '../img/cgv.png',
+        img: '../../img/cgv.png',
       },
       {
         href: 'http://bhdstar.vn',
-        img: '../img/bhd.png',
+        img: '../../img/bhd.png',
       },
       {
         href: 'http://galaxycine.vn',
-        img: '../img/galaxycine.png',
+        img: '../../img/galaxycine.png',
       },
       {
         href: 'http://cinestar.com.vn',
-        img: '../img/cinestar.png',
+        img: '../../img/cinestar.png',
       },
       {
         href: 'http://lottecinemavn.com',
@@ -66,23 +66,23 @@ const partnershipList = [
     list: [
       {
         href: 'https://www.megagscinemas.vn',
-        img: '../img/megags.png',
+        img: '../../img/megags.png',
       },
       {
         href: 'https://www.betacineplex.vn/',
-        img: '../img/bt.jpg',
+        img: '../../img/bt.jpg',
       },
       {
         href: 'http://ddcinema.vn',
-        img: '../img/dongdacinema.png',
+        img: '../../img/dongdacinema.png',
       },
       {
         href: 'https://touchcinema.com/',
-        img: '../img/TOUCH.png',
+        img: '../../img/TOUCH.png',
       },
       {
         href: 'https://cinemaxvn.com/',
-        img: '../img/cnx.jpg',
+        img: '../../img/cnx.jpg',
       },
     ],
   },
@@ -91,23 +91,23 @@ const partnershipList = [
     list: [
       {
         href: 'http://starlight.vn/',
-        img: '../img/STARLIGHT.png',
+        img: '../../img/STARLIGHT.png',
       },
       {
         href: 'https://www.dcine.vn/',
-        img: '../img/dcine.png',
+        img: '../../img/dcine.png',
       },
       {
         href: 'https://zalopay.vn/',
-        img: '../img/zalopay_icon.png',
+        img: '../../img/zalopay_icon.png',
       },
       {
         href: 'https://www.payoo.vn/',
-        img: '../img/payoo.jpg',
+        img: '../../img/payoo.jpg',
       },
       {
         href: 'https://www.vietcombank.com.vn/',
-        img: '../img/VCB.png',
+        img: '../../img/VCB.png',
       },
     ],
   },
@@ -153,7 +153,7 @@ function Footer() {
             </List>
           </Grid>
 
-          <Grid className={classes.partnership} item md={5}>
+          <Grid className={classes.partnership} item md={5} lg={4}>
             <Typography variant="h6" color="secondary">
               <TextTranslation id="container.Footer.Partnership" />
             </Typography>
@@ -180,7 +180,7 @@ function Footer() {
               <ListItem button>
                 <img
                   className={classes.img}
-                  src="../img/facebook-logo.png"
+                  src="../../img/facebook-logo.png"
                   alt=""
                 />
                 <ListItemText
@@ -191,7 +191,7 @@ function Footer() {
               <ListItem button>
                 <img
                   className={classes.img}
-                  src="../img/zalo-logo.png"
+                  src="../../img/zalo-logo.png"
                   alt=""
                 />
                 <ListItemText style={{ marginLeft: '10px' }} primary="Zalo" />

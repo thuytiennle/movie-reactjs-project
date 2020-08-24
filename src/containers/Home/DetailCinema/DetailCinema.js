@@ -6,6 +6,7 @@ import { Loader, Spinner } from '../../../components/LoadingIndicator';
 import CinemaIntro from './CinemaIntro';
 import DetailCinemaTab from './DetailCinemaTab';
 import { actFetchDetailCinemaRequest } from './modules/actions';
+import { Footer } from '../../../components/Footer';
 
 export default function DetailCinema() {
   // useSelector uses to get state from store
@@ -73,6 +74,7 @@ export default function DetailCinema() {
                 cinemaId={cinemaId}
               />
             </div>
+            <Footer />
           </Box>
         </>
       ) : (

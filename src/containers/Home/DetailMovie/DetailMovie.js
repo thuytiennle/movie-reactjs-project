@@ -8,6 +8,7 @@ import { actMovieModalClose } from '../MovieShow/modules/actions';
 import CinemaShowTimeTab from './CinemaShowTimeTab';
 import { actFetchDetailMovieRequest } from './modules/actions';
 import MovieIntro from './MovieIntro';
+import { Footer } from '../../../components/Footer';
 
 export default function DetailMovie() {
   // useSelector uses to get state from store
@@ -63,6 +64,7 @@ export default function DetailMovie() {
             <div id="movieShowTime">
               <CinemaShowTimeTab detailMovie={detailMovie} />
             </div>
+            <Footer />
           </Box>
         </>
       )}

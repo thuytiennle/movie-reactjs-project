@@ -8,6 +8,7 @@ import { UserManage } from '../containers/Admin/UserManage';
 import { MovieManage } from '../containers/Admin/MovieManage';
 import { AddUser } from '../containers/Admin/UserManage/AddUser';
 import { AddMovie } from '../containers/Admin/MovieManage/AddMovie';
+import { DetailNews } from '../containers/Home/News/DetailNews';
 
 export const routesHome = [
   {
@@ -28,6 +29,12 @@ export const routesHome = [
     exact: false,
     auth: false,
     component: DetailCinema,
+  },
+  {
+    path: '/news/:newsId',
+    exact: false,
+    auth: false,
+    component: DetailNews,
   },
   {
     path: '/cinema-booking-room/:showTimeId',

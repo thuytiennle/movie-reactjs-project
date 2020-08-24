@@ -60,7 +60,7 @@ export default function DashBoardNavBar(props) {
           </Typography>
         </CustomRouterLink>
         {/* THEME, LANGUAGE MODE */}
-        <Box display={{ xs: 'none', md: 'flex' }} alignItems="center">
+        <Box display={{ xs: 'none', lg: 'flex' }} alignItems="center">
           <LanguageSelector />
           <ThemeSwitchButton />
           {/* Check if user login then show sign in or sign out button */}

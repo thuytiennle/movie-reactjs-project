@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   wrapper: {
     marginTop: '68px',
     backgroundColor: theme.palette.background.dark,
-    height: 'calc(100vh - 68px)',
+    padding: '32px 0 100px',
   },
   buttonContainer: {
     width: '100%',

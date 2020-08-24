@@ -32,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
   tabContainer: {
     overflow: 'hidden',
     overflowX: 'scroll',
+    boxShadow: '0 0 20px #e8e8e86c',
   },
   scrollCustom: {
     // Customize scrollbar
@@ -54,7 +55,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: 912,
     height: 600,
-    boxShadow: '0 0 20px #e8e8e86c',
     overflow: 'hidden',
   },
   container1: {

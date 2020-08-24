@@ -1,4 +1,4 @@
-import { Button } from '@material-ui/core';
+import { Button, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
@@ -12,16 +12,10 @@ import { actFetchSearchUserRequest } from './module/actions';
 const useStyles = makeStyles((theme) => ({
   root: {
     marginLeft: 0,
+    marginBottom: 30,
     [theme.breakpoints.up('lg')]: {
       marginLeft: 240,
     },
-  },
-  row: {
-    height: '42px',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    margin: theme.spacing(2),
   },
   searchInput: {
     marginRight: theme.spacing(1),
@@ -47,23 +41,27 @@ const UsersToolbar = (props) => {
 
   return (
     <div {...rest} className={clsx(classes.root, className)}>
-      <div className={classes.row}>
-        <SearchInput
-          className={classes.searchInput}
-          placeholder={TextTranslation({
-            id: 'container.Admin.UserManage.SearchUser',
-          })}
-          onChange={handleChange}
-        />
-        <Button
-          className={classes.routerButton}
-          variant="contained"
-          component={Link}
-          to="/admin/user-manage/add-user"
-        >
-          <TextTranslation id="container.Admin.UserManage.AddUserBtn" />
-        </Button>
-      </div>
+      <Grid container alignItems="center">
+        <Grid item xs={12} sm={4} style={{ margin: '15px 0' }}>
+          <Button
+            className={classes.routerButton}
+            variant="contained"
+            component={Link}
+            to="/admin/user-manage/add-user"
+          >
+            <TextTranslation id="container.Admin.UserManage.AddUserBtn" />
+          </Button>
+        </Grid>
+        <Grid item xs={12} sm={8}>
+          <SearchInput
+            className={classes.searchInput}
+            placeholder={TextTranslation({
+              id: 'container.Admin.UserManage.SearchUser',
+            })}
+            onChange={handleChange}
+          />
+        </Grid>
+      </Grid>
     </div>
   );
 };

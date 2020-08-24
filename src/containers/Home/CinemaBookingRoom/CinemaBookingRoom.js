@@ -19,9 +19,8 @@ import { actFetchCinemaBookingRoomRequest } from './modules/actions';
 const useStyles = makeStyles((theme) => ({
   wrapper: {
     marginTop: 68,
-    padding: 20,
+    padding: 39,
     borderRadius: 'unset',
-    height: 'calc(100vh - 68px)',
     backgroundColor: theme.palette.background.dark,
   },
   link: {
@@ -93,7 +92,7 @@ export default function CinemaBookingRoom() {
         cinemaBookingRoom.thongTinPhim &&
         cinemaBookingRoom.danhSachGhe && (
           <Grid container>
-            <Grid item sm={9}>
+            <Grid item sm={12} md={8} lg={9}>
               <Container maxWidth="md">
                 <Box display="flex" justifyContent="space-between">
                   <div>
@@ -120,7 +119,7 @@ export default function CinemaBookingRoom() {
                 </Box>
               </Container>
             </Grid>
-            <Grid item sm={3}>
+            <Grid item sm={12} md={4} lg={3} style={{ marginTop: 20 }}>
               <BookingSeatForm cinemaBookingRoom={cinemaBookingRoom} />
             </Grid>
             {/* display dialog when time is up */}

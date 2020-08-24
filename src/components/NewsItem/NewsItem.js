@@ -1,57 +1,62 @@
 import {
   Button,
   Card,
-  CardActionArea,
   CardActions,
   CardContent,
   CardMedia,
   Typography,
 } from '@material-ui/core';
+import ShareIcon from '@material-ui/icons/Share';
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { PropTypes } from 'prop-types';
+import { Link } from 'react-router-dom';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   card: {
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
   },
   newsContent: {
-    height: 42,
+    textOverflow: 'ellipsis',
     overflow: 'hidden',
+  },
+  link: {
+    color: theme.palette.text.primary,
+    '&:hover': {
+      textDecoration: 'none',
+      color: theme.palette.text.secondary,
+    },
   },
 }));
 
-export default function NewsItem() {
+export default function NewsItem(props) {
+  const { news } = props;
   const classes = useStyles();
   return (
     <Card className={classes.card}>
-      <CardActionArea>
-        <CardMedia
-          component="img"
-          height="80"
-          image="https://galaxycine.vn/media/2020/7/15/wonder-woman-1984-publicity-still-5-h-2019-1_1594801321671.jpg"
-        />
-      </CardActionArea>
+      <Link to={`/news/${news.id}`}>
+        <CardMedia component="img" height="80" image={news.img} />
+      </Link>
       <CardContent>
-        <CardActionArea>
-          <Typography gutterBottom variant="h5" component="h2">
-            Lizard
+        <Link className={classes.link} to={`/news/${news.id}`}>
+          <Typography gutterBottom variant="h6" component="h2">
+            {`${news.title.substring(0, 45)} ...`}
           </Typography>
-        </CardActionArea>
+        </Link>
         <Typography
           className={classes.newsContent}
           variant="body2"
           color="textSecondary"
           component="p"
         >
-          Lizards are a widespread group of squamate reptiles, with over 6,000
-          species, ranging across all continents except Antarctica
+          {`${news.content.substring(0, 50)} ...`}
         </Typography>
       </CardContent>
       <CardActions>
         <Button size="small" color="primary">
-          Share
+          <ShareIcon />
         </Button>
         <Button size="small" color="primary">
           Learn More
@@ -60,3 +65,7 @@ export default function NewsItem() {
     </Card>
   );
 }
+
+NewsItem.propTypes = {
+  news: PropTypes.any,
+};
