@@ -1,13 +1,13 @@
-import React, { useCallback, memo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { makeStyles, Paper } from '@material-ui/core';
+import React, { memo, useCallback } from 'react';
 import ModalVideo from 'react-modal-video';
-import { Paper, makeStyles } from '@material-ui/core';
-import { MovieItem } from '../../../components/MovieItem';
-import { actMovieModalClose } from './modules/actions';
-import { SimpleTabs } from '../../../components/Tabs';
+import { useDispatch, useSelector } from 'react-redux';
 import { Spinner } from '../../../components/LoadingIndicator';
+import { MovieItem } from '../../../components/MovieItem';
 import { CoverflowSwiper } from '../../../components/Swiper';
+import { SimpleTabs } from '../../../components/Tabs';
 import { TextTranslation } from '../../Language/TextTranslation';
+import { actMovieModalClose } from './modules/actions';
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {

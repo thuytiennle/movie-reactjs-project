@@ -4,14 +4,16 @@ import {
   Grid,
   TextField,
   Typography,
+  Snackbar,
 } from '@material-ui/core';
 import Avatar from '@material-ui/core/Avatar';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import Alert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { Form, Formik } from 'formik';
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import * as yup from 'yup';
 import { TextTranslation } from '../../Language/TextTranslation';
@@ -23,8 +25,6 @@ const SignInSchema = yup.object().shape({
     .required(<TextTranslation id="container.Auth.SignUp.AccountValidate" />),
   matKhau: yup
     .string()
-    .min(6, <TextTranslation id="container.Auth.SignUp.PassValidateShort" />)
-    .max(20, <TextTranslation id="container.Auth.SignUp.PassValidateLong" />)
     .required(<TextTranslation id="container.Auth.SignUp.PasswordValidate" />),
 });
 
@@ -60,14 +60,28 @@ export default function SignIn() {
   const location = useLocation();
   const history = useHistory();
   const { from } = location.state || { from: { pathname: '/' } };
+  // Set state
+  const [openAlert, serOpenAlert] = React.useState(false);
   // Get state from store
-  // const infoUserSignInError = useSelector(
-  //   (state) => state.AuthReducer.infoUserSignInError,
-  // );
+  const infoUserSignInError = useSelector(
+    (state) => state.AuthReducer.infoUserSignInError,
+  );
 
-  // if (infoUserSignInError) {
-  //   console.log(infoUserSignInError.response.data);
-  // }
+  // Update openAlert when error occurs
+  React.useEffect(() => {
+    if (infoUserSignInError) {
+      serOpenAlert(true);
+    }
+  }, [infoUserSignInError]);
+
+  // Close alert
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    serOpenAlert(false);
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -149,6 +163,18 @@ export default function SignIn() {
             </Form>
           )}
         </Formik>
+        {/* Display when sign in have error */}
+        {infoUserSignInError && (
+          <Snackbar
+            open={openAlert}
+            autoHideDuration={6000}
+            onClose={handleClose}
+          >
+            <Alert onClose={handleClose} severity="error">
+              {infoUserSignInError.response.data}
+            </Alert>
+          </Snackbar>
+        )}
       </div>
     </Container>
   );

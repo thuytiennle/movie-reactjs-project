@@ -6,6 +6,7 @@ import {
   FETCH_CINEMA_BOOKING_TICKET_REQUEST,
   FETCH_CINEMA_BOOKING_TICKET_SUCCESS,
   FETCH_CINEMA_BOOKING_TICKET_FAILED,
+  RESET_FOR_NEXT_BOOKING,
 } from './constants';
 
 export const actFetchCinemaBookingRoomRequest = (showTimeId) => {
@@ -50,5 +51,11 @@ export const actFetchCinemaBookingTicketFailed = (error) => {
   return {
     type: FETCH_CINEMA_BOOKING_TICKET_FAILED,
     error,
+  };
+};
+
+export const actResetForNextBooking = () => {
+  return {
+    type: RESET_FOR_NEXT_BOOKING,
   };
 };

@@ -1,4 +1,4 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, put, takeLatest, delay } from 'redux-saga/effects';
 import { callAPI } from '../../../../utils/callAPI';
 import {
   actFetchListUserFailed,
@@ -24,6 +24,7 @@ import { authHeader } from '../../../../utils/auth-header';
 
 function* listUserSaga() {
   try {
+    yield delay(1000);
     const response = yield call(() =>
       callAPI('QuanLyNguoiDung/LayDanhSachNguoiDung?MaNhom=GP05', 'GET', null),
     );

@@ -2,7 +2,7 @@ import { Box } from '@material-ui/core';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { Loader, Spinner } from '../../../components/LoadingIndicator';
+import { Loader } from '../../../components/LoadingIndicator';
 import CinemaIntro from './CinemaIntro';
 import DetailCinemaTab from './DetailCinemaTab';
 import { actFetchDetailCinemaRequest } from './modules/actions';
@@ -14,7 +14,7 @@ export default function DetailCinema() {
     (state) => state.detailCinemaReducer.detailCinema,
   );
   const loadingDetailCinema = useSelector(
-    (state) => state.detailMovieReducer.loadingDetailCinema,
+    (state) => state.detailCinemaReducer.loadingDetailCinema,
   );
 
   // Declare dispatch func
@@ -26,11 +26,6 @@ export default function DetailCinema() {
     // Dispatch actFetchDetailMovieRequest
     dispatch(actFetchDetailCinemaRequest(cinemaId));
   }, [dispatch, cinemaId]);
-
-  // Display Loader while loading data
-  if (loadingDetailCinema) {
-    return <Loader />;
-  }
 
   // Function find index
   const findIndex = (mang, key, id) => {
@@ -57,29 +52,31 @@ export default function DetailCinema() {
       );
     }
   };
+  // Display Loader while loading data
+  if (loadingDetailCinema) {
+    return <Loader />;
+  }
 
   return (
     <div className="wrapper">
       {/* Check in case detailMovie.data is null then can not read props of detailMovie  */}
       {detailCinema[0] &&
-      detailCinema[0].lstCumRap &&
-      detailCinema[0].lstCumRap.length > 0 ? (
-        <>
-          <Box marginTop="68px">
-            {renderCinemaIntro()}
-            <div id="cinemaShowTime">
-              <DetailCinemaTab
-                detailCinema={[...detailCinema[0].lstCumRap]}
-                cinemaBranchId={cinemaBranchId}
-                cinemaId={cinemaId}
-              />
-            </div>
-            <Footer />
-          </Box>
-        </>
-      ) : (
-        <Spinner />
-      )}
+        detailCinema[0].lstCumRap &&
+        detailCinema[0].lstCumRap.length > 0 && (
+          <>
+            <Box marginTop="68px">
+              {renderCinemaIntro()}
+              <div id="cinemaShowTime">
+                <DetailCinemaTab
+                  detailCinema={[...detailCinema[0].lstCumRap]}
+                  cinemaBranchId={cinemaBranchId}
+                  cinemaId={cinemaId}
+                />
+              </div>
+              <Footer />
+            </Box>
+          </>
+        )}
     </div>
   );
 }

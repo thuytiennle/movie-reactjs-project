@@ -4,7 +4,7 @@ import { Link } from 'react-scroll';
 import PropTypes from 'prop-types';
 import { CustomThemeContext } from '../../containers/Theme/CustomThemeContext';
 
-const ScrollLink = styled(Link)`
+export const ScrollLink = styled(Link)`
   position: relative;
   display: ${(props) => props.display};
   margin: 0 10px;

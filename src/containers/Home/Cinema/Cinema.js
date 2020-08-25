@@ -31,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
   tabContainer: {
     overflow: 'hidden',
+    height: 600,
     overflowX: 'scroll',
     boxShadow: '0 0 20px #e8e8e86c',
   },
@@ -194,10 +195,10 @@ function Cinema() {
           <TextTranslation id="container.Cinema.Title" />
         </Typography>
         <div className={clsx(classes.tabContainer, classes.scrollCustom)}>
-          <Grid container className={classes.root}>
-            <Grid item sm={1} className={classes.container1}>
-              {/* When cinemaComplex has data then render tabs otherwise spinner */}
-              {cinemaComplex && cinemaComplex.length ? (
+          {cinemaComplex && cinemaComplex.length > 0 ? (
+            <Grid container className={classes.root}>
+              <Grid item sm={1} className={classes.container1}>
+                {/* When cinemaComplex has data then render tabs otherwise spinner */}
                 <Tabs
                   value={handleValueTab1()}
                   orientation="vertical"
@@ -208,46 +209,46 @@ function Cinema() {
                 >
                   {renderCinemaComplex()}
                 </Tabs>
-              ) : (
-                <Spinner />
-              )}
+              </Grid>
+              <Grid item sm={11} className={classes.container2}>
+                <div className={classes.rootInner}>
+                  {cinemaBranch &&
+                  cinemaBranch.length > 0 &&
+                  cinemaBranch[0].lstCumRap &&
+                  cinemaBranch[0].lstCumRap.length > 0 ? (
+                    <>
+                      <Grid item sm={4}>
+                        <Tabs
+                          value={selectCinemaBranch}
+                          orientation="vertical"
+                          variant="scrollable"
+                          onChange={handleChangeTab2}
+                          aria-label="ant example"
+                          className={classes.tabsVetical}
+                        >
+                          {renderCinemaBranch()}
+                        </Tabs>
+                      </Grid>
+                      <Grid item sm={8} role="tabpanel">
+                        <div
+                          className={clsx(
+                            classes.scrollbar,
+                            classes.scrollCustom,
+                          )}
+                        >
+                          {renderCinemaShowTime()}
+                        </div>
+                      </Grid>
+                    </>
+                  ) : (
+                    <Spinner />
+                  )}
+                </div>
+              </Grid>
             </Grid>
-            <Grid item sm={11} className={classes.container2}>
-              <div className={classes.rootInner}>
-                {cinemaBranch &&
-                cinemaBranch.length > 0 &&
-                cinemaBranch[0].lstCumRap &&
-                cinemaBranch[0].lstCumRap.length > 0 ? (
-                  <>
-                    <Grid item sm={4}>
-                      <Tabs
-                        value={selectCinemaBranch}
-                        orientation="vertical"
-                        variant="scrollable"
-                        onChange={handleChangeTab2}
-                        aria-label="ant example"
-                        className={classes.tabsVetical}
-                      >
-                        {renderCinemaBranch()}
-                      </Tabs>
-                    </Grid>
-                    <Grid item sm={8} role="tabpanel">
-                      <div
-                        className={clsx(
-                          classes.scrollbar,
-                          classes.scrollCustom,
-                        )}
-                      >
-                        {renderCinemaShowTime()}
-                      </div>
-                    </Grid>
-                  </>
-                ) : (
-                  <Spinner />
-                )}
-              </div>
-            </Grid>
-          </Grid>
+          ) : (
+            <Spinner />
+          )}
         </div>
       </Container>
     </Paper>

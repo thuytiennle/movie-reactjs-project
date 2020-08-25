@@ -6,12 +6,14 @@ import {
   FETCH_CINEMA_BOOKING_TICKET_REQUEST,
   FETCH_CINEMA_BOOKING_TICKET_SUCCESS,
   FETCH_CINEMA_BOOKING_TICKET_FAILED,
+  RESET_FOR_NEXT_BOOKING,
 } from './constants';
 
 const initialState = {
   cinemaBookingRoom: {},
   loadingCinemaBookingRoom: false,
   errorCinemaBookingRoom: null,
+  openSucessDialog: false,
   cinemaBookingTicket: '',
   loadingCinemaBookingTicket: false,
   errorCinemaBookingTicket: null,
@@ -46,6 +48,8 @@ const cinemaBookingRoomReducer = (state = initialState, action) => {
       state.cinemaBookingTicket = action.data;
       state.loadingCinemaBookingTicket = false;
       state.errorCinemaBookingTicket = null;
+      // Booking successfully then opendialog
+      state.openSucessDialog = true;
       return { ...state };
     case FETCH_CINEMA_BOOKING_TICKET_FAILED:
       state.cinemaBookingTicket = '';
@@ -65,6 +69,17 @@ const cinemaBookingRoomReducer = (state = initialState, action) => {
       state.listBookingSeat = [...listSeat];
       return { ...state };
     }
+    // Close Booking Success Dialog
+    case RESET_FOR_NEXT_BOOKING:
+      state.cinemaBookingRoom = {};
+      state.loadingCinemaBookingRoom = false;
+      state.errorCinemaBookingRoom = null;
+      state.openSucessDialog = false;
+      state.cinemaBookingTicket = '';
+      state.loadingCinemaBookingTicket = false;
+      state.errorCinemaBookingTicket = null;
+      state.listBookingSeat = [];
+      return { ...state };
     default:
       return state;
   }

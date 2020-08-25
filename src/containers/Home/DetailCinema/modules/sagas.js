@@ -1,4 +1,4 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, put, takeLatest, delay } from 'redux-saga/effects';
 import { callAPI } from '../../../../utils/callAPI';
 import { FETCH_DETAIL_CINEMA_REQUEST } from './constants';
 import {
@@ -9,6 +9,8 @@ import {
 // Saga Worker: detailCinemaSaga
 function* detailCinemaSaga({ cinemaId }) {
   try {
+    // Delay to display loading
+    yield delay(2500);
     const response = yield call(() =>
       callAPI(
         `QuanLyRap/LayThongTinLichChieuHeThongRap?maHeThongRap=${cinemaId}&maNhom=GP05`,

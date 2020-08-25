@@ -19,6 +19,7 @@ import { SimpleTabs } from '../../../components/Tabs';
 import ProfileDetail from './ProfileDetail';
 import ProfileBookingHistory from './ProfileBookingHistory';
 import { actSignOut } from '../../Auth/module/actions';
+import { Loader } from '../../../components/LoadingIndicator';
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -41,6 +42,9 @@ export default function Profile() {
   const userProfile = useSelector((state) => state.profileReducer.userProfile);
   const userProfileUpdated = useSelector(
     (state) => state.profileReducer.userProfileUpdated,
+  );
+  const loadingUserProfile = useSelector(
+    (state) => state.profileReducer.loadingUserProfile,
   );
   const errorUserProfileUpdated = useSelector(
     (state) => state.profileReducer.errorUserProfileUpdated,
@@ -91,6 +95,10 @@ export default function Profile() {
       setOpenDialog(false);
     }
   };
+
+  if (loadingUserProfile) {
+    return <Loader />;
+  }
 
   return (
     <div className={classes.wrapper}>

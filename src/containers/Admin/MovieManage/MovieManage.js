@@ -7,6 +7,7 @@ import MovieToolbar from './MovieToolbar';
 import MovieEditDialog from './MovieEditDialog';
 import { actCloseMovieDialog, actCloseShowTimeDialog } from './module/actions';
 import ShowTimeCreateDialog from './ShowTimeCreateDialog';
+import { Loader } from '../../../components/LoadingIndicator';
 
 const useStyle = makeStyles((theme) => ({
   wrapper: {
@@ -20,6 +21,9 @@ export default function MovieManage() {
   const dispatch = useDispatch();
   // Get state from store
   const listMovie = useSelector((state) => state.listMovieReducer.listMovie);
+  const loadingListMovie = useSelector(
+    (state) => state.listMovieReducer.loadingListMovie,
+  );
   const openMovieDialog = useSelector(
     (state) => state.movieManageReducer.openDialog,
   );
@@ -32,6 +36,11 @@ export default function MovieManage() {
     // Dispatch action request to init saga listMovie API
     dispatch(actFetchListMovieRequest());
   }, [dispatch]);
+
+  // Loader
+  if (loadingListMovie) {
+    return <Loader />;
+  }
 
   return (
     <div className={classes.wrapper}>

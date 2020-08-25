@@ -5,10 +5,12 @@ import UserTable from './UserTable';
 import { actFetchListUserRequest, actCloseEditDialog } from './module/actions';
 import UsersToolbar from './UserToolbar';
 import UserEditDialog from './UserEditDialog';
+import { Loader } from '../../../components/LoadingIndicator';
 
 const useStyle = makeStyles((theme) => ({
   wrapper: {
-    padding: '20px 20px 38px',
+    padding: 20,
+    height: 'calc(100vh - 68px)',
     backgroundColor: theme.palette.background.light,
   },
 }));
@@ -18,6 +20,9 @@ export default function UserManage() {
   const dispatch = useDispatch();
   // Get state from store
   const listUser = useSelector((state) => state.userManageReducer.listUser);
+  const loadingListUser = useSelector(
+    (state) => state.userManageReducer.loadingListUser,
+  );
   const openEditDialog = useSelector(
     (state) => state.userManageReducer.openEditDialog,
   );
@@ -27,6 +32,10 @@ export default function UserManage() {
   React.useEffect(() => {
     dispatch(actFetchListUserRequest());
   }, [dispatch]);
+
+  if (loadingListUser) {
+    return <Loader />;
+  }
 
   return (
     <div className={classes.wrapper}>

@@ -1,4 +1,4 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, put, takeLatest, delay } from 'redux-saga/effects';
 import { callAPI } from '../../../../utils/callAPI';
 import {
   actFetchDetailMovieSuccess,
@@ -10,6 +10,8 @@ import { FECTH_DETAIL_MOVIE_REQUEST } from './constants';
 function* detailMovieSaga(action) {
   const { id } = action;
   try {
+    // Delay to display loading
+    yield delay(2500);
     // Call func uses for handling async functions as Axios, setTimeout with params 1 callback function
     const response = yield call(() =>
       callAPI(`QuanLyRap/LayThongTinLichChieuPhim?MaPhim=${id}`, 'GET', null),

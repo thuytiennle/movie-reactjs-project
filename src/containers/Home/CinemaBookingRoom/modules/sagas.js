@@ -1,4 +1,4 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, put, takeLatest, delay } from 'redux-saga/effects';
 import {
   FETCH_CINEMA_BOOKING_ROOM_REQUEST,
   FETCH_CINEMA_BOOKING_TICKET_REQUEST,
@@ -14,6 +14,8 @@ import { authHeader } from '../../../../utils/auth-header';
 
 function* cinemaBookingRoomSaga({ showTimeId }) {
   try {
+    // Delay to display loading
+    yield delay(2500);
     const response = yield call(() =>
       callAPI(
         `QuanLyDatVe/LayDanhSachPhongVe?MaLichChieu=${showTimeId}`,

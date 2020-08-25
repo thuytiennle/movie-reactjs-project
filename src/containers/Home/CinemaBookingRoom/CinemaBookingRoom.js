@@ -11,10 +11,14 @@ import {
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
+import { Loader } from '../../../components/LoadingIndicator';
 import { TextTranslation } from '../../Language/TextTranslation';
 import BookingSeatForm from './BookingSeatForm';
 import ListBookingSeat from './ListBookingSeat';
-import { actFetchCinemaBookingRoomRequest } from './modules/actions';
+import {
+  actFetchCinemaBookingRoomRequest,
+  actResetForNextBooking,
+} from './modules/actions';
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -41,19 +45,26 @@ export default function CinemaBookingRoom() {
   const cinemaBookingRoom = useSelector(
     (state) => state.cinemaBookingRoomReducer.cinemaBookingRoom,
   );
-  const cinemaBookingTicket = useSelector(
-    (state) => state.cinemaBookingRoomReducer.cinemaBookingTicket,
+  const openSucessDialog = useSelector(
+    (state) => state.cinemaBookingRoomReducer.openSucessDialog,
+  );
+  const loadingCinemaBookingRoom = useSelector(
+    (state) => state.cinemaBookingRoomReducer.loadingCinemaBookingRoom,
   );
 
   const classes = useStyles();
   const dispatch = useDispatch();
   const { showTimeId } = useParams();
 
-  const [second, setSecond] = React.useState(300);
+  const [second, setSecond] = React.useState(60);
   const [time, setTime] = React.useState({});
   const [openDialogTimeUp, setOpenDialogTimeUp] = React.useState(false);
 
+  // DidMount get list seat
   useEffect(() => {
+    // Close booking Successful Dialog of the previous order
+    dispatch(actResetForNextBooking());
+    // Call API render list seat
     dispatch(actFetchCinemaBookingRoomRequest(showTimeId));
   }, [dispatch, showTimeId]);
 
@@ -66,6 +77,7 @@ export default function CinemaBookingRoom() {
     };
   };
 
+  // Update time count down
   useEffect(() => {
     let interval = null;
     if (second !== 0) {
@@ -81,10 +93,15 @@ export default function CinemaBookingRoom() {
     return () => clearInterval(interval);
   }, [second]);
 
+  // Time booking out then off the dialog alerting and set time
   const handleBookingAgain = () => {
     setOpenDialogTimeUp(false);
     setSecond(300);
   };
+
+  if (loadingCinemaBookingRoom) {
+    return <Loader />;
+  }
 
   return (
     <Paper className={classes.wrapper}>
@@ -140,10 +157,7 @@ export default function CinemaBookingRoom() {
               </Box>
             </Dialog>
             {/* Display dialog when booking is successful */}
-            <Dialog
-              disableBackdropClick
-              open={cinemaBookingTicket ? Boolean(true) : Boolean(false)}
-            >
+            <Dialog disableBackdropClick open={openSucessDialog}>
               <Box padding="10px" alignItems="center">
                 <Typography>
                   <TextTranslation id="container.CinemaBookingRoom.BookingSuccess" />

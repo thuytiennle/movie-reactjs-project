@@ -63,12 +63,8 @@ function ProfileDetail(props) {
                       onChange={handleChange}
                       value={values.taiKhoan}
                       variant="outlined"
-                      error={errors.taiKhoan && touched.taiKhoan}
-                      helperText={
-                        errors.taiKhoan && touched.taiKhoan
-                          ? errors.taiKhoan
-                          : null
-                      }
+                      // Can not edit username
+                      disabled
                     />
                   </Grid>
                   <Grid item md={6} xs={12}>

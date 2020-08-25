@@ -12,3 +12,5 @@ export const FETCH_CINEMA_BOOKING_TICKET_SUCCESS =
   'cinemaBookingRoom/cinemaBookingTicketReducer/FETCH_CINEMA_BOOKING_TICKET_SUCCESS';
 export const FETCH_CINEMA_BOOKING_TICKET_FAILED =
   'cinemaBookingRoom/cinemaBookingTicketReducer/FETCH_CINEMA_BOOKING_TICKET_FAILED';
+export const RESET_FOR_NEXT_BOOKING =
+  'cinemaBookingRoom/cinemaBookingTicketReducer/RESET_FOR_NEXT_BOOKING';

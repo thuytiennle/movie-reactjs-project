@@ -24,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('lg')]: {
       marginLeft: 240,
     },
+    [theme.breakpoints.down('md')]: {
+      height: 'auto',
+    },
   },
   button: {
     width: '100%',

@@ -1,4 +1,4 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, put, takeLatest, delay } from 'redux-saga/effects';
 import { callAPI } from '../../../../utils/callAPI';
 import {
   actFetchUserProfileFailed,
@@ -14,6 +14,8 @@ import { authHeader } from '../../../../utils/auth-header';
 
 function* userProfileSaga({ account }) {
   try {
+    // Wait 2500s to show loading
+    yield delay(2500);
     const response = yield call(() =>
       callAPI('QuanLyNguoiDung/ThongTinTaiKhoan', 'POST', account),
     );

@@ -6,7 +6,7 @@ import {
 
 const initialState = {
   detailCinema: [],
-  loadingDetailCinema: false,
+  loadingDetailCinema: true,
   errorDetailCinema: null,
 };
 

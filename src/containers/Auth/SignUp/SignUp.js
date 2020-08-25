@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { Formik } from 'formik';
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { TextTranslation } from '../../Language/TextTranslation';
 import { actFetchSignUpRequest } from '../module/actions';
@@ -47,6 +47,12 @@ const useStyles = makeStyles((theme) => ({
 export default function SignUp() {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const infoUserError = useSelector((state) => state.AuthReducer.infoUserError);
+
+  // When error happens then alert
+  if (infoUserError) {
+    console.log(infoUserError.response.data);
+  }
 
   return (
     <Container component="main" maxWidth="xs">
