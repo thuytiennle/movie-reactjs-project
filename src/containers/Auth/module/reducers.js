@@ -2,6 +2,7 @@ import {
   FETCH_SIGN_UP_REQUEST,
   FETCH_SIGN_UP_SUCCESS,
   FETCH_SIGN_UP_FAILED,
+  RESET_STATE_SIGN_UP,
   FETCH_SIGN_IN_REQUEST,
   FETCH_SIGN_IN_SUCCESS,
   FETCH_SIGN_IN_FAILED,
@@ -44,6 +45,11 @@ const AuthReducer = (state = intialState, action) => {
       state.infoUser = {};
       state.loadingInfoUser = Boolean(true);
       state.infoUserError = action.err;
+      return { ...state };
+    case RESET_STATE_SIGN_UP:
+      state.infoUser = {};
+      state.loadingInfoUser = Boolean(true);
+      state.infoUserError = null;
       return { ...state };
     // Sign In
     case FETCH_SIGN_IN_REQUEST:

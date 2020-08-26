@@ -56,6 +56,7 @@ module.exports = {
     'no-param-reassign': 0,
     'no-return-assign': 0,
     'no-restricted-syntax': 0,
+    'no-lonely-if': 0,
     'require-yield': 0,
     'prefer-destructuring': 0,
     'global-require': 0,

@@ -14,3 +14,9 @@ export const FETCH_CINEMA_BOOKING_TICKET_FAILED =
   'cinemaBookingRoom/cinemaBookingTicketReducer/FETCH_CINEMA_BOOKING_TICKET_FAILED';
 export const RESET_FOR_NEXT_BOOKING =
   'cinemaBookingRoom/cinemaBookingTicketReducer/RESET_FOR_NEXT_BOOKING';
+export const DIALOG_MESSAGE =
+  'cinemaBookingRoom/cinemaBookingTicketReducer/DIALOG_MESSAGE';
+export const DISABLE_BOOKING_BUTTON =
+  'cinemaBookingRoom/cinemaBookingTicketReducer/DISABLE_BOOKING_BUTTON';
+export const CLEAR_DIALOG_MESS =
+  'cinemaBookingRoom/cinemaBookingTicketReducer/CLEAR_DIALOG_MESS';

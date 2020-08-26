@@ -29,6 +29,9 @@
   "container.CinemaBookingRoom.VIP": "VIP",
   "container.CinemaBookingRoom.Standard": "Standard",
   "container.CinemaBookingRoom.TimeupNote": "Booking time is up! Please make your next order in 5 minutes.",
+  "container.CinemaBookingRoom.SeatOverLimit": "Please do not select over 8 seats.",
+  "container.CinemaBookingRoom.NotLeaveOuterSeat": "Please do not leave the outermost seat.",
+  "container.CinemaBookingRoom.NotLeaveMiddleSeat": "Please do not leave the middle seat.",
   "container.CinemaBookingRoom.BookingAgain": "Booking Again",
   "container.CinemaBookingRoom.BookingSuccess": "Successful ticket booking !",
   "container.Profile.ProfileTitle": "Profile",
@@ -40,7 +43,6 @@
   "container.Profile.Movie.Duration": "Duration",
   "container.Profile.Total": "Total",
   "container.Profile.UpdateSuccess": "Update succesfully! Please press OK to log in again",
-  "container.Profile.UpdateFailed": "Updating has failed",
   "container.Footer.BrandGuidelines": "Brand Guidlines",
   "container.Footer.UsageDiscussion": "Usage Discussion",
   "container.Footer.PrivacyPolicy": "Privacy policy",
@@ -101,6 +103,7 @@
   "container.Auth.SignUp.SelectUser": "Select roles",
   "container.Auth.SignUp.SelectCustomer": "Customer",
   "container.Auth.SignUp.SelectAdmin": "Admin",
+  "container.Auth.SignUp.SucessfulAuth": "Sign In is successful! Please sign in.",
   "container.PageNotFound.PageNotFound": "Page not found",
   "container.PageNotFound.HomePageButton": "HomePage"
 }

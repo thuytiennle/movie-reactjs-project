@@ -10,7 +10,7 @@ import {
 } from '@material-ui/core';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { Loader } from '../../../components/LoadingIndicator';
 import { TextTranslation } from '../../Language/TextTranslation';
 import BookingSeatForm from './BookingSeatForm';
@@ -18,6 +18,8 @@ import ListBookingSeat from './ListBookingSeat';
 import {
   actFetchCinemaBookingRoomRequest,
   actResetForNextBooking,
+  actDialogMessage,
+  actClearDialogMess,
 } from './modules/actions';
 
 const useStyles = makeStyles((theme) => ({
@@ -45,23 +47,30 @@ export default function CinemaBookingRoom() {
   const cinemaBookingRoom = useSelector(
     (state) => state.cinemaBookingRoomReducer.cinemaBookingRoom,
   );
-  const openSucessDialog = useSelector(
-    (state) => state.cinemaBookingRoomReducer.openSucessDialog,
-  );
   const loadingCinemaBookingRoom = useSelector(
     (state) => state.cinemaBookingRoomReducer.loadingCinemaBookingRoom,
+  );
+  const dialogMessType = useSelector(
+    (state) => state.cinemaBookingRoomReducer.dialogMessType,
+  );
+  const errorCinemaBookingTicket = useSelector(
+    (state) => state.cinemaBookingRoomReducer.errorCinemaBookingTicket,
   );
 
   const classes = useStyles();
   const dispatch = useDispatch();
+  const history = useHistory();
   const { showTimeId } = useParams();
 
-  const [second, setSecond] = React.useState(60);
+  const [second, setSecond] = React.useState(303);
   const [time, setTime] = React.useState({});
-  const [openDialogTimeUp, setOpenDialogTimeUp] = React.useState(false);
+  const [openDialog, setOpenDialog] = React.useState(false);
+  const [messDialog, setMessDialog] = React.useState('');
 
   // DidMount get list seat
   useEffect(() => {
+    // Close openDialog
+    setOpenDialog(false);
     // Close booking Successful Dialog of the previous order
     dispatch(actResetForNextBooking());
     // Call API render list seat
@@ -88,15 +97,76 @@ export default function CinemaBookingRoom() {
     } else if (second === 0) {
       clearInterval(interval);
       // Set open Dialog time up
-      setOpenDialogTimeUp(true);
+      dispatch(actDialogMessage('time-up'));
+      // setOpenDialog(true);
+      // setMessDialog(
+      //   <TextTranslation id="container.CinemaBookingRoom.BookingAgain" />,
+      // );
     }
     return () => clearInterval(interval);
-  }, [second]);
+  }, [dispatch, second]);
+  // Update booking error
+  useEffect(() => {
+    switch (dialogMessType) {
+      case 'time-up':
+        setOpenDialog(true);
+        setMessDialog(
+          <TextTranslation id="container.CinemaBookingRoom.TimeupNote" />,
+        );
+        break;
+      case 'seat-over-limit':
+        setOpenDialog(true);
+        setMessDialog(
+          <TextTranslation id="container.CinemaBookingRoom.SeatOverLimit" />,
+        );
+        break;
+      case 'not-leave-outer-seat':
+        setOpenDialog(true);
+        setMessDialog(
+          <TextTranslation id="container.CinemaBookingRoom.NotLeaveOuterSeat" />,
+        );
+        break;
+      case 'not-leave-middle-seat':
+        setOpenDialog(true);
+        setMessDialog(
+          <TextTranslation id="container.CinemaBookingRoom.NotLeaveMiddleSeat" />,
+        );
+        break;
+      case 'sucessful-booking':
+        setOpenDialog(true);
+        setMessDialog(
+          <TextTranslation id="container.CinemaBookingRoom.BookingSuccess" />,
+        );
+        break;
+      case 'fail-booking':
+        setOpenDialog(true);
+        setMessDialog(errorCinemaBookingTicket.response.data || '');
+        break;
+      default:
+        // If there isnt any messages then close dialog
+        setOpenDialog(false);
+        break;
+    }
+  }, [dialogMessType, errorCinemaBookingTicket]);
 
   // Time booking out then off the dialog alerting and set time
   const handleBookingAgain = () => {
-    setOpenDialogTimeUp(false);
-    setSecond(300);
+    switch (dialogMessType) {
+      case 'time-up':
+        setOpenDialog(false);
+        setSecond(300);
+        dispatch(actClearDialogMess());
+        break;
+      case 'sucessful-booking':
+        setOpenDialog(false);
+        // Back to home
+        history.push('/');
+        break;
+      default:
+        setOpenDialog(false);
+        dispatch(actClearDialogMess());
+        break;
+    }
   };
 
   if (loadingCinemaBookingRoom) {
@@ -140,35 +210,14 @@ export default function CinemaBookingRoom() {
               <BookingSeatForm cinemaBookingRoom={cinemaBookingRoom} />
             </Grid>
             {/* display dialog when time is up */}
-            <Dialog disableBackdropClick open={openDialogTimeUp}>
+            <Dialog disableBackdropClick open={openDialog}>
               <Box padding="10px" alignItems="center">
-                <Typography>
-                  <TextTranslation id="container.CinemaBookingRoom.TimeupNote" />
-                </Typography>
+                <Typography>{messDialog}</Typography>
                 <Box className={classes.buttonContainer}>
                   <Button
                     variant="outlined"
                     color="secondary"
                     onClick={handleBookingAgain}
-                  >
-                    <TextTranslation id="container.CinemaBookingRoom.BookingAgain" />
-                  </Button>
-                </Box>
-              </Box>
-            </Dialog>
-            {/* Display dialog when booking is successful */}
-            <Dialog disableBackdropClick open={openSucessDialog}>
-              <Box padding="10px" alignItems="center">
-                <Typography>
-                  <TextTranslation id="container.CinemaBookingRoom.BookingSuccess" />
-                </Typography>
-                <Box className={classes.buttonContainer}>
-                  <Button
-                    className={classes.link}
-                    variant="outlined"
-                    color="secondary"
-                    component={Link}
-                    to="/"
                   >
                     OK
                   </Button>

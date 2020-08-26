@@ -11,7 +11,10 @@ import { PropTypes } from 'prop-types';
 import React, { memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { TextTranslation } from '../../Language/TextTranslation';
-import { actFetchCinemaBookingTicketRequest } from './modules/actions';
+import {
+  actFetchCinemaBookingTicketRequest,
+  actChangeDiableBookingButton,
+} from './modules/actions';
 
 const useStyles = makeStyles(() => ({
   form: {
@@ -28,6 +31,9 @@ function BookingSeatForm(props) {
   // Get state from store
   const listBookingSeat = useSelector(
     (state) => state.cinemaBookingRoomReducer.listBookingSeat,
+  );
+  const disableBookingButton = useSelector(
+    (state) => state.cinemaBookingRoomReducer.disableBookingButton,
   );
 
   // Calculate total payment
@@ -50,6 +56,13 @@ function BookingSeatForm(props) {
     };
     dispatch(actFetchCinemaBookingTicketRequest(bookedSeatinfo));
   };
+  // Update is disabledbookingbutton when listBookingSeat is null and there are any unselected middle seats in list
+  React.useEffect(() => {
+    if (!Array.isArray(listBookingSeat) || !listBookingSeat.length) {
+      // listBookingSeat is null
+      dispatch(actChangeDiableBookingButton(true));
+    }
+  }, [dispatch, listBookingSeat]);
 
   return (
     <Paper style={{ padding: '15px' }}>
@@ -106,11 +119,7 @@ function BookingSeatForm(props) {
         style={{ width: '100%', margin: '50px 0' }}
         color="secondary"
         // If listBooking not null then user can press ooking button
-        disabled={
-          listBookingSeat && listBookingSeat.length > 0
-            ? Boolean(false)
-            : Boolean(true)
-        }
+        disabled={disableBookingButton}
         onClick={handleBookingClick}
       >
         <TextTranslation id="container.BookingButton" />

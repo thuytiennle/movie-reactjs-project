@@ -2,6 +2,7 @@ import {
   FETCH_SIGN_UP_REQUEST,
   FETCH_SIGN_UP_SUCCESS,
   FETCH_SIGN_UP_FAILED,
+  RESET_STATE_SIGN_UP,
   FETCH_SIGN_IN_REQUEST,
   FETCH_SIGN_IN_SUCCESS,
   FETCH_SIGN_IN_FAILED,
@@ -30,6 +31,14 @@ export const actFetchSignUpSuccess = (user) => {
 export const actFetchSignUpFailed = (err) => {
   return {
     type: FETCH_SIGN_UP_FAILED,
+    err,
+  };
+};
+
+// Reset Sign Up when access page
+export const actResetSignUp = (err) => {
+  return {
+    type: RESET_STATE_SIGN_UP,
     err,
   };
 };

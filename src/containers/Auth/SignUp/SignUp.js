@@ -1,13 +1,23 @@
-import { Avatar, Button, Container, Grid, Typography } from '@material-ui/core';
+import {
+  Avatar,
+  Box,
+  Button,
+  Container,
+  Dialog,
+  Grid,
+  Snackbar,
+  Typography,
+} from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Alert from '@material-ui/lab/Alert';
 import { Formik } from 'formik';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { TextTranslation } from '../../Language/TextTranslation';
-import { actFetchSignUpRequest } from '../module/actions';
+import { actFetchSignUpRequest, actResetSignUp } from '../module/actions';
 import SignUpForm from './SignUpForm';
 import { SignupSchema } from './SignUpSchema';
 
@@ -42,17 +52,53 @@ const useStyles = makeStyles((theme) => ({
   formControlSelect: {
     width: '100%',
   },
+  buttonContainer: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: '10px',
+  },
 }));
 
 export default function SignUp() {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const history = useHistory();
   const infoUserError = useSelector((state) => state.AuthReducer.infoUserError);
+  const infoUser = useSelector((state) => state.AuthReducer.infoUser);
+  // Set state
+  const [openAlert, setOpenAlert] = React.useState(false);
+  const [messError, setMessError] = React.useState('');
+  const [openDialog, setOpenDialog] = React.useState(false);
 
-  // When error happens then alert
-  if (infoUserError) {
-    console.log(infoUserError.response.data);
-  }
+  // Did mount
+  React.useEffect(() => {
+    dispatch(actResetSignUp());
+    // Set alert and dialog off
+    setOpenAlert(false);
+    setOpenDialog(false);
+  }, [dispatch]);
+
+  // Update openAlert when error occurs, and open alert sign up success
+  React.useEffect(() => {
+    if (infoUserError) {
+      setOpenAlert(true);
+      setMessError(infoUserError.response.data);
+    }
+    // Check info user has sign in successful
+    if (Object.keys(infoUser).length > 0) {
+      setOpenDialog(true);
+    }
+  }, [infoUserError, infoUser]);
+
+  // Close alert
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenAlert(false);
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -107,6 +153,36 @@ export default function SignUp() {
             </SignUpForm>
           )}
         </Formik>
+        {/* Display when sign in have error */}
+        <Snackbar
+          open={openAlert}
+          autoHideDuration={6000}
+          onClose={handleClose}
+        >
+          <Alert onClose={handleClose} severity="error">
+            {messError}
+          </Alert>
+        </Snackbar>
+        {/* Display when sign up successfully */}
+        <Dialog disableBackdropClick open={openDialog}>
+          <Box padding="10px" alignItems="center">
+            <Typography>
+              <TextTranslation id="container.Auth.SignUp.SucessfulAuth" />
+            </Typography>
+            <Box className={classes.buttonContainer}>
+              <Button
+                variant="outlined"
+                color="secondary"
+                onClick={() => {
+                  // Move to sign in page
+                  history.push('/sign-in');
+                }}
+              >
+                Ok
+              </Button>
+            </Box>
+          </Box>
+        </Dialog>
       </div>
     </Container>
   );

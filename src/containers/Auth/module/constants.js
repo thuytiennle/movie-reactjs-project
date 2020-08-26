@@ -4,6 +4,8 @@ export const FETCH_SIGN_UP_SUCCESS =
   'container/Auth/AuthReducer/FETCH_SIGN_UP_SUCCESS';
 export const FETCH_SIGN_UP_FAILED =
   'container/Auth/AuthReducer/FETCH_SIGN_UP_FAILED';
+export const RESET_STATE_SIGN_UP =
+  'container/Auth/AuthReducer/RESET_STATE_SIGN_UP';
 export const FETCH_SIGN_IN_REQUEST =
   'container/Auth/AuthReducer/FETCH_SIGN_IN_REQUEST';
 export const FETCH_SIGN_IN_SUCCESS =

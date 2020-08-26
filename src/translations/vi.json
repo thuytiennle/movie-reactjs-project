@@ -29,6 +29,9 @@
   "container.CinemaBookingRoom.VIP": "VIP",
   "container.CinemaBookingRoom.Standard": "Thường",
   "container.CinemaBookingRoom.TimeupNote": "Vui lòng thực hiện đơn hàng trong thời hạn 5 phút.",
+  "container.CinemaBookingRoom.SeatOverLimit": "Vui lòng chọn tối đa 8 ghế.",
+  "container.CinemaBookingRoom.NotLeaveOuterSeat": "Vui lòng không để trống ghế ngoài cùng.",
+  "container.CinemaBookingRoom.NotLeaveMiddleSeat": "Vui lòng không để trống ghế giữa.",
   "container.CinemaBookingRoom.BookingAgain": "Đặt lại vé",
   "container.CinemaBookingRoom.BookingSuccess": "Đặt vé thành công !",
   "container.Profile.ProfileTitle": "Tài khoản cá nhân",
@@ -40,7 +43,6 @@
   "container.Profile.Movie.Duration": "Thời lượng",
   "container.Profile.Total": "Thành tiền",
   "container.Profile.UpdateSuccess": "Cập nhật thông tin thành công! Nhấn OK để đăng nhập lại",
-  "container.Profile.UpdateFailed": "Cập nhật thông tin thất bại",
   "container.Footer.BrandGuidelines": "Cẩm nang thương hiệu",
   "container.Footer.UsageDiscussion": "Thảo luận sử dụng",
   "container.Footer.PrivacyPolicy": "Chính sách bảo mật",
@@ -101,6 +103,7 @@
   "container.Auth.SignUp.SelectUser": "Chọn mã loại người dùng",
   "container.Auth.SignUp.SelectCustomer": "Khách hàng",
   "container.Auth.SignUp.SelectAdmin": "Quản Trị",
+  "container.Auth.SignUp.SucessfulAuth": "Đăng kí thành công! Vui lòng đăng nhập.",
   "container.PageNotFound.PageNotFound": "Trang không tồn tại",
   "container.PageNotFound.HomePageButton": "Trang chủ"
 }

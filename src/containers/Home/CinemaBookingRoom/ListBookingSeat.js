@@ -88,6 +88,9 @@ function ListBookingSeat(props) {
                 <Seat
                   key={`seat-${seat.maGhe}`}
                   seat={seat}
+                  rowsName={rows[rowIndex]}
+                  seatIndex={index + 1}
+                  rowLength={row.length}
                   seatName={`${rows[rowIndex]}${`0${index + 1}`.slice(-2)}`}
                 />
               ))}

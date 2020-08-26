@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import { IconButton } from '@material-ui/core';
 import WeekendRoundedIcon from '@material-ui/icons/WeekendRounded';
 import { PropTypes } from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { actBookingSeat } from './modules/actions';
 
 function getColor(isSelected, isSelecting, type) {
@@ -23,16 +23,28 @@ function getColor(isSelected, isSelecting, type) {
 }
 
 function Seat(props) {
-  const { seat, seatName } = props;
+  const { seat, seatName, rowsName, seatIndex, rowLength } = props;
   const [isSelecting, setIsSelecting] = React.useState(Boolean(false));
   const dispatch = useDispatch();
+  // Get state fro store
+  const listBookingSeat = useSelector(
+    (state) => state.cinemaBookingRoomReducer.listBookingSeat,
+  );
 
   const handleClick = () => {
-    setIsSelecting(!isSelecting);
+    // If listBookingSeat over
+    if (listBookingSeat && listBookingSeat.length > 7) {
+      setIsSelecting(false);
+    } else {
+      setIsSelecting(!isSelecting);
+    }
     const selectingSeat = {
       seatId: seat.maGhe,
       price: seat.giaVe,
       seatName,
+      rowsName,
+      seatIndex,
+      rowLength,
       status: !isSelecting,
     };
     // Push sselecting to store
@@ -53,6 +65,9 @@ function Seat(props) {
 Seat.propTypes = {
   seat: PropTypes.any,
   seatName: PropTypes.string,
+  rowsName: PropTypes.string,
+  seatIndex: PropTypes.any,
+  rowLength: PropTypes.any,
 };
 
 export default memo(Seat);

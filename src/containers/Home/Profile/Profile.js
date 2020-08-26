@@ -1,25 +1,25 @@
 import {
+  Box,
+  Button,
+  Dialog,
   Grid,
   Paper,
   Typography,
-  Box,
-  Dialog,
-  Button,
 } from '@material-ui/core';
-import AccountCircle from '@material-ui/icons/AccountCircle';
 import { makeStyles } from '@material-ui/core/styles';
+import AccountCircle from '@material-ui/icons/AccountCircle';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Loader } from '../../../components/LoadingIndicator';
+import { SimpleTabs } from '../../../components/Tabs';
+import { actSignOut } from '../../Auth/module/actions';
+import { TextTranslation } from '../../Language/TextTranslation';
 import {
   actFetchUserProfileRequest,
   actFetchUserProfileUpdateReset,
 } from './module/actions';
-import { TextTranslation } from '../../Language/TextTranslation';
-import { SimpleTabs } from '../../../components/Tabs';
-import ProfileDetail from './ProfileDetail';
 import ProfileBookingHistory from './ProfileBookingHistory';
-import { actSignOut } from '../../Auth/module/actions';
-import { Loader } from '../../../components/LoadingIndicator';
+import ProfileDetail from './ProfileDetail';
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -75,20 +75,17 @@ export default function Profile() {
     }
     if (Object.keys(errorUserProfileUpdated).length > 0) {
       setOpenDialog(true);
-      setOpenDialogMess(
-        (
-          <TextTranslation id="container.Profile.UpdateFailed" />
-        )`. ${errorUserProfileUpdated.error.data}`,
-      );
+      setOpenDialogMess(errorUserProfileUpdated.response.data);
     }
   }, [userProfileUpdated, errorUserProfileUpdated]);
 
   const handleDialog = () => {
     if (Object.keys(userProfileUpdated).length > 0) {
-      // Close dialog and signout if update thành công
-      setOpenDialog(false);
-      dispatch(actFetchUserProfileUpdateReset());
       dispatch(actSignOut());
+      // Reset previous update data
+      dispatch(actFetchUserProfileUpdateReset());
+      // Close Dialog
+      setOpenDialog(false);
     }
     if (Object.keys(errorUserProfileUpdated).length > 0) {
       // Off dialog

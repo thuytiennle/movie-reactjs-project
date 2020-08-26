@@ -12,7 +12,7 @@ import { TextTranslation } from '../../Language/TextTranslation';
 
 const useStyle = makeStyles((theme) => ({
   wrapper: {
-    height: 375,
+    height: 378,
     overflowY: 'scroll',
     // Customize scrollbar
     '&::-webkit-scrollbar': {
