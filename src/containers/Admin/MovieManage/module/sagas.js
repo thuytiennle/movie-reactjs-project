@@ -5,22 +5,27 @@ import { actFetchListMovieRequest } from '../../../Home/MovieShow/modules/action
 import {
   actFetchAddMovieFailed,
   actFetchAddMovieSuccess,
+  actFetchCiemaBranchInfoFailed,
+  actFetchCiemaBranchInfoSuccess,
   actFetchDeleteMovieFailed,
   actFetchDeleteMovieSuccess,
   actFetchMovieInfoFailed,
   actFetchMovieInfoSuccess,
   actFetchUpdateMovieFailed,
   actFetchUpdateMovieSuccess,
-  actFetchCiemaBranchInfoSuccess,
-  actFetchCiemaBranchInfoFailed,
+  actFetchAddMovieShowTimeSuccess,
+  actFetchAddMovieShowTimeFailed,
 } from './actions';
 import {
   FETCH_ADD_MOVIE_REQUEST,
+  FETCH_CINEMA_BRANCH_REQUEST,
   FETCH_DELETE_MOVIE_REQUEST,
   FETCH_MOVIE_INFO_REQUEST,
   FETCH_UPDATE_MOVIE_REQUEST,
-  FETCH_CINEMA_BRANCH_REQUEST,
+  FETCH_ADD_MOVIE_SHOWTIME_REQUEST,
 } from './constants';
+
+const axios = require('axios').default;
 
 function* addMovieSaga({ movie }) {
   try {
@@ -51,15 +56,15 @@ function* deleteMovieSaga({ deleteMovieId }) {
     yield put(actFetchListMovieRequest());
   } catch (error) {
     yield put(actFetchDeleteMovieFailed(error));
-    yield put(actFetchListMovieRequest());
   }
 }
 
-function* upDateMovieSaga({ updateUser }) {
+function* updateMovieSaga({ updateMovie }) {
   try {
     const params = { headers: authHeader() };
     const response = yield call(() =>
-      callAPI('QuanLyPhim/CapNhatPhimUpload', 'POST', updateUser, params),
+      // callAPI('QuanLyPhim/CapNhatPhimUpload', 'POST', updateUser, params),
+      axios.post('/CapNhatPhimUpload', updateMovie, params),
     );
     yield put(actFetchUpdateMovieSuccess(response.data));
     // Load list Movie
@@ -96,10 +101,23 @@ function* cinemaBranchInfoSaga({ cinemaId }) {
   }
 }
 
+function* addShowTimeSaga({ movieShowTime }) {
+  try {
+    const params = { headers: authHeader() };
+    const response = yield call(() =>
+      callAPI('QuanLyDatVe/TaoLichChieu', 'POST', movieShowTime, params),
+    );
+    yield put(actFetchAddMovieShowTimeSuccess(response.data));
+  } catch (error) {
+    yield put(actFetchAddMovieShowTimeFailed(error));
+  }
+}
+
 export default function* movieManageSaga() {
   yield takeLatest(FETCH_ADD_MOVIE_REQUEST, addMovieSaga);
   yield takeLatest(FETCH_DELETE_MOVIE_REQUEST, deleteMovieSaga);
-  yield takeLatest(FETCH_UPDATE_MOVIE_REQUEST, upDateMovieSaga);
+  yield takeLatest(FETCH_UPDATE_MOVIE_REQUEST, updateMovieSaga);
   yield takeLatest(FETCH_MOVIE_INFO_REQUEST, movieInfoSaga);
   yield takeLatest(FETCH_CINEMA_BRANCH_REQUEST, cinemaBranchInfoSaga);
+  yield takeLatest(FETCH_ADD_MOVIE_SHOWTIME_REQUEST, addShowTimeSaga);
 }

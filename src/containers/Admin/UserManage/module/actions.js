@@ -5,12 +5,14 @@ import {
   FETCH_ADD_USER_REQUEST,
   FETCH_ADD_USER_SUCCESS,
   FETCH_ADD_USER_FAILED,
+  RESET_ADD_USER,
   FETCH_DELETE_USER_REQUEST,
   FETCH_DELETE_USER_SUCCESS,
   FETCH_DELETE_USER_FAILED,
   FETCH_UPDATE_USER_REQUEST,
   FETCH_UPDATE_USER_SUCCESS,
   FETCH_UPDATE_USER_FAILED,
+  RESET_UPDATE_USER,
   OPEN_EDIT_DIALOG,
   CLOSE_EDIT_DIALOG,
   FETCH_SEARCH_USER_REQUEST,
@@ -58,6 +60,12 @@ export const actFetchAddUserFailed = (error) => {
   return {
     type: FETCH_ADD_USER_FAILED,
     error,
+  };
+};
+
+export const actResetAddUSer = () => {
+  return {
+    type: RESET_ADD_USER,
   };
 };
 
@@ -114,6 +122,12 @@ export const actOpenEditDialog = (editUser) => {
 export const actCloseEditDialog = () => {
   return {
     type: CLOSE_EDIT_DIALOG,
+  };
+};
+
+export const actResetUpdateUSer = () => {
+  return {
+    type: RESET_UPDATE_USER,
   };
 };
 

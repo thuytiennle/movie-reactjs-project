@@ -5,12 +5,14 @@ import {
   FETCH_ADD_USER_REQUEST,
   FETCH_ADD_USER_SUCCESS,
   FETCH_ADD_USER_FAILED,
+  RESET_ADD_USER,
   FETCH_DELETE_USER_REQUEST,
   FETCH_DELETE_USER_SUCCESS,
   FETCH_DELETE_USER_FAILED,
   FETCH_UPDATE_USER_REQUEST,
   FETCH_UPDATE_USER_SUCCESS,
   FETCH_UPDATE_USER_FAILED,
+  RESET_UPDATE_USER,
   OPEN_EDIT_DIALOG,
   CLOSE_EDIT_DIALOG,
   FETCH_SEARCH_USER_REQUEST,
@@ -39,6 +41,7 @@ const initialState = {
   editUser: null,
   openEditDialog: false,
   // Search User
+  keyword: '',
   searchUser: [],
   loadingSearchUser: true,
   errorSearchUser: null,
@@ -76,6 +79,11 @@ const userManageReducer = (state = initialState, action) => {
       state.loadingAddUser = false;
       state.errorAddUser = action.error;
       return { ...state };
+    case RESET_ADD_USER:
+      state.addUser = {};
+      state.loadingAddUser = true;
+      state.errorAddUser = null;
+      return { ...state };
     // Delete User
     case FETCH_DELETE_USER_REQUEST:
       state.deleteUser = '';
@@ -108,6 +116,11 @@ const userManageReducer = (state = initialState, action) => {
       state.loadingUpdateUser = false;
       state.errorUpdateUser = action.error;
       return { ...state };
+    case RESET_UPDATE_USER:
+      state.updateUser = {};
+      state.loadingUpdateUser = true;
+      state.errorUpdateUser = null;
+      return { ...state };
     // Edit dialog
     case OPEN_EDIT_DIALOG:
       state.openEditDialog = true;
@@ -120,6 +133,7 @@ const userManageReducer = (state = initialState, action) => {
       return state;
     // Search User
     case FETCH_SEARCH_USER_REQUEST:
+      state.keyword = action.keyword;
       state.searchUser = [];
       state.loadingSearchUser = true;
       state.errorSearchUser = null;

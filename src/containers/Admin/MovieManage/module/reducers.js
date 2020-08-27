@@ -17,6 +17,10 @@ import {
   FETCH_CINEMA_BRANCH_REQUEST,
   FETCH_CINEMA_BRANCH_SUCCESS,
   FETCH_CINEMA_BRANCH_FAILED,
+  FETCH_ADD_MOVIE_SHOWTIME_REQUEST,
+  FETCH_ADD_MOVIE_SHOWTIME_SUCCESS,
+  FETCH_ADD_MOVIE_SHOWTIME_FAILED,
+  RESET_ADD_MOVIE,
 } from './constants';
 
 const initialState = {
@@ -43,6 +47,10 @@ const initialState = {
   cinemaBranch: [],
   loadingCinemaBranch: true,
   errorCinemaBranch: null,
+  // MovieShowTimeCreation
+  movieShowTime: '',
+  loadingMovieShowTime: true,
+  errorMovieShowTime: null,
 };
 
 const movieManageReducer = (state = initialState, action) => {
@@ -61,6 +69,11 @@ const movieManageReducer = (state = initialState, action) => {
       state.addMovie = {};
       state.loadingAddMovie = false;
       state.errorAddMovie = action.error;
+      return { ...state };
+    case RESET_ADD_MOVIE:
+      state.addMovie = {};
+      state.loadingAddMovie = true;
+      state.errorAddMovie = null;
       return { ...state };
     // Delete movie
     case FETCH_DELETE_MOVIE_REQUEST:
@@ -119,7 +132,7 @@ const movieManageReducer = (state = initialState, action) => {
       return { ...state };
     case FETCH_MOVIE_INFO_FAILED:
       state.movieInfo = {};
-      state.loadingMovieInfo = true;
+      state.loadingMovieInfo = false;
       state.errorMovieInfo = action.error;
       return { ...state };
     // Cinema Branch Info
@@ -137,6 +150,22 @@ const movieManageReducer = (state = initialState, action) => {
       state.cinemaBranch = [];
       state.loadingCinemaBranch = false;
       state.errorCinemaBranch = action.error;
+      return { ...state };
+    // ShowTime Creation
+    case FETCH_ADD_MOVIE_SHOWTIME_REQUEST:
+      state.movieShowTime = [];
+      state.loadingMovieShowTime = true;
+      state.errorMovieShowTime = null;
+      return { ...state };
+    case FETCH_ADD_MOVIE_SHOWTIME_SUCCESS:
+      state.movieShowTime = action.data;
+      state.loadingMovieShowTime = false;
+      state.errorMovieShowTime = null;
+      return { ...state };
+    case FETCH_ADD_MOVIE_SHOWTIME_FAILED:
+      state.movieShowTime = [];
+      state.loadingMovieShowTime = false;
+      state.errorMovieShowTime = action.error;
       return { ...state };
     default:
       return state;

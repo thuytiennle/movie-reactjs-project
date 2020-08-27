@@ -12,9 +12,14 @@ import TableRow from '@material-ui/core/TableRow';
 import CloseIcon from '@material-ui/icons/Close';
 import { PropTypes } from 'prop-types';
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { TextTranslation } from '../../Language/TextTranslation';
-import { actOpenEditDialog, actFetchDeleteUserRequest } from './module/actions';
+import {
+  actOpenEditDialog,
+  actFetchDeleteUserRequest,
+  actFetchListUserRequest,
+  actFetchSearchUserRequest,
+} from './module/actions';
 
 const columns = [
   {
@@ -86,7 +91,8 @@ export default function UserTable(props) {
   const dispatch = useDispatch();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
+  // Get state from store
+  const keyword = useSelector((state) => state.userManageReducer.keyword);
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -160,9 +166,12 @@ export default function UserTable(props) {
                         <Button
                           variant="contained"
                           style={{ backgroundColor: red[500], color: '#fff' }}
-                          onClick={() =>
-                            dispatch(actFetchDeleteUserRequest(row.taiKhoan))
-                          }
+                          onClick={() => {
+                            dispatch(actFetchDeleteUserRequest(row.taiKhoan));
+                            // Load user
+                            dispatch(actFetchListUserRequest());
+                            dispatch(actFetchSearchUserRequest(keyword));
+                          }}
                         >
                           <CloseIcon />
                         </Button>

@@ -3,9 +3,9 @@
 const { createProxyMiddleware } = require('http-proxy-middleware');
 module.exports = function (app) {
   app.use(
-    '/QuanLyPhim/CapNhatPhimUpload',
+    '/CapNhatPhimUpload',
     createProxyMiddleware({
-      target: 'http://movie0706.cybersoft.edu.vn/api',
+      target: 'http://movie0706.cybersoft.edu.vn/api/QuanLyPhim',
       secure: false,
       changeOrigin: true,
     }),

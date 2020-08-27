@@ -49,11 +49,11 @@ export default function MovieEditDialog(props) {
               // Do JSON ko giữ đc file nên dùng formData. FormData sẽ bảo mật hơn
               // Sử dụng FormData để có thể gửi dữ liệu lên server
               // Bao gồm các loại dữ liệu và file
-              const formdata = new FormData();
+              const formUpdateUser = new FormData();
               for (let key in movie) {
-                formdata.append(key, movie[key]);
+                formUpdateUser.append(key, movie[key]);
               }
-              dispatch(actFetchUpdateMovieRequest(formdata));
+              dispatch(actFetchUpdateMovieRequest(formUpdateUser));
             }}
           >
             {(propsForm) => (

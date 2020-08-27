@@ -1,31 +1,35 @@
 import {
+  Box,
   Button,
   Card,
   CardActions,
   CardContent,
   CardHeader,
+  Dialog,
+  Snackbar,
+  Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import SaveIcon from '@material-ui/icons/Save';
+import Alert from '@material-ui/lab/Alert';
 import { Formik } from 'formik';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { TextTranslation } from '../../../Language/TextTranslation';
-import { actFetchAddMovieRequest } from '../module/actions';
+import { actFetchAddMovieRequest, actResetAddMovie } from '../module/actions';
 import MovieForm from '../MovieForm';
 import { MovieSchema } from '../MovieSchema';
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
-    marginLeft: 0,
     padding: 20,
-    height: 'calc(100vh - 68px)',
+    marginLeft: 0,
     backgroundColor: theme.palette.background.light,
     [theme.breakpoints.up('lg')]: {
       marginLeft: 240,
     },
-    [theme.breakpoints.down('md')]: {
-      height: 'auto',
+    [theme.breakpoints.up('md')]: {
+      height: 'calc(100vh - 68px)',
     },
   },
   button: {
@@ -40,11 +44,43 @@ export default function AddMovie() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const FormData = require('form-data');
+  const [openAlert, setOpenAlert] = React.useState(false);
+  const [messError, setMessError] = React.useState('');
+  const [openDialog, setOpenDialog] = React.useState(false);
 
-  const error = useSelector((state) => state.movieManageReducer.errorAddMovie);
-  if (error) {
-    console.log(error.response);
-  }
+  const addMovie = useSelector((state) => state.movieManageReducer.addMovie);
+  const errorAddMovie = useSelector(
+    (state) => state.movieManageReducer.errorAddMovie,
+  );
+  // Did mount
+  React.useEffect(() => {
+    // Reset add state from store
+    dispatch(actResetAddMovie());
+    // Set alert and dialog off
+    setOpenAlert(false);
+    setOpenDialog(false);
+  }, [dispatch]);
+
+  // Update openAlert when error occurs, and open alert sign up success
+  React.useEffect(() => {
+    if (errorAddMovie) {
+      setOpenAlert(true);
+      setMessError(errorAddMovie.response.data);
+    }
+    // Check info user has sign in successful
+    if (Object.keys(addMovie).length > 0) {
+      setOpenDialog(true);
+    }
+  }, [errorAddMovie, addMovie]);
+
+  // Close alert
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenAlert(false);
+  };
 
   return (
     <div className={classes.wrapper}>
@@ -61,7 +97,7 @@ export default function AddMovie() {
               biDanh: '',
               trailer: '',
               hinhAnh: '',
-              ngayKhoiChieu: '2020-01-01',
+              ngayKhoiChieu: new Date(),
               moTa: '',
               // danhGia: '',
             }}
@@ -101,6 +137,43 @@ export default function AddMovie() {
           </Formik>
         </CardContent>
       </Card>
+      {/* Display when sign in have error */}
+      <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="error">
+          {messError}
+        </Alert>
+      </Snackbar>
+      {/* Display when sign up successfully */}
+      <Dialog disableBackdropClick open={openDialog}>
+        <Box padding="10px" alignItems="center">
+          <Typography>
+            <TextTranslation id="container.Admin.MovieManage.SuccessfulAddMovie" />
+          </Typography>
+          <Box className={classes.buttonContainer}>
+            <Button
+              style={{ marginRight: 10 }}
+              color="primary"
+              onClick={() => {
+                setOpenDialog(false);
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="outlined"
+              color="secondary"
+              onClick={() => {
+                // Move to user admin page
+                // history.push('/admin/user-manage');
+                // Reset add state from store
+                dispatch(actResetAddMovie());
+              }}
+            >
+              Ok
+            </Button>
+          </Box>
+        </Box>
+      </Dialog>
     </div>
   );
 }

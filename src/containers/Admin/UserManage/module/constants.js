@@ -11,6 +11,8 @@ export const FETCH_ADD_USER_SUCCESS =
   'container/Admin/userManageReducer/FETCH_ADD_USER_SUCCESS';
 export const FETCH_ADD_USER_FAILED =
   'container/Admin/userManageReducer/FETCH_ADD_USER_FAILED';
+export const RESET_ADD_USER =
+  'container/Admin/userManageReducer/RESET_ADD_USER';
 // Delete user
 export const FETCH_DELETE_USER_REQUEST =
   'container/Admin/userManageReducer/FETCH_DELETE_USER_REQUEST';
@@ -25,6 +27,8 @@ export const FETCH_UPDATE_USER_SUCCESS =
   'container/Admin/userManageReducer/FETCH_UPDATE_USER_SUCCESS';
 export const FETCH_UPDATE_USER_FAILED =
   'container/Admin/userManageReducer/FETCH_UPDATE_USER_FAILED';
+export const RESET_UPDATE_USER =
+  'container/Admin/userManageReducer/RESET_UPDATE_USER';
 /* Edit dialog */
 export const OPEN_EDIT_DIALOG =
   'container/Admin/userManageReducer/OPEN_EDIT_DIALOG';

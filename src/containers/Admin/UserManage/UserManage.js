@@ -1,17 +1,30 @@
 import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import UserTable from './UserTable';
-import { actFetchListUserRequest, actCloseEditDialog } from './module/actions';
-import UsersToolbar from './UserToolbar';
-import UserEditDialog from './UserEditDialog';
+import { useDispatch, useSelector } from 'react-redux';
 import { Loader } from '../../../components/LoadingIndicator';
+import {
+  actFetchListUserRequest,
+  actFetchSearchUserRequest,
+} from './module/actions';
+import UserEditDialog from './UserEditDialog';
+import UserTable from './UserTable';
+import UsersToolbar from './UserToolbar';
 
 const useStyle = makeStyles((theme) => ({
   wrapper: {
     padding: 20,
     height: 'calc(100vh - 68px)',
     backgroundColor: theme.palette.background.light,
+    [theme.breakpoints.down('md')]: {
+      height: 'auto',
+    },
+  },
+  loaderDiv: {
+    marginLeft: 0,
+    backgroundColor: theme.palette.titleBar.main,
+    [theme.breakpoints.up('lg')]: {
+      marginLeft: 240,
+    },
   },
 }));
 
@@ -26,15 +39,21 @@ export default function UserManage() {
   const openEditDialog = useSelector(
     (state) => state.userManageReducer.openEditDialog,
   );
+  const keyword = useSelector((state) => state.userManageReducer.keyword);
   const searchUser = useSelector((state) => state.userManageReducer.searchUser);
 
   // Did Mount
   React.useEffect(() => {
     dispatch(actFetchListUserRequest());
-  }, [dispatch]);
+    dispatch(actFetchSearchUserRequest(keyword));
+  }, []);
 
   if (loadingListUser) {
-    return <Loader />;
+    return (
+      <div className={classes.loaderDiv}>
+        <Loader />
+      </div>
+    );
   }
 
   return (
@@ -42,13 +61,8 @@ export default function UserManage() {
       {listUser && listUser.length > 0 && (
         <>
           <UsersToolbar />
-          <UserTable
-            rows={searchUser && searchUser.length > 0 ? searchUser : listUser}
-          />
-          <UserEditDialog
-            open={openEditDialog}
-            onClose={() => dispatch(actCloseEditDialog())}
-          />
+          <UserTable rows={keyword ? searchUser : listUser} />
+          <UserEditDialog open={openEditDialog} />
         </>
       )}
     </div>

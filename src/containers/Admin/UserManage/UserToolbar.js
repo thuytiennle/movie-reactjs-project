@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/styles';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { SearchInput } from '../../../components/SearchInput';
 import { TextTranslation } from '../../Language/TextTranslation';
@@ -12,7 +12,7 @@ import { actFetchSearchUserRequest } from './module/actions';
 const useStyles = makeStyles((theme) => ({
   root: {
     marginLeft: 0,
-    marginBottom: 30,
+    marginBottom: 10,
     [theme.breakpoints.up('lg')]: {
       marginLeft: 240,
     },
@@ -33,6 +33,8 @@ const UsersToolbar = (props) => {
   const { className, ...rest } = props;
   const classes = useStyles();
   const dispatch = useDispatch();
+  // Get state from store
+  const keyword = useSelector((state) => state.userManageReducer.keyword);
 
   const handleChange = (event) => {
     const { value } = event.target;
@@ -58,6 +60,7 @@ const UsersToolbar = (props) => {
             placeholder={TextTranslation({
               id: 'container.Admin.UserManage.SearchUser',
             })}
+            value={keyword || ''}
             onChange={handleChange}
           />
         </Grid>

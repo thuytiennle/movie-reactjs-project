@@ -1,26 +1,25 @@
-import { call, put, takeLatest, delay } from 'redux-saga/effects';
+import { call, delay, put, takeLatest } from 'redux-saga/effects';
+import { authHeader } from '../../../../utils/auth-header';
 import { callAPI } from '../../../../utils/callAPI';
 import {
+  actFetchAddUserFailed,
+  actFetchAddUserSuccess,
+  actFetchDeleteUserFailed,
+  actFetchDeleteUserSuccess,
   actFetchListUserFailed,
   actFetchListUserSuccess,
-  actFetchDeleteUserSuccess,
-  actFetchDeleteUserFailed,
-  actFetchListUserRequest,
-  actFetchAddUserSuccess,
-  actFetchAddUserFailed,
-  actFetchUpdateUserSuccess,
-  actFetchUpdateUserFailed,
-  actFetchSearchUserSuccess,
   actFetchSearchUserFailed,
+  actFetchSearchUserSuccess,
+  actFetchUpdateUserFailed,
+  actFetchUpdateUserSuccess,
 } from './actions';
 import {
-  FETCH_LIST_USER_REQUEST,
   FETCH_ADD_USER_REQUEST,
   FETCH_DELETE_USER_REQUEST,
-  FETCH_UPDATE_USER_REQUEST,
+  FETCH_LIST_USER_REQUEST,
   FETCH_SEARCH_USER_REQUEST,
+  FETCH_UPDATE_USER_REQUEST,
 } from './constants';
-import { authHeader } from '../../../../utils/auth-header';
 
 function* listUserSaga() {
   try {
@@ -61,7 +60,8 @@ function* deleteUserSaga({ deleteAccount }) {
     );
     yield put(actFetchDeleteUserSuccess(response.data));
     // Load list User
-    yield put(actFetchListUserRequest());
+    // yield put(actFetchListUserRequest());
+    // yield put(actFetchSearchUserRequest(''));
   } catch (error) {
     yield put(actFetchDeleteUserFailed(error));
   }
@@ -80,7 +80,8 @@ function* updateUserSaga({ updateUser }) {
     );
     yield put(actFetchUpdateUserSuccess(response.data));
     // Load list User
-    yield put(actFetchListUserRequest());
+    // yield put(actFetchListUserRequest());
+    // yield put(actFetchSearchUserRequest(''));
   } catch (error) {
     yield put(actFetchUpdateUserFailed(error));
   }
@@ -88,13 +89,13 @@ function* updateUserSaga({ updateUser }) {
 
 function* searchUserSaga({ keyword }) {
   try {
-    const params = { headers: authHeader() };
     const response = yield call(() =>
       callAPI(
-        `QuanLyNguoiDung/TimKiemNguoiDung?MaNhom=GP05&tuKhoa=${keyword}`,
+        keyword
+          ? `QuanLyNguoiDung/TimKiemNguoiDung?MaNhom=GP05&tuKhoa=${keyword}`
+          : `QuanLyNguoiDung/TimKiemNguoiDung?MaNhom=GP05`,
         'GET',
         null,
-        params,
       ),
     );
     yield put(actFetchSearchUserSuccess(response.data));
