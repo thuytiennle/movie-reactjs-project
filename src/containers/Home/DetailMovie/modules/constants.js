@@ -6,3 +6,5 @@ export const FECTH_DETAIL_MOVIE_SUCCESS =
 
 export const FECTH_DETAIL_MOVIE_FAILED =
   'detailMovie/detailMovieReducer/FECTH_DETAIL_MOVIE_FAILED';
+
+export const ADD_COMMENT = 'detailMovie/detailMovieReducer/ADD_COMMENT';

@@ -91,6 +91,10 @@ export default function MovieForm(props) {
             onChange={(event) =>
               setFieldValue('hinhAnh', event.target.files[0])
             }
+            error={errors.hinhAnh && touched.hinhAnh}
+            helperText={
+              errors.hinhAnh && touched.hinhAnh ? errors.hinhAnh : null
+            }
           />
         </Grid>
         <Grid item xs={12} {...grid}>
@@ -125,22 +129,6 @@ export default function MovieForm(props) {
             helperText={errors.moTa && touched.moTa ? errors.moTa : null}
           />
         </Grid>
-        {/* <Grid item xs={12} {...grid}>
-          <TextField
-            type="text"
-            name="danhGia"
-            variant="outlined"
-            fullWidth
-            label={<TextTranslation id="container.Admin.MovieManage.Review" />}
-            color="secondary"
-            onChange={handleChange}
-            value={values.danhGia}
-            error={errors.danhGia && touched.danhGia}
-            helperText={
-              errors.danhGia && touched.danhGia ? errors.danhGia : null
-            }
-          />
-        </Grid> */}
       </Grid>
       {children}
     </Form>

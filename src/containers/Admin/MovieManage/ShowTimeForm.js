@@ -6,6 +6,7 @@ import {
   InputLabel,
   Select,
   TextField,
+  FormHelperText,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { DateTimePicker } from '@material-ui/pickers';
@@ -133,6 +134,7 @@ function ShowTimeForm(props) {
               native
               value={values.maRap}
               onChange={handleChange}
+              error={errors.maRap && touched.maRap}
             >
               <option value="">
                 {TextTranslation({
@@ -160,6 +162,9 @@ function ShowTimeForm(props) {
                     )),
                 )}
             </Select>
+            <FormHelperText style={{ color: 'red' }}>
+              {errors.maRap && touched.maRap ? errors.maRap : null}
+            </FormHelperText>
           </FormControl>
         </Grid>
         <Grid item xs={12} sm={6}>

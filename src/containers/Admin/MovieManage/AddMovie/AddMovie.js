@@ -15,6 +15,7 @@ import Alert from '@material-ui/lab/Alert';
 import { Formik } from 'formik';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { TextTranslation } from '../../../Language/TextTranslation';
 import { actFetchAddMovieRequest, actResetAddMovie } from '../module/actions';
 import MovieForm from '../MovieForm';
@@ -38,11 +39,18 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     margin: '50px 0',
   },
+  buttonContainer: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: '10px',
+  },
 }));
 
 export default function AddMovie() {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const history = useHistory();
   const FormData = require('form-data');
   const [openAlert, setOpenAlert] = React.useState(false);
   const [messError, setMessError] = React.useState('');
@@ -164,7 +172,7 @@ export default function AddMovie() {
               color="secondary"
               onClick={() => {
                 // Move to user admin page
-                // history.push('/admin/user-manage');
+                history.push('/admin/movie-manage');
                 // Reset add state from store
                 dispatch(actResetAddMovie());
               }}

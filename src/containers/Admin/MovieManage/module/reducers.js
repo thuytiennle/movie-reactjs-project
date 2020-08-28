@@ -21,6 +21,8 @@ import {
   FETCH_ADD_MOVIE_SHOWTIME_SUCCESS,
   FETCH_ADD_MOVIE_SHOWTIME_FAILED,
   RESET_ADD_MOVIE,
+  RESET_UPDATE_MOVIE,
+  RESET_ADD_MOVIE_SHOWTIME,
 } from './constants';
 
 const initialState = {
@@ -114,6 +116,11 @@ const movieManageReducer = (state = initialState, action) => {
       state.loadingupDateMovie = false;
       state.errorUpdateMovie = action.error;
       return { ...state };
+    case RESET_UPDATE_MOVIE:
+      state.upDateMovie = {};
+      state.loadingupDateMovie = false;
+      state.errorUpdateMovie = null;
+      return { ...state };
     // ShowTime
     case CLOSE_SHOW_TIME_DIALOG:
       state.openShowTimeDialog = false;
@@ -153,7 +160,7 @@ const movieManageReducer = (state = initialState, action) => {
       return { ...state };
     // ShowTime Creation
     case FETCH_ADD_MOVIE_SHOWTIME_REQUEST:
-      state.movieShowTime = [];
+      state.movieShowTime = '';
       state.loadingMovieShowTime = true;
       state.errorMovieShowTime = null;
       return { ...state };
@@ -163,9 +170,14 @@ const movieManageReducer = (state = initialState, action) => {
       state.errorMovieShowTime = null;
       return { ...state };
     case FETCH_ADD_MOVIE_SHOWTIME_FAILED:
-      state.movieShowTime = [];
+      state.movieShowTime = '';
       state.loadingMovieShowTime = false;
       state.errorMovieShowTime = action.error;
+      return { ...state };
+    case RESET_ADD_MOVIE_SHOWTIME:
+      state.movieShowTime = '';
+      state.loadingMovieShowTime = false;
+      state.errorMovieShowTime = null;
       return { ...state };
     default:
       return state;

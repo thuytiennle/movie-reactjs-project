@@ -10,4 +10,12 @@ module.exports = function (app) {
       changeOrigin: true,
     }),
   );
+  app.use(
+    '/XoaPhim',
+    createProxyMiddleware({
+      target: 'http://movie0706.cybersoft.edu.vn/api/QuanLyPhim',
+      secure: false,
+      changeOrigin: true,
+    }),
+  );
 };

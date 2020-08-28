@@ -14,6 +14,7 @@ import {
   FETCH_UPDATE_MOVIE_FAILED,
   FETCH_UPDATE_MOVIE_REQUEST,
   FETCH_UPDATE_MOVIE_SUCCESS,
+  RESET_UPDATE_MOVIE,
   OPEN_MOVIE_DIALOG,
   FETCH_CINEMA_BRANCH_REQUEST,
   FETCH_CINEMA_BRANCH_SUCCESS,
@@ -21,6 +22,7 @@ import {
   FETCH_ADD_MOVIE_SHOWTIME_REQUEST,
   FETCH_ADD_MOVIE_SHOWTIME_SUCCESS,
   FETCH_ADD_MOVIE_SHOWTIME_FAILED,
+  RESET_ADD_MOVIE_SHOWTIME,
 } from './constants';
 
 export const actFetchAddMovieRequest = (movie) => {
@@ -106,6 +108,12 @@ export const actFetchUpdateMovieFailed = (error) => {
   };
 };
 
+export const actResetUpdateMovie = () => {
+  return {
+    type: RESET_UPDATE_MOVIE,
+  };
+};
+
 // Show Time Selection
 export const actCloseShowTimeDialog = () => {
   return {
@@ -175,6 +183,13 @@ export const actFetchAddMovieShowTimeSuccess = (data) => {
 export const actFetchAddMovieShowTimeFailed = (error) => {
   return {
     type: FETCH_ADD_MOVIE_SHOWTIME_FAILED,
+    error,
+  };
+};
+
+export const actResetAddShowTime = (error) => {
+  return {
+    type: RESET_ADD_MOVIE_SHOWTIME,
     error,
   };
 };

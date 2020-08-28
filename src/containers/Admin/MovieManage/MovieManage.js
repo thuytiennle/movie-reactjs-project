@@ -1,9 +1,11 @@
+import { Snackbar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import Alert from '@material-ui/lab/Alert';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Loader } from '../../../components/LoadingIndicator';
 import { actFetchListMovieRequest } from '../../Home/MovieShow/modules/actions';
-import { actCloseMovieDialog, actCloseShowTimeDialog } from './module/actions';
+import { actCloseShowTimeDialog } from './module/actions';
 import MovieEditDialog from './MovieEditDialog';
 import MovieTable from './MovieTable';
 import MovieToolbar from './MovieToolbar';
@@ -30,6 +32,9 @@ const useStyle = makeStyles((theme) => ({
 export default function MovieManage() {
   const classes = useStyle();
   const dispatch = useDispatch();
+  // Set state
+  const [openAlert, setOpenAlert] = React.useState(false);
+  const [messError, setMessError] = React.useState('');
   // Get state from store
   const listMovie = useSelector((state) => state.listMovieReducer.listMovie);
   const loadingListMovie = useSelector(
@@ -41,8 +46,8 @@ export default function MovieManage() {
   const openShowTimeDialog = useSelector(
     (state) => state.movieManageReducer.openShowTimeDialog,
   );
-  const errorUpdateMovie = useSelector(
-    (state) => state.movieManageReducer.errorUpdateMovie,
+  const errorDeleteMovie = useSelector(
+    (state) => state.movieManageReducer.errorDeleteMovie,
   );
 
   // Did Mount
@@ -50,6 +55,20 @@ export default function MovieManage() {
     // Dispatch action request to init saga listMovie API
     dispatch(actFetchListMovieRequest());
   }, [dispatch]);
+
+  // Did mount
+  React.useEffect(() => {
+    // Set alert and dialog off
+    setOpenAlert(false);
+  }, [dispatch]);
+
+  // Update openAlert when error occurs, and open alert sign up success
+  React.useEffect(() => {
+    if (errorDeleteMovie) {
+      setOpenAlert(true);
+      setMessError(errorDeleteMovie.response.data);
+    }
+  }, [errorDeleteMovie]);
 
   // Loader
   if (loadingListMovie) {
@@ -60,9 +79,14 @@ export default function MovieManage() {
     );
   }
 
-  if (errorUpdateMovie) {
-    console.log(errorUpdateMovie.response);
-  }
+  // Close alert
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenAlert(false);
+  };
 
   return (
     <div className={classes.wrapper}>
@@ -70,14 +94,21 @@ export default function MovieManage() {
         <>
           <MovieToolbar />
           <MovieTable rows={listMovie} />
-          <MovieEditDialog
-            open={openMovieDialog}
-            onClose={() => dispatch(actCloseMovieDialog())}
-          />
+          <MovieEditDialog open={openMovieDialog} />
           <ShowTimeCreateDialog
             open={openShowTimeDialog}
             onClose={() => dispatch(actCloseShowTimeDialog())}
           />
+          {/* Display when sign in have error */}
+          <Snackbar
+            open={openAlert}
+            autoHideDuration={6000}
+            onClose={handleClose}
+          >
+            <Alert onClose={handleClose} severity="error">
+              {messError}
+            </Alert>
+          </Snackbar>
         </>
       )}
     </div>

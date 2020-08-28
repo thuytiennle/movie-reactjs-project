@@ -1,18 +1,10 @@
-import {
-  Container,
-  Grid,
-  makeStyles,
-  Paper,
-  Tabs,
-  Typography,
-} from '@material-ui/core';
+import { Container, Grid, makeStyles, Paper, Tabs } from '@material-ui/core';
 import clsx from 'clsx';
 import { PropTypes } from 'prop-types';
 import React, { useEffect } from 'react';
 import { SimpleCard } from '../../../components/Card';
 import { Spinner } from '../../../components/LoadingIndicator';
 import { CustomTab } from '../../../components/Tabs';
-import { TextTranslation } from '../../Language/TextTranslation';
 import CinemaShowTime from './CinemaShowTime';
 import DateTab from './DateTab';
 
@@ -20,7 +12,6 @@ const useStyles = makeStyles((theme) => ({
   wrapper: {
     backgroundColor: theme.palette.background.dark,
     borderRadius: 'unset',
-    padding: '60px 0',
   },
   tabContainer: {
     overflowX: 'scroll',
@@ -53,10 +44,6 @@ const useStyles = makeStyles((theme) => ({
   },
   padding: {
     padding: theme.spacing(2),
-  },
-  title: {
-    textAlign: 'center',
-    padding: '15px 0',
   },
   container1: {
     padding: '10px',
@@ -182,9 +169,6 @@ export default function MovieShowTime(props) {
   return (
     <Paper className={classes.wrapper}>
       <Container maxWidth="md" className={classes.padding}>
-        <Typography variant="h5" color="secondary" className={classes.title}>
-          <TextTranslation id="components.Navbar.ShowTime" />
-        </Typography>
         <div className={clsx(classes.tabContainer, classes.scrollCustom)}>
           <div className={classes.root}>
             {detailMovie.heThongRapChieu &&

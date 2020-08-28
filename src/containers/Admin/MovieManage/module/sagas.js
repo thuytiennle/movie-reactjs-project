@@ -42,14 +42,10 @@ function* addMovieSaga({ movie }) {
 
 function* deleteMovieSaga({ deleteMovieId }) {
   try {
-    const params = { headers: authHeader(), credentials: 'same-origin' };
     const response = yield call(() =>
-      callAPI(
-        `QuanLyPhim/XoaPhim?MaPhim=${deleteMovieId}`,
-        'DELETE',
-        null,
-        params,
-      ),
+      axios.delete(`/XoaPhim?MaPhim=${deleteMovieId}`, {
+        headers: authHeader(),
+      }),
     );
     yield put(actFetchDeleteMovieSuccess(response.data));
     // Load list Movie
@@ -67,8 +63,6 @@ function* updateMovieSaga({ updateMovie }) {
       axios.post('/CapNhatPhimUpload', updateMovie, params),
     );
     yield put(actFetchUpdateMovieSuccess(response.data));
-    // Load list Movie
-    yield put(actFetchListMovieRequest());
   } catch (error) {
     yield put(actFetchUpdateMovieFailed(error));
     // yield put(actFetchListMovieRequest());

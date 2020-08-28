@@ -1,20 +1,37 @@
-import { Box } from '@material-ui/core';
+import { Box, makeStyles } from '@material-ui/core';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { Footer } from '../../../components/Footer';
 import { Loader } from '../../../components/LoadingIndicator';
+import { Review } from '../../../components/ReviewItem';
+import { SimpleTabs } from '../../../components/Tabs';
+import { TextTranslation } from '../../Language/TextTranslation';
 import CinemaIntro from './CinemaIntro';
 import DetailCinemaTab from './DetailCinemaTab';
-import { actFetchDetailCinemaRequest } from './modules/actions';
-import { Footer } from '../../../components/Footer';
+import {
+  actFetchDetailCinemaRequest,
+  actAddCinemaComment,
+} from './modules/actions';
+
+const useStyles = makeStyles((theme) => ({
+  tabContainer: {
+    backgroundColor: theme.palette.background.dark,
+    padding: '60px 0',
+  },
+}));
 
 export default function DetailCinema() {
+  const classes = useStyles();
   // useSelector uses to get state from store
   const detailCinema = useSelector(
     (state) => state.detailCinemaReducer.detailCinema,
   );
   const loadingDetailCinema = useSelector(
     (state) => state.detailCinemaReducer.loadingDetailCinema,
+  );
+  const listComment = useSelector(
+    (state) => state.detailCinemaReducer.listComment,
   );
 
   // Declare dispatch func
@@ -66,11 +83,36 @@ export default function DetailCinema() {
           <>
             <Box marginTop="68px">
               {renderCinemaIntro()}
-              <div id="cinemaShowTime">
-                <DetailCinemaTab
-                  detailCinema={[...detailCinema[0].lstCumRap]}
-                  cinemaBranchId={cinemaBranchId}
-                  cinemaId={cinemaId}
+              <div id="cinemaShowTime" className={classes.tabContainer}>
+                <SimpleTabs
+                  tabs={[
+                    {
+                      tabName: (
+                        <TextTranslation id="components.Navbar.ShowTime" />
+                      ),
+                      // If renderHTML null then tabContent gets ''
+                      tabContent: (
+                        <DetailCinemaTab
+                          detailCinema={[...detailCinema[0].lstCumRap]}
+                          cinemaBranchId={cinemaBranchId}
+                          cinemaId={cinemaId}
+                        />
+                      ),
+                    },
+                    {
+                      tabName: (
+                        <TextTranslation id="container.MovieShow.Review" />
+                      ),
+                      tabContent: (
+                        <Review
+                          listComment={listComment}
+                          onSubmit={(comment) => {
+                            dispatch(actAddCinemaComment(comment));
+                          }}
+                        />
+                      ),
+                    },
+                  ]}
                 />
               </div>
               <Footer />

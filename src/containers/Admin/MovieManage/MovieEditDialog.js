@@ -1,26 +1,85 @@
+import { Snackbar } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Alert from '@material-ui/lab/Alert';
 import { Formik } from 'formik';
 import { PropTypes } from 'prop-types';
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { actFetchListMovieRequest } from '../../Home/MovieShow/modules/actions';
 import { TextTranslation } from '../../Language/TextTranslation';
+import {
+  actCloseMovieDialog,
+  actFetchUpdateMovieRequest,
+  actResetUpdateMovie,
+} from './module/actions';
 import MovieForm from './MovieForm';
 import { MovieSchema } from './MovieSchema';
-import { actFetchUpdateMovieRequest } from './module/actions';
 
 export default function MovieEditDialog(props) {
-  const { open, onClose } = props;
+  const { open } = props;
+  const dispatch = useDispatch();
   const FormData = require('form-data');
+  // Set state
+  const [openAlert, setOpenAlert] = React.useState(false);
+  const [snackbarMess, setSnackbarMess] = React.useState('');
   // Get editUSer from store
   const editMovie = useSelector((state) => state.movieManageReducer.editMovie);
-  const dispatch = useDispatch();
+  const upDateMovie = useSelector(
+    (state) => state.movieManageReducer.upDateMovie,
+  );
+  const errorUpdateMovie = useSelector(
+    (state) => state.userManageReducer.errorUpdateMovie,
+  );
+
+  // Did mount
+  React.useEffect(() => {
+    // Set alert and dialog off
+    setOpenAlert(false);
+  }, [dispatch]);
+
+  // Update openAlert when error occurs, and open alert sign up success
+  React.useEffect(() => {
+    if (errorUpdateMovie) {
+      setOpenAlert(true);
+      setSnackbarMess(errorUpdateMovie.response.data);
+    }
+    // Check info user has sign in successful
+    if (Object.keys(upDateMovie).length > 0) {
+      setOpenAlert(true);
+      setSnackbarMess(
+        <TextTranslation id="container.Admin.UserManage.SuccessfulUpdateUser" />,
+      );
+    }
+  }, [errorUpdateMovie, upDateMovie]);
+
+  // Close alert
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenAlert(false);
+  };
+  const handleCloseDialog = () => {
+    // Close alert
+    setOpenAlert(false);
+    dispatch(actCloseMovieDialog());
+    // Load list Movie
+    dispatch(actFetchListMovieRequest());
+    // Reset updat movie state
+    dispatch(actResetUpdateMovie());
+  };
 
   return (
-    <Dialog open={open} onClose={onClose} aria-labelledby="form-dialog-title">
+    <Dialog
+      open={open}
+      onClose={handleCloseDialog}
+      aria-labelledby="form-dialog-title"
+    >
       <DialogTitle id="form-dialog-title">
         <TextTranslation id="container.Admin.UserManage.UpdateUser" />
       </DialogTitle>
@@ -59,8 +118,8 @@ export default function MovieEditDialog(props) {
             {(propsForm) => (
               <MovieForm {...propsForm}>
                 <DialogActions>
-                  <Button onClick={onClose}>Cancel</Button>
-                  <Button type="submit" onClick={onClose} color="secondary">
+                  <Button onClick={handleCloseDialog}>Cancel</Button>
+                  <Button type="submit" color="secondary">
                     <TextTranslation id="container.Admin.UserManage/MovieManage.UpdateBtn" />
                   </Button>
                 </DialogActions>
@@ -69,11 +128,19 @@ export default function MovieEditDialog(props) {
           </Formik>
         )}
       </DialogContent>
+      {/* Display when sign in have error */}
+      <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleClose}>
+        <Alert
+          onClose={handleClose}
+          severity={errorUpdateMovie ? 'error' : 'success'}
+        >
+          {snackbarMess}
+        </Alert>
+      </Snackbar>
     </Dialog>
   );
 }
 
 MovieEditDialog.propTypes = {
-  onClose: PropTypes.func,
   open: PropTypes.bool.isRequired,
 };

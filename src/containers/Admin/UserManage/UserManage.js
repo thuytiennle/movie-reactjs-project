@@ -46,7 +46,7 @@ export default function UserManage() {
   React.useEffect(() => {
     dispatch(actFetchListUserRequest());
     dispatch(actFetchSearchUserRequest(keyword));
-  }, []);
+  }, [dispatch]);
 
   if (loadingListUser) {
     return (

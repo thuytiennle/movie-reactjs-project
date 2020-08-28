@@ -1,15 +1,7 @@
-import {
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  CardMedia,
-  Typography,
-} from '@material-ui/core';
-import ShareIcon from '@material-ui/icons/Share';
-import React from 'react';
+import { Card, CardContent, CardMedia, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { PropTypes } from 'prop-types';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
@@ -54,14 +46,6 @@ export default function NewsItem(props) {
           {`${news.content.substring(0, 50)} ...`}
         </Typography>
       </CardContent>
-      <CardActions>
-        <Button size="small" color="primary">
-          <ShareIcon />
-        </Button>
-        <Button size="small" color="primary">
-          Learn More
-        </Button>
-      </CardActions>
     </Card>
   );
 }

@@ -24,6 +24,8 @@ export const FETCH_UPDATE_MOVIE_SUCCESS =
   'container/Admin/movieManageReducer/FETCH_UPDATE_MOVIE_SUCCESS';
 export const FETCH_UPDATE_MOVIE_FAILED =
   'container/Admin/movieManageReducer/FETCH_UPDATE_MOVIE_FAILED';
+export const RESET_UPDATE_MOVIE =
+  'container/Admin/movieManageReducer/RESET_UPDATE_MOVIE';
 // ShowTime
 export const CLOSE_SHOW_TIME_DIALOG =
   'container/Admin/movieManageReducer/CLOSE_SHOW_TIME_DIALOG';
@@ -48,3 +50,5 @@ export const FETCH_ADD_MOVIE_SHOWTIME_SUCCESS =
   'container/Admin/movieManageReducer/FETCH_ADD_MOVIE_SHOWTIME_SUCCESS';
 export const FETCH_ADD_MOVIE_SHOWTIME_FAILED =
   'container/Admin/movieManageReducer/FETCH_ADD_MOVIE_SHOWTIME_FAILED';
+export const RESET_ADD_MOVIE_SHOWTIME =
+  'container/Admin/movieManageReducer/RESET_ADD_MOVIE_SHOWTIME';
