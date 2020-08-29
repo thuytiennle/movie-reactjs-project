@@ -32,7 +32,7 @@ export default function MovieEditDialog(props) {
     (state) => state.movieManageReducer.upDateMovie,
   );
   const errorUpdateMovie = useSelector(
-    (state) => state.userManageReducer.errorUpdateMovie,
+    (state) => state.movieManageReducer.errorUpdateMovie,
   );
 
   // Did mount
@@ -55,6 +55,7 @@ export default function MovieEditDialog(props) {
       );
     }
   }, [errorUpdateMovie, upDateMovie]);
+  console.log(errorUpdateMovie);
 
   // Close alert
   const handleClose = (event, reason) => {

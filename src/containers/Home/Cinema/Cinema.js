@@ -77,7 +77,7 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
   },
   scrollbar: {
-    height: '100%',
+    height: 580,
     overflowY: 'scroll',
   },
   img: {

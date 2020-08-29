@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
   },
   scrollbar: {
-    height: '100%',
+    height: 550,
     overflowY: 'scroll',
   },
 }));

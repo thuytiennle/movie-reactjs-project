@@ -9,21 +9,29 @@ function CinemaShowTime(props) {
   // Render movie show by mapping props.movie and just show timeline that match to day. But API just have date from 2019 then just pick up one (01-01-2019)
   const renderMovieShow = () => {
     if (cinema.lichChieuPhim && cinema.lichChieuPhim.length > 0) {
-      return cinema.lichChieuPhim.map((item) => {
-        return (
+      const timeList = cinema.lichChieuPhim.filter(
+        (item) =>
           new Date(item.ngayChieuGioChieu).toLocaleDateString() ===
-            new Date(date).toLocaleDateString() && (
-            <CustomRouterLink
-              key={item.maLichChieu}
-              to={`/cinema-booking-room/${item.maLichChieu}`}
-            >
-              {new Date(item.ngayChieuGioChieu).toLocaleTimeString([], {
-                hour: '2-digit',
-                minute: '2-digit',
-                hour12: false,
-              })}
-            </CustomRouterLink>
-          )
+          new Date(date).toLocaleDateString(),
+      );
+      // Sort time list
+      const sortedTimeList = timeList.sort((a, b) => {
+        const aDate = new Date(a.ngayChieuGioChieu);
+        const bDate = new Date(b.ngayChieuGioChieu);
+        return aDate.getTime() - bDate.getTime();
+      });
+      return sortedTimeList.map((item) => {
+        return (
+          <CustomRouterLink
+            key={item.maLichChieu}
+            to={`/cinema-booking-room/${item.maLichChieu}`}
+          >
+            {new Date(item.ngayChieuGioChieu).toLocaleTimeString([], {
+              hour: '2-digit',
+              minute: '2-digit',
+              hour12: false,
+            })}
+          </CustomRouterLink>
         );
       });
     }
@@ -38,6 +46,12 @@ CinemaShowTime.propTypes = {
 
 export default function ShowTimeItem(props) {
   const { cinema, date } = props;
+  // Check if lstLichChieu have the date= 01/01/2019 then show the showTime List if not hide it
+  const isDate = cinema.lichChieuPhim.some(
+    (item) =>
+      new Date(item.ngayChieuGioChieu).toLocaleDateString() ===
+      new Date(date).toLocaleDateString(),
+  );
 
   const cinemaInfo = {
     hinhAnh: '../img/cinema-img.jpg',
@@ -45,10 +59,14 @@ export default function ShowTimeItem(props) {
   };
 
   return (
-    <SimpleAccordion
-      summary={<MovieInfo movie={cinemaInfo} />}
-      details={<CinemaShowTime cinema={cinema} date={date} />}
-    />
+    <>
+      {isDate && (
+        <SimpleAccordion
+          summary={<MovieInfo movie={cinemaInfo} />}
+          details={<CinemaShowTime cinema={cinema} date={date} />}
+        />
+      )}
+    </>
   );
 }
 
