@@ -52,6 +52,8 @@ function* deleteMovieSaga({ deleteMovieId }) {
     yield put(actFetchListMovieRequest());
   } catch (error) {
     yield put(actFetchDeleteMovieFailed(error));
+    // Load list Movie
+    yield put(actFetchListMovieRequest());
   }
 }
 

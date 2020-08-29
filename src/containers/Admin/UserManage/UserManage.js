@@ -45,7 +45,7 @@ export default function UserManage() {
   // Did Mount
   React.useEffect(() => {
     dispatch(actFetchListUserRequest());
-    dispatch(actFetchSearchUserRequest(keyword));
+    dispatch(actFetchSearchUserRequest(''));
   }, [dispatch]);
 
   if (loadingListUser) {

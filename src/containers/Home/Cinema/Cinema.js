@@ -54,7 +54,9 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   root: {
-    width: 912,
+    flexGrow: 1,
+    display: 'flex',
+    minWidth: 912,
     height: 600,
     overflow: 'hidden',
   },
@@ -196,7 +198,7 @@ function Cinema() {
         </Typography>
         <div className={clsx(classes.tabContainer, classes.scrollCustom)}>
           {cinemaComplex && cinemaComplex.length > 0 ? (
-            <Grid container className={classes.root}>
+            <div className={classes.root}>
               <Grid item sm={1} className={classes.container1}>
                 {/* When cinemaComplex has data then render tabs otherwise spinner */}
                 <Tabs
@@ -245,7 +247,7 @@ function Cinema() {
                   )}
                 </div>
               </Grid>
-            </Grid>
+            </div>
           ) : (
             <Spinner />
           )}

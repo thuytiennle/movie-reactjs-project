@@ -10,7 +10,7 @@ import CinemaInfo from './CinemaInfo';
 const useStyles = makeStyles((theme) => ({
   wrapper: {
     backgroundColor: theme.palette.background.dark,
-    borderRadius: 'unset',
+    boxShadow: 'unset',
   },
   tabContainer: {
     overflowX: 'scroll',
@@ -98,6 +98,8 @@ export default function MovieShowTime(props) {
         const uniqueDateSet = new Set(sortDate);
         const movieDateArray = [...uniqueDateSet];
         setDateList(movieDateArray);
+        // Have new date array then setDate=movieDateArray[0]
+        setDate(movieDateArray[0]);
       }
     }
   }, [cinemaBranchId, detailCinema]);

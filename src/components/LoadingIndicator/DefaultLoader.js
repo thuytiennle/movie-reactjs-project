@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { CustomThemeContext } from '../../containers/Theme/CustomThemeContext';
 
 const LoadingDiv = styled.div`
-  background-color: #000;
+  background-color: ${(props) => props.bgColor};
   width: 100%;
   height: 100vh;
   position: relative;
@@ -108,7 +108,7 @@ function DefaultLoader() {
   const { currentTheme } = useContext(CustomThemeContext);
 
   return (
-    <LoadingDiv>
+    <LoadingDiv bgColor={currentTheme === 'darkTheme' ? '#000' : 'fff'}>
       <LoadingContainer>
         <LoaderCell className="cell">
           <LoaderPl

@@ -23,7 +23,7 @@ import { TextTranslation } from '../../containers/Language/TextTranslation';
 const useStyles = makeStyles((theme) => ({
   wrapper: {
     backgroundColor: theme.palette.background.dark,
-    borderRadius: 'unset',
+    boxShadow: 'unset',
   },
   root: {
     flexGrow: 1,

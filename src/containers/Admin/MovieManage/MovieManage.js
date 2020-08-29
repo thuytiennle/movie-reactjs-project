@@ -5,7 +5,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Loader } from '../../../components/LoadingIndicator';
 import { actFetchListMovieRequest } from '../../Home/MovieShow/modules/actions';
-import { actCloseShowTimeDialog } from './module/actions';
+import { actCloseShowTimeDialog, actResetDeleteMovie } from './module/actions';
 import MovieEditDialog from './MovieEditDialog';
 import MovieTable from './MovieTable';
 import MovieToolbar from './MovieToolbar';
@@ -54,10 +54,7 @@ export default function MovieManage() {
   React.useEffect(() => {
     // Dispatch action request to init saga listMovie API
     dispatch(actFetchListMovieRequest());
-  }, [dispatch]);
-
-  // Did mount
-  React.useEffect(() => {
+    dispatch(actResetDeleteMovie());
     // Set alert and dialog off
     setOpenAlert(false);
   }, [dispatch]);
@@ -67,8 +64,10 @@ export default function MovieManage() {
     if (errorDeleteMovie) {
       setOpenAlert(true);
       setMessError(errorDeleteMovie.response.data);
+      // Reset delete movie for next delete
+      dispatch(actResetDeleteMovie());
     }
-  }, [errorDeleteMovie]);
+  }, [dispatch, errorDeleteMovie]);
 
   // Loader
   if (loadingListMovie) {

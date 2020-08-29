@@ -8,6 +8,7 @@ import {
   FETCH_DELETE_MOVIE_FAILED,
   FETCH_DELETE_MOVIE_REQUEST,
   FETCH_DELETE_MOVIE_SUCCESS,
+  RESET_DELETE_MOVIE,
   FETCH_MOVIE_INFO_FAILED,
   FETCH_MOVIE_INFO_REQUEST,
   FETCH_MOVIE_INFO_SUCCESS,
@@ -72,6 +73,10 @@ export const actFetchDeleteMovieFailed = (error) => {
     type: FETCH_DELETE_MOVIE_FAILED,
     error,
   };
+};
+
+export const actResetDeleteMovie = () => {
+  return { type: RESET_DELETE_MOVIE };
 };
 
 // Edit movie

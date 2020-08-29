@@ -7,6 +7,7 @@ import {
   FETCH_DELETE_MOVIE_FAILED,
   FETCH_DELETE_MOVIE_REQUEST,
   FETCH_DELETE_MOVIE_SUCCESS,
+  RESET_DELETE_MOVIE,
   FETCH_MOVIE_INFO_FAILED,
   FETCH_MOVIE_INFO_REQUEST,
   FETCH_MOVIE_INFO_SUCCESS,
@@ -57,6 +58,7 @@ const initialState = {
 
 const movieManageReducer = (state = initialState, action) => {
   switch (action.type) {
+    // Add movie
     case FETCH_ADD_MOVIE_REQUEST:
       state.addMovie = {};
       state.loadingAddMovie = true;
@@ -92,6 +94,11 @@ const movieManageReducer = (state = initialState, action) => {
       state.deleteMovie = '';
       state.loadingDeleteMovie = false;
       state.errorDeleteMovie = action.error;
+      return { ...state };
+    case RESET_DELETE_MOVIE:
+      state.deleteMovie = '';
+      state.loadingDeleteMovie = true;
+      state.errorDeleteMovie = null;
       return { ...state };
     // Update or edit movie
     case OPEN_MOVIE_DIALOG:

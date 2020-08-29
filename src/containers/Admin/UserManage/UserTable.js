@@ -12,13 +12,13 @@ import TableRow from '@material-ui/core/TableRow';
 import CloseIcon from '@material-ui/icons/Close';
 import { PropTypes } from 'prop-types';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { TextTranslation } from '../../Language/TextTranslation';
 import {
-  actOpenEditDialog,
   actFetchDeleteUserRequest,
   actFetchListUserRequest,
   actFetchSearchUserRequest,
+  actOpenEditDialog,
 } from './module/actions';
 
 const columns = [
@@ -91,8 +91,7 @@ export default function UserTable(props) {
   const dispatch = useDispatch();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  // Get state from store
-  const keyword = useSelector((state) => state.userManageReducer.keyword);
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -101,6 +100,11 @@ export default function UserTable(props) {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+
+  // Update page start from 1 when rows change
+  React.useEffect(() => {
+    setPage(0);
+  }, [rows]);
 
   return (
     <div className={classes.wrapper}>
@@ -170,7 +174,7 @@ export default function UserTable(props) {
                             dispatch(actFetchDeleteUserRequest(row.taiKhoan));
                             // Load user
                             dispatch(actFetchListUserRequest());
-                            dispatch(actFetchSearchUserRequest(keyword));
+                            dispatch(actFetchSearchUserRequest(''));
                           }}
                         >
                           <CloseIcon />
@@ -187,7 +191,8 @@ export default function UserTable(props) {
           component="div"
           count={rows.length}
           rowsPerPage={rowsPerPage}
-          page={page}
+          // If page is over rows.length/rowsPerPage then set page === 0. In case. search user 4 elements and previously we are in 21st page =>pigination is warning "The page prop of a TablePagination is out of range (0 to 0, but page is 3)."
+          page={page > rows.length / rowsPerPage ? 0 : page}
           onChangePage={handleChangePage}
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />

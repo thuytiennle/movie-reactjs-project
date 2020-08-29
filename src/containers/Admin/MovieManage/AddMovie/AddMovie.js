@@ -74,12 +74,13 @@ export default function AddMovie() {
     if (errorAddMovie) {
       setOpenAlert(true);
       setMessError(errorAddMovie.response.data);
+      dispatch(actResetAddMovie());
     }
     // Check info user has sign in successful
     if (Object.keys(addMovie).length > 0) {
       setOpenDialog(true);
     }
-  }, [errorAddMovie, addMovie]);
+  }, [dispatch, errorAddMovie, addMovie]);
 
   // Close alert
   const handleClose = (event, reason) => {
@@ -162,6 +163,7 @@ export default function AddMovie() {
               style={{ marginRight: 10 }}
               color="primary"
               onClick={() => {
+                dispatch(actResetAddMovie());
                 setOpenDialog(false);
               }}
             >

@@ -1,3 +1,4 @@
+// Add movie
 export const FETCH_ADD_MOVIE_REQUEST =
   'container/Admin/movieManageReducer/FETCH_ADD_MOVIE_REQUEST';
 export const FETCH_ADD_MOVIE_SUCCESS =
@@ -13,6 +14,8 @@ export const FETCH_DELETE_MOVIE_SUCCESS =
   'container/Admin/movieManageReducer/FETCH_DELETE_MOVIE_SUCCESS';
 export const FETCH_DELETE_MOVIE_FAILED =
   'container/Admin/movieManageReducer/FETCH_DELETE_MOVIE_FAILED';
+export const RESET_DELETE_MOVIE =
+  'container/Admin/movieManageReducer/RESET_DELETE_MOVIE';
 // Update movie
 export const OPEN_MOVIE_DIALOG =
   'container/Admin/movieManageReducer/OPEN_MOVIE_DIALOG';
