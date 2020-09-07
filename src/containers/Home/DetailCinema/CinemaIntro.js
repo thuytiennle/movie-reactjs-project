@@ -75,7 +75,7 @@ export default function CinemaIntro(props) {
               </Typography>
               <div className={classes.contentButton}>
                 <Button variant="contained" color="secondary" className="my-3">
-                  <Link smooth={Boolean(true)} offset={-50} to="movieShowTime">
+                  <Link smooth={Boolean(true)} offset={-50} to="cinemaShowTime">
                     <TextTranslation id="container.BookingButton" />
                   </Link>
                 </Button>
